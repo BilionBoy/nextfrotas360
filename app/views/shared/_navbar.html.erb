@@ -1,68 +1,59 @@
-<div class="navbar navbar-dark navbar-expand-xl navbar-static" style="background: #005171;">
+<div class="navbar navbar-dark navbar-expand-xl navbar-static pv-navbar">
   <div class="container-fluid">
     <div class="d-flex d-xl-none me-2">
-      <button type="button" class="navbar-toggler sidebar-mobile-main-toggle rounded-pill">
+      <button type="button" class="navbar-toggler sidebar-mobile-main-toggle rounded-pill pv-toggler">
         <i class="ph-list"></i>
       </button>
     </div>
+    <!-- Simplified branding with cleaner government styling -->
     <div class="navbar-brand flex-0 flex-sm-1 py-0">
-      <%= link_to root_path, class: 'd-flex align-items-center text-decoration-none text-white gap-2' do %>
-        <img src="/layout/assets/img/Team.png" style="height: 65px">
-        <img src="/layout/assets/img/template.png" style="height: 55px">
+      <%= link_to root_path, class: 'd-flex align-items-center text-decoration-none text-white gap-3' do %>
+        <div class="pv-logo-container">
+          <img src="/layout/assets/img/preft.png" style="height: 50px" alt="Brasão Prefeitura Porto Velho" class="pv-brasao">
+          <img src="/layout/assets/img/frotas360.png" style="height: 40px" alt="Logo Sistema" class="pv-sistema">
+        </div>
       <% end %>
     </div>
     <ul class="nav flex-row justify-content-end order-1 order-lg-2">
       <li class="nav-item nav-item-dropdown-lg ms-lg-2">
-        <a href="#" class="navbar-nav-link align-items-center rounded-pill p-1" id="userMenuToggle">
-          <div class="status-indicator-container">
-            <i class="ph-user-circle"></i>
-          </div>
-          <span class="d-none d-xl-inline-block mx-lg-2">
-            <h4>Olá, Dhiogo </h4>
+        <!-- Simplified user menu with better government styling -->
+        <a href="#" class="navbar-nav-link align-items-center rounded-pill p-2 pv-user-toggle" id="userMenuToggle" role="button" aria-expanded="false">
+          <i class="ph-user-circle-gear pv-user-icon"></i>
+          <span class="d-none d-xl-inline-block mx-lg-2 pv-user-info">
+            <span class="pv-greeting">Bem-vindo,</span>
+            <strong class="pv-username">Dhiogo</strong>
           </span>
+          <i class="ph-caret-down ms-1 pv-dropdown-arrow"></i>
         </a>
-        <div id="userMenu" class="custom-dropdown-menu">
-          <%= button_to '<i class="ph-sign-out me-2"></i>Sair'.html_safe,  class: "btn btn-logout"   %>
+        <!-- Cleaner dropdown menu -->
+        <div id="userMenu" class="pv-dropdown-menu">
+          <div class="pv-user-profile">
+            <i class="ph-identification-card"></i>
+            <div>
+              <strong>Dhiogo Silva</strong>
+              <small>Servidor Público</small>
+            </div>
+          </div>
+          <hr class="pv-divider">
+          <a href="#" class="pv-dropdown-item">
+            <i class="ph-user-gear me-2"></i>Meu Perfil
+          </a>
+          <a href="#" class="pv-dropdown-item">
+            <i class="ph-gear me-2"></i>Configurações
+          </a>
+          <a href="#" class="pv-dropdown-item">
+            <i class="ph-question me-2"></i>Ajuda
+          </a>
+          <hr class="pv-divider">
+          <div id="userMenu" class="custom-dropdown-menu">
+            <%= button_to '<i class="ph-sign-out me-2"></i>Sair'.html_safe,  class: "btn btn-logout"   %>
+          </div>
         </div>
-      </li>
-    </ul>
-  </div>
+      </div>
+    </li>
+  </ul>
 </div>
-<style>
-  .custom-dropdown-menu {
-    display: none;
-    position: absolute;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    right: 0;
-    margin-top: 0px;
-    z-index: 1000;
-    padding: 4px;
-    width: 200px;
-  }
-
-  .btn-logout {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    color: #4a4a4a;
-    text-align: left;
-    font-size: 14px;
-    background-color: white;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-  }
-
-  .btn-logout:hover {
-    color: #4a4a4a;
-    background-color: #f2f2f2;
-  }
-
-  .nav-item-dropdown-lg {
-    position: relative;
-  }
-</style>
+</div>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const userMenuToggle = document.getElementById('userMenuToggle');
@@ -70,12 +61,15 @@
 
     userMenuToggle.addEventListener('click', function (e) {
       e.preventDefault();
-      userMenu.style.display = userMenu.style.display === 'block' ? 'none' : 'block';
+      const isOpen = userMenu.style.display === 'block';
+      userMenu.style.display = isOpen ? 'none' : 'block';
+      userMenuToggle.setAttribute('aria-expanded', !isOpen);
     });
 
     document.addEventListener('click', function (e) {
       if (!userMenu.contains(e.target) && !userMenuToggle.contains(e.target)) {
         userMenu.style.display = 'none';
+        userMenuToggle.setAttribute('aria-expanded', 'false');
       }
     });
   });

@@ -1,19 +1,22 @@
-<div class="sidebar sidebar-dark sidebar-main sidebar-expand-xl" style="background: #005171;">
+<div class="sidebar sidebar-dark sidebar-main sidebar-expand-xl pv-sidebar">
   <div class="sidebar-content">
+
+    <!-- HEADER -->
     <div class="sidebar-section">
-      <div class="sidebar-section-body d-flex justify-content-center">
-        <h5 class="sidebar-resize-hide flex-grow-1 my-auto"><b>Menu</b></h5>
-        <div>
-          <button
-            type="button"
-            class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-mobile-main-toggle d-xl-none"
-          >
-            <i class="ph-x"></i>
-          </button>
+      <div class="sidebar-section-body d-flex justify-content-between align-items-center px-3 py-2">
+        <div class="pv-menu-header d-flex align-items-center gap-2">
+          <i class="ph-buildings pv-menu-icon"></i>
+          <h5 class="sidebar-resize-hide flex-grow-1 my-auto pv-menu-title">
+            <strong>HOME</strong>
+          </h5>
         </div>
+        <button type="button" class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-mobile-main-toggle d-xl-none pv-close-btn">
+          <i class="ph-x"></i>
+        </button>
       </div>
     </div>
-    <!-- Barra de pesquisa -->
+
+    <!-- SEARCH -->
     <div class="sidebar-section-body">
       <div class="form-control-feedback form-control-feedback-end">
         <input
@@ -28,38 +31,129 @@
         </div>
       </div>
     </div>
-    <!-- Itens da sidebar -->
+
+    <!-- NAVIGATION -->
     <div class="sidebar-section">
-      <ul class="nav nav-sidebar" data-nav-type="accordion" id="sidebar-items">
-        <li class="nav-item"></li>
-          <a href="<%= root_path %>" class="nav-link" id="config-link" data-no-close>
-            <i class="ph-house"></i>
-            <span>Home</span>
+      <ul class="nav nav-sidebar pv-nav" data-nav-type="accordion" id="sidebar-items">
+
+        <!-- SISTEMA MUNICIPAL -->
+        <li class="nav-item-header pv-nav-header">
+          <span>SISTEMA MUNICIPAL</span>
+        </li>
+        <li class="nav-item">
+          <a href="<%= root_path %>" class="nav-link pv-nav-link active">
+            <i class="ph-house-line"></i>
+            <span>Página Inicial</span>
           </a>
         </li>
+
+        <!-- ADMINISTRAÇÃO -->
+        <li class="nav-item-header pv-nav-header">
+          <span>ADMINISTRAÇÃO</span>
+        </li>
+
+        <!-- Outros módulos -->
+        <li class="nav-item">
+          <a href="<%= root_path %>" class="nav-link pv-nav-link">
+            <i class="ph-file-text"></i>
+            <span>Orçamentos</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<%= root_path %>" class="nav-link pv-nav-link">
+            <i class="ph-user"></i>
+            <span>Condutores</span>
+          </a>
+        </li>
+
+        <!-- Referenciais -->
+        <li class="nav-item nav-item-submenu">
+          <a href="#" class="nav-link pv-nav-link">
+            <i class="ph-database"></i>
+            <span>Referenciais</span>
+          </a>
+          <ul class="nav nav-group-sub">
+            <li class="nav-item">
+              <a href="<%= root_path %>" class="nav-link">Tipos de Veículo</a>
+            </li>
+            <li class="nav-item">
+              <a href="<%= root_path %>" class="nav-link">Tipos de Centro de Custo</a>
+            </li>
+            <li class="nav-item">
+              <a href="<%= root_path %>" class="nav-link">Tipos de Solicitação</a>
+            </li>
+            <li class="nav-item">
+              <a href="<%= root_path %>" class="nav-link">Categorias de Serviço</a>
+            </li>
+            <li class="nav-item">
+              <a href="<%= root_path %>" class="nav-link">Cadastrar Cartão</a>
+            </li>
+          </ul>
+        </li>
+
       </ul>
     </div>
   </div>
 </div>
 
-  <script>
-    function filterSidebar() {
-      const input = document.getElementById('sidebar-search-input');
-      const filter = input.value.toLowerCase();
-      const navItems = document.querySelectorAll('#sidebar-items .nav-item, #sidebar-items .nav-item-header');
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const input = document.getElementById('sidebar-search-input');
 
-      navItems.forEach(item => {
-        const text = item.textContent.toLowerCase();
-        const isCollapsible = item.querySelector('.nav-group-sub');
+  function filterSidebar() {
+    const filter = input.value.toLowerCase();
+    const navItems = document.querySelectorAll('#sidebar-items .nav-item:not(.nav-item-header)');
+    const navHeaders = document.querySelectorAll('#sidebar-items .nav-item-header');
+    let visibleCount = 0;
 
-        if (text.includes(filter)) {
-          item.style.display = ''; // Mostra o item
-          if (isCollapsible) {
-            isCollapsible.classList.add('show'); // Abre a seção colapsável
-          }
-        } else {
-          item.style.display = 'none'; // Oculta o item
-        }
-      });
+    navItems.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      item.style.display = text.includes(filter) ? '' : 'none';
+      if (text.includes(filter)) visibleCount++;
+    });
+
+    navHeaders.forEach(header => {
+      let next = header.nextElementSibling;
+      let hasVisible = false;
+      while (next && !next.classList.contains('nav-item-header')) {
+        if (next.classList.contains('nav-item') && next.style.display !== 'none') hasVisible = true;
+        next = next.nextElementSibling;
+      }
+      header.style.display = hasVisible || filter === '' ? '' : 'none';
+    });
+
+    const sidebar = document.querySelector('.pv-nav');
+    let noResultMsg = sidebar.querySelector('.no-results-message');
+
+    if (visibleCount === 0 && filter.length > 0) {
+      if (!noResultMsg) {
+        noResultMsg = document.createElement('li');
+        noResultMsg.className = 'nav-item no-results-message';
+        noResultMsg.innerHTML = `
+          <div class="nav-link pv-no-results">
+            <i class="ph-magnifying-glass me-2"></i>
+            <div>
+              <strong>Nenhum resultado encontrado</strong>
+              <small>Tente usar termos diferentes</small>
+            </div>
+          </div>`;
+        sidebar.appendChild(noResultMsg);
+      }
+    } else if (noResultMsg) {
+      noResultMsg.remove();
     }
-  </script>
+  }
+
+  input.addEventListener('keyup', filterSidebar);
+
+  document.querySelectorAll('.nav-item-submenu > a').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const parent = link.parentElement;
+      parent.classList.toggle('open');
+    });
+  });
+
+  document.querySelectorAll('.nav-item-submenu').forEach(submenu => submenu.classList.remove('open'));
+});
+</script>

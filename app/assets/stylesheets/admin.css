@@ -1,101 +1,484 @@
-.hand-pointer,
-.nav-item,
-.hand-pointer:hover,
-.nav-item:hover {
+/* ========================================
+   IDENTIDADE VISUAL GOVERNAMENTAL
+   PREFEITURA DE PORTO VELHO
+   ======================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+:root {
+  /* Cores Oficiais da Prefeitura */
+  --pv-blue-primary: #03317b;
+  --pv-blue-secondary: #0f4a9c;
+  --pv-blue-light: #2e5dbe;
+  --pv-blue-dark: #0d3f8c;
+  --pv-green-primary: #8bc34a;
+  --pv-green-secondary: #7cb342;
+  --pv-white: #ffffff;
+  --pv-gray-light: #f8f9fa;
+  --pv-gray-medium: #6c757d;
+  --pv-gray-dark: #495057;
+
+  /* Standardized typography following government design patterns */
+  --pv-font-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Helvetica Neue", Arial, sans-serif;
+  --pv-font-title: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Helvetica Neue", Arial, sans-serif;
+
+  /* Typography scales for institutional hierarchy */
+  --pv-text-xs: 0.75rem; /* 12px */
+  --pv-text-sm: 0.875rem; /* 14px */
+  --pv-text-base: 1rem; /* 16px */
+  --pv-text-lg: 1.125rem; /* 18px */
+  --pv-text-xl: 1.25rem; /* 20px */
+  --pv-text-2xl: 1.5rem; /* 24px */
+
+  /* Simplified shadows - removed excessive effects */
+  --pv-shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --pv-shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-item-submenu > .nav-group-sub {
+  display: none; /* garante que submenus fiquem fechados */
+}
+.nav-item-submenu.open > .nav-group-sub {
+  display: block;
+}
+/* Added global typography base styles for institutional consistency */
+body {
+  font-family: var(--pv-font-primary);
+  font-size: var(--pv-text-base);
+  line-height: 1.5;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a.nav-link {
+  color: white;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--pv-font-title);
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0;
+}
+
+h1 {
+  font-size: var(--pv-text-2xl);
+}
+h2 {
+  font-size: var(--pv-text-xl);
+}
+h3 {
+  font-size: var(--pv-text-lg);
+}
+h4 {
+  font-size: var(--pv-text-base);
+}
+h5 {
+  font-size: var(--pv-text-sm);
+}
+h6 {
+  font-size: var(--pv-text-xs);
+}
+
+/* ========================================
+   NAVBAR GOVERNAMENTAL
+   ======================================== */
+
+.pv-navbar {
+  background: var(--pv-blue-primary) !important;
+  border-bottom: 2px solid var(--pv-green-primary);
+  box-shadow: var(--pv-shadow-light);
+  font-family: var(--pv-font-primary);
+  min-height: 70px;
+}
+
+.pv-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pv-brasao,
+.pv-sistema {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.pv-title-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.pv-main-title {
+  font-family: var(--pv-font-title);
+  font-size: var(--pv-text-lg);
+  font-weight: 600;
+  color: var(--pv-white);
+  margin: 0;
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+}
+
+.pv-subtitle {
+  font-family: var(--pv-font-primary);
+  font-size: var(--pv-text-sm);
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  font-weight: 400;
+}
+
+.pv-user-toggle {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: background-color 0.2s ease;
+  padding: 8px 16px !important;
+  backdrop-filter: blur(10px);
+}
+
+.pv-user-toggle:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--pv-yellow-primary);
+}
+
+.pv-user-icon {
+  font-size: 1.5rem;
+  color: var(--pv-white);
+  margin-right: 8px;
+}
+
+.pv-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+}
+
+.pv-greeting {
+  font-size: var(--pv-text-xs);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.pv-username {
+  font-size: var(--pv-text-sm);
+  color: var(--pv-white);
+  font-weight: 600;
+}
+
+.pv-dropdown-arrow {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  transition: transform 0.3s ease;
+}
+
+.pv-user-toggle[aria-expanded="true"] .pv-dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.pv-dropdown-menu {
+  display: none;
+  position: absolute;
+  background: var(--pv-white);
+  box-shadow: var(--pv-shadow-light);
+  border: 1px solid var(--pv-gray-light);
+  border-radius: 6px;
+  right: 0;
+  margin-top: 8px;
+  z-index: 1000;
+  padding: 12px;
+  width: 240px;
+  font-family: var(--pv-font-primary);
+}
+
+.pv-user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--pv-gray-light);
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.pv-user-profile i {
+  font-size: 1.8rem;
+  color: var(--pv-blue-primary);
+}
+
+.pv-user-profile strong {
+  display: block;
+  color: var(--pv-blue-primary);
+  font-weight: 600;
+}
+
+.pv-user-profile small {
+  color: var(--pv-gray-medium);
+  font-size: var(--pv-text-xs);
+}
+
+.pv-divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--pv-green-primary),
+    transparent
+  );
+  margin: 12px 0;
+}
+
+.pv-dropdown-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 16px;
+  color: var(--pv-blue-primary);
+  text-decoration: none;
+  font-size: var(--pv-text-sm);
+  font-weight: 500;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.pv-dropdown-item:hover {
+  color: var(--pv-white);
+  background: var(--pv-green-primary);
+}
+
+.pv-btn-logout {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 16px;
+  color: #dc3545;
+  font-size: var(--pv-text-sm);
+  font-weight: 600;
+  background: rgba(220, 53, 69, 0.1);
+  border: 1px solid rgba(220, 53, 69, 0.2);
+  border-radius: 6px;
+  transition: all 0.3s ease;
   cursor: pointer;
 }
 
-.sort_link,
-.sort_link:hover {
-  text-decoration: none;
-  color: var(
-    --bs-table-color-state,
-    var(--bs-table-color-type, var(--bs-table-color))
-  );
-}
-
-.keyup {
-  text-transform: uppercase;
-}
-
-.downcase {
-  text-transform: lowercase;
-}
-
-.select2-container.is-invalid .select2-selection {
+.pv-btn-logout:hover {
+  color: var(--pv-white);
+  background: #dc3545;
   border-color: #dc3545;
 }
 
-.steps-basic > .actions {
-  padding-top: 15px;
-  padding-bottom: 15px;
-  background: var(--light);
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  border-bottom-left-radius: var(--border-radius);
-  border-bottom-right-radius: var(--border-radius);
-  border-top: var(--card-border-width) solid var(--card-border-color);
+/* ========================================
+   SIDEBAR GOVERNAMENTAL
+   ======================================== */
+
+.pv-sidebar {
+  background: var(--pv-blue-primary) !important;
+  border-right: 2px solid var(--pv-green-primary);
+  box-shadow: var(--pv-shadow-light);
+  font-family: var(--pv-font-primary);
 }
 
-.select2-container.is-valid .select2-selection {
-  border-color: #28a745;
+.pv-menu-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-grow: 1;
 }
 
-.select2-container.is-invalid .select2-selection:focus {
-  /* Sombra vermelha */
-  box-shadow: 0 0 0 0.125rem rgba(239, 68, 68, 0.25);
+.pv-menu-icon {
+  font-size: 1.2rem;
+  color: var(--pv-white);
 }
 
-.select2-container.is-valid .select2-selection:focus {
-  /* Sombra verde */
-  box-shadow: 0 0 0 0.125rem rgba(5, 150, 105, 0.25);
+.pv-menu-title {
+  color: var(--pv-white) !important;
+  font-family: var(--pv-font-title) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px;
+  font-size: var(--pv-text-sm) !important;
+  margin: 0 !important;
 }
 
-abbr {
-  color: var(--danger);
+.pv-search-container {
+  margin: 0 15px 20px 15px;
 }
 
-.btn-to-top {
-  position: absolute;
-  bottom: 4.1rem;
-  right: 1.2rem;
+.pv-search-input {
+  background: var(--pv-white) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 6px !important;
+  padding: 10px 40px 10px 16px !important;
+  color: var(--pv-blue-primary) !important;
+  font-weight: 400;
+  transition: border-color 0.2s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilo para impressão */
-@media print {
-  /* Elementos que você deseja ocultar na impressão */
-  .sidebar,
-  .navbar,
-  title,
-  .no-print {
-    display: none !important; /* ou visibility: hidden; */
+.pv-search-input:focus {
+  border-color: var(--pv-green-primary) !important;
+  box-shadow: 0 0 0 2px rgba(19, 81, 180, 0.15) !important;
+  outline: none !important;
+}
+
+.pv-search-input::placeholder {
+  color: var(--pv-blue-primary) !important;
+  opacity: 0.7;
+}
+
+.pv-search-icon {
+  color: var(--pv-blue-primary) !important;
+  right: 18px !important;
+  top: 50% !important;
+  transform: translateY(-50%);
+}
+
+.pv-search-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 0 16px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--pv-text-xs);
+  font-weight: 400;
+}
+
+.pv-search-hint i {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.pv-nav {
+  padding: 0 10px;
+}
+
+.pv-nav-header {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-family: var(--pv-font-primary);
+  font-weight: 500 !important;
+  font-size: var(--pv-text-xs) !important;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 16px 16px 6px 16px !important;
+  margin-top: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.pv-nav-link {
+  color: rgba(255, 255, 255, 0.9) !important;
+  border-radius: 4px !important;
+  margin: 1px 0 !important;
+  padding: 10px 16px !important;
+  transition: background-color 0.2s ease;
+  font-weight: 400;
+  position: relative;
+  border-left: 3px solid transparent;
+}
+
+.pv-nav-link:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: var(--pv-white) !important;
+  border-left-color: var(--pv-green-primary);
+}
+
+.pv-nav-link.active {
+  background: linear-gradient(
+    135deg,
+    var(--pv-green-primary),
+    var(--pv-green-secondary)
+  ) !important;
+  color: var(--pv-white) !important;
+  font-weight: 500;
+  border-left-color: var(--pv-blue-light);
+}
+
+.pv-no-results {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+  cursor: default;
+  text-align: center;
+  padding: 16px !important;
+  border-radius: 4px;
+  margin: 8px 0;
+}
+
+.pv-no-results strong {
+  display: block;
+  margin-bottom: 4px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.pv-no-results small {
+  font-size: var(--pv-text-xs);
+  opacity: 0.7;
+}
+
+/* ========================================
+   RESPONSIVIDADE GOVERNAMENTAL
+   ======================================== */
+
+@media (max-width: 1199.98px) {
+  .pv-main-title {
+    font-size: var(--pv-text-base);
+  }
+
+  .pv-subtitle {
+    font-size: var(--pv-text-xs);
+  }
+
+  .pv-dropdown-menu {
+    width: 240px;
+    right: -10px;
   }
 }
 
-.table > :not(caption) > * > * {
-  padding: 0.45rem 1rem !important;
+@media (max-width: 768px) {
+  .pv-navbar {
+    padding: 0.5rem 1rem;
+    min-height: 65px;
+  }
+
+  .pv-title-section {
+    display: none;
+  }
+
+  .pv-dropdown-menu {
+    width: 220px;
+    right: -15px;
+  }
+
+  .pv-search-container {
+    margin: 0 10px 15px 10px;
+  }
+
+  .pv-nav {
+    padding: 0 5px;
+  }
 }
 
-.table-responsive {
-  /* Se você quer que o conteúdo interno não quebre linhas */
-  white-space: nowrap;
-  /* Defina a largura máxima conforme necessário */
-  max-width: 100%;
-  /* Impede a rolagem vertical */
-  overflow-y: hidden;
+/* ========================================
+   SCROLLBAR GOVERNAMENTAL
+   ======================================== */
+
+.pv-sidebar .sidebar-content::-webkit-scrollbar {
+  width: 4px;
 }
 
-.accordion-button {
-  color: white;
-  background-color: #247297;
-  border-color: white;
+.pv-sidebar .sidebar-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
 }
 
-.accordion-button:not(.collapsed) {
-  color: white;
-  background-color: #1a6a8d;
-  border-color: white;
+.pv-sidebar .sidebar-content::-webkit-scrollbar-thumb {
+  background: var(--pv-green-primary);
+  border-radius: 2px;
 }
-.accordion-button::after {
-  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+
+.pv-sidebar .sidebar-content::-webkit-scrollbar-thumb:hover {
+  background: var(--pv-green-secondary);
 }
+
