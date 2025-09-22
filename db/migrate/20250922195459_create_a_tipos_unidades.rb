@@ -1,0 +1,19 @@
+# frozen_string_literal: true
+
+class CreateATiposUnidades < ActiveRecord::Migration[7.2]
+unless table_exists? :a_tipos_unidades
+  def up
+    create_table :a_tipos_unidades do |t|
+      t.string   :descricao
+      t.string   :created_by
+      t.string   :updated_by
+      t.datetime :deleted_at
+      t.timestamps
+    end
+  end
+end
+
+  def down
+    drop_table :a_tipos_unidades if table_exists?(:a_tipos_unidades)
+  end
+end

@@ -14,6 +14,9 @@ pt-BR:
       a_status:
         one: "Status"
         other: "Status"
+      a_tipo_unidade:
+        one: "Tipo de Unidade"
+        other: "Tipos de Unidade"
     attributes:
       funcao:
         nome: "Nome"
