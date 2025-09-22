@@ -17,6 +17,12 @@ pt-BR:
       a_tipo_unidade:
         one: "Tipo de Unidade"
         other: "Tipos de Unidade"
+      a_tipo_usuario:
+        one: "Tipo de Usuário"
+        other: "Tipos de Usuários"
+      g_status:
+        one: "Status de Gestão"
+        other: "Status de Gestão"
     attributes:
       funcao:
         nome: "Nome"
