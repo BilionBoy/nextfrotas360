@@ -38,6 +38,9 @@ pt-BR:
       g_municipio:
         one: "Município"
         other: "Municípios"
+      g_bairro:
+        one: "Bairro"
+        other: "Bairros"
       o_status:
         one: "Status do Orçamento"
         other: "Status dos Orçamentos"
@@ -83,6 +86,9 @@ pt-BR:
         codigo_ibge: "Código Ibge"
         descricao: "Descrição"
         g_estado_id: "Estado"
+      g_bairro:
+        descricao: "Descrição"
+        g_municipio_id: "Município"
       o_status:
         descricao: "Descrição"
       o_tipo_solicitacao:

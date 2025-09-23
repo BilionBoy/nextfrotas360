@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :g_bairros
   resources :g_municipios
   resources :g_estados
   root 'home#index'
