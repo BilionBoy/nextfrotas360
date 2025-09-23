@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_23_024751) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_23_031411) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -37,6 +37,30 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_024751) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["a_status_id"], name: "index_a_papeis_on_a_status_id"
+  end
+
+  create_table "a_papeis_permissoes", force: :cascade do |t|
+    t.bigint "a_papel_id"
+    t.bigint "a_permissao_id", null: false
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["a_papel_id"], name: "index_a_papeis_permissoes_on_a_papel_id"
+    t.index ["a_permissao_id"], name: "index_a_papeis_permissoes_on_a_permissao_id"
+  end
+
+  create_table "a_permissoes", force: :cascade do |t|
+    t.string "nome"
+    t.string "descricao"
+    t.string "recurso"
+    t.string "acao"
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "a_status", force: :cascade do |t|
@@ -286,6 +310,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_024751) do
 
   add_foreign_key "a_cargos", "a_status"
   add_foreign_key "a_papeis", "a_status"
+  add_foreign_key "a_papeis_permissoes", "a_permissoes"
   add_foreign_key "g_bairros", "g_municipios"
   add_foreign_key "g_distritos", "g_municipios"
   add_foreign_key "g_estados", "g_paises"

@@ -74,6 +74,12 @@ pt-BR:
       a_papel:
         one: "Papel"
         other: "Papéis"
+      a_permissao:
+        one: "Permissão do Papel"
+        other: "Permissões dos Papéis"
+      a_papel_permissao:
+        one: "Papel Permissão"
+        other: "Papéis Permissões"
     attributes:
       a_status:
         descricao: "Descrição"
@@ -145,6 +151,15 @@ pt-BR:
         nome: "Nome"
         descricao: "Descrição"
         a_status_id: "Status"
+      a_permissao:
+        a_papel_id: "Papel"
+        nome: "Nome"
+        descricao: "Descrição"
+        recurso: "Recurso"
+        acao: "Ação"
+      a_papel_permissao:
+        a_papel_id: "Papel"
+        a_permissao_id: "Permissão"
     errors:
       messages:
         record_invalid: "A validação falhou: %{errors}"

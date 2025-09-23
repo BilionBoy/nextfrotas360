@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :a_papeis_permissoes
+  resources :a_permissoes
   resources :a_papeis
   resources :a_cargos
   root 'home#index'

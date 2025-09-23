@@ -1,0 +1,37 @@
+<div class="container">
+  <%= render "shared/notice" %>
+  <div class="card border-0 shadow shadow-sm">
+    <div class="card-header border-0 d-flex justify-content-between">
+      <span class="fs-4">Visualizar A Permissao</span>
+    </div>
+    <div class="card-body">
+      <div id="<%= dom_id @a_permissao %>">
+          <p>
+            <strong>Nome:</strong>
+            <%= @a_permissao.nome %>
+          </p>
+          <p>
+            <strong>Descricao:</strong>
+            <%= @a_permissao.descricao %>
+          </p>
+          <p>
+            <strong>Recurso:</strong>
+            <%= @a_permissao.recurso %>
+          </p>
+          <p>
+            <strong>Acao:</strong>
+            <%= @a_permissao.acao %>
+          </p>
+      </div>
+    </div>
+    <div class="card-footer border-0 d-flex justify-content-between">
+      <div>
+        <%= link_to edit_a_permissao_path(@a_permissao), class: "btn btn-primary" do %>
+        <i class="bi bi-pencil-square"></i> Editar
+        <% end %>
+        <%= link_to "Voltar", a_permissoes_path, class: "btn btn-secondary" %>
+      </div>
+      <%= button_to "Deletar", @a_permissao, method: :delete, class: "btn btn-outline-danger border-0" %>
+    </div>
+  </div>
+</div>
