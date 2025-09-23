@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  resources :t_taxas
+  resources :g_municipios
+  resources :g_estados
   root 'home#index'
   get 'home/index'
   
@@ -13,10 +14,12 @@ Rails.application.routes.draw do
   resources :g_status
   resources :g_tipos_veiculos
   resources :g_tipos_centros_custos
+  resources :g_paises
   resources :o_tipos_solicitacoes
   resources :o_status
   resources :o_categorias_servicos
   resources :o_visibilidades
   resources :o_urgencias
+  resources :t_taxas
   
 end

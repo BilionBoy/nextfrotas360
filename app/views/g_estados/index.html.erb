@@ -1,12 +1,12 @@
-<%= render "shared/context_nav", title: t("activerecord.models.#{AStatus.model_name.i18n_key}.other"), new_path: new_a_status_path do  %>
-  <span class="breadcrumb-item active"><%= t("activerecord.models.#{AStatus.model_name.i18n_key}.other") %></span>
+<%= render "shared/context_nav", title: t("activerecord.models.#{GEstado.model_name.i18n_key}.other"), new_path: new_g_estado_path do  %>
+  <span class="breadcrumb-item active"><%= t("activerecord.models.#{GEstado.model_name.i18n_key}.other") %></span>
 <% end %>
 <div class="card">
   <div class="card-header d-flex">
     <%= search_form_for @q, html: { class: "d-flex gap-2" , autocomplete: "off"} do |f| %>
       <%= f.search_field :descricao_cont, class: "form-control", placeholder: "Pesquisar" %>
       <%= f.button(type: 'submit', class: 'btn btn-info') { tag.i(class: 'ph-magnifying-glass') } %>
-      <%= link_to  tag.i(class: 'ph-x-circle'), a_status_path, class: "btn btn-light" if params[:q] %>
+      <%= link_to  tag.i(class: 'ph-x-circle'), g_estados_path, class: "btn btn-light" if params[:q] %>
     <% end %>
   </div>
   <div class="card-body">
@@ -15,11 +15,13 @@
         <thead>
           <tr>
             <th class="text-center">Ações</th>
-            <th><%= sort_link(@q, :descricao, t("activerecord.attributes.a_status.descricao")) %></th>
+            <th><%= sort_link(@q, :descricao, t("activerecord.attributes.g_estado.descricao")) %></th>
+            <th><%= sort_link(@q, :uf, t("activerecord.attributes.g_estado.uf")) %></th>
+            <th><%= sort_link(@q, :g_pais, t("activerecord.attributes.g_estado.país")) %></th>
           </tr>
         </thead>
         <tbody>
-          <% @a_status.each do |a_status| %>
+          <% @g_estados.each do |g_estado| %>
             <tr>
               <td class="text-center">
                 <div class="dropdown-toggle">
@@ -28,15 +30,17 @@
                   </a>
                   <div class="dropdown-menu" style="">
                     <div class="dropdown-header">Opções</div>
-                    <%= link_to edit_a_status_path(a_status), class: "dropdown-item" do %>
+                    <%= link_to edit_g_estado_path(g_estado), class: "dropdown-item" do %>
                       <i class="ph-pen me-2"></i> Editar
                     <% end %>
-                    <%= form_for a_status, method: :delete do |f| %>
-                      <a class="dropdown-item hand-pointer " data-confirm-delete="<%= a_status_path(a_status) %>" data-csrf-token="<%= form_authenticity_token %>">
+                    <%= form_for g_estado, method: :delete do |f| %>
+                      <a class="dropdown-item hand-pointer " data-confirm-delete="<%= g_estado_path(g_estado) %>" data-csrf-token="<%= form_authenticity_token %>">
                         <i class="ph-trash-simple me-2"></i>Excluir
                       </a>
                     <% end %>
-                    <td><%= a_status.descricao %></td>
+                    <td><%= g_estado.descricao %></td>
+                    <td><%= g_estado.uf %></td>
+                    <td><%= g_estado.g_pais&.descricao %></td>
                   </div>
                 </div>
               </td>

@@ -272,6 +272,34 @@ h6 {
   background: #dc3545;
   border-color: #dc3545;
 }
+/* Itens principais do menu */
+.nav-sidebar .nav-link.pv-nav-link:hover {
+  color: #fff !important;
+}
+
+/* Itens do submenu */
+.nav-sidebar .nav-group-sub .nav-link:hover {
+  color: #fff !important;
+}
+
+/* Mantém ativo o submenu aberto */
+.nav-sidebar .nav-group-sub .nav-link.active {
+  color: #fff !important;
+}
+
+/* Opção: suaviza a transição de cor */
+.nav-sidebar .nav-link {
+  transition: background-color 0.2s, color 0.2s;
+}
+/* Links de submenu "pai" (que têm submenus dentro) */
+.nav-item-submenu > a.nav-link:hover {
+  color: #fff !important;
+}
+
+/* Se quiser também quando estiver aberto */
+.nav-item-submenu.open > a.nav-link {
+  color: #fff !important;
+}
 
 /* ========================================
    SIDEBAR GOVERNAMENTAL
@@ -481,4 +509,3 @@ h6 {
 .pv-sidebar .sidebar-content::-webkit-scrollbar-thumb:hover {
   background: var(--pv-green-secondary);
 }
-

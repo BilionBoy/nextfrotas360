@@ -29,6 +29,15 @@ pt-BR:
       g_tipo_centro_custo:
         one: "Tipo de Centro de Custo"
         other: "Tipos de Centros de Custos"
+      g_pais:
+        one: "País"
+        other: "Países"
+      g_estado:
+        one: "Estado"
+        other: "Estados"
+      g_municipio:
+        one: "Município"
+        other: "Municípios"
       o_status:
         one: "Status do Orçamento"
         other: "Status dos Orçamentos"
@@ -47,6 +56,9 @@ pt-BR:
       t_taxa:
         one: "Taxa"
         other: "Taxas"
+      a_unidade:
+        one: "Unidade"
+        other: "Unidades"
     attributes:
       a_status:
         descricao: "Descrição"
@@ -60,6 +72,17 @@ pt-BR:
         descricao: "Descrição"
       g_tipo_centro_custo:
         descricao: "Descrição"
+      g_pais:
+        descricao: "Descrição"
+        sigla: "Sigla"
+      g_estado:
+        descricao: "Descrição"
+        uf: "Uf"
+        g_pais_id: "País"
+      g_municipio:
+        codigo_ibge: "Código Ibge"
+        descricao: "Descrição"
+        g_estado_id: "Estado"
       o_status:
         descricao: "Descrição"
       o_tipo_solicitacao:

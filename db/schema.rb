@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_23_011328) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_23_015826) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,6 +43,40 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_011328) do
 
   create_table "cargos", force: :cascade do |t|
     t.string "descricao"
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "g_estados", force: :cascade do |t|
+    t.string "descricao"
+    t.string "uf"
+    t.bigint "g_pais_id", null: false
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["g_pais_id"], name: "index_g_estados_on_g_pais_id"
+  end
+
+  create_table "g_municipios", force: :cascade do |t|
+    t.integer "codigo_ibge"
+    t.string "descricao"
+    t.bigint "g_estado_id", null: false
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["g_estado_id"], name: "index_g_municipios_on_g_estado_id"
+  end
+
+  create_table "g_paises", force: :cascade do |t|
+    t.string "descricao"
+    t.string "sigla"
     t.string "created_by"
     t.string "updated_by"
     t.datetime "deleted_at"
@@ -172,5 +206,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_011328) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "g_estados", "g_paises"
+  add_foreign_key "g_municipios", "g_estados"
   add_foreign_key "t_taxas", "a_status"
 end
