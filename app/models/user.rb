@@ -6,6 +6,7 @@ class User < ApplicationRecord
   belongs_to :a_unidade
   belongs_to :a_tipo_usuario
   belongs_to :a_status
+  has_many :a_usuarios_papeis
 
   validates :nome, presence: true
   validates :email, presence: true, uniqueness: true

@@ -1,0 +1,1 @@
+json.array! @a_usuarios_historicos_cargos_unidades, partial: "a_usuarios_historicos_cargos_unidades/a_usuario_historico_cargo_unidade", as: :a_usuario_historico_cargo_unidade

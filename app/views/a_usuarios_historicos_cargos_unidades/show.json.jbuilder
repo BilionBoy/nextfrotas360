@@ -1,0 +1,1 @@
+json.partial! "a_usuarios_historicos_cargos_unidades/a_usuario_historico_cargo_unidade", a_usuario_historico_cargo_unidade: @a_usuario_historico_cargo_unidade

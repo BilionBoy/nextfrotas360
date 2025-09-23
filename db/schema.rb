@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_23_032733) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_23_142942) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -107,6 +107,34 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_032733) do
     t.index ["a_status_id"], name: "index_a_unidades_on_a_status_id"
     t.index ["a_tipo_unidade_id"], name: "index_a_unidades_on_a_tipo_unidade_id"
     t.index ["g_municipio_id"], name: "index_a_unidades_on_g_municipio_id"
+  end
+
+  create_table "a_usuarios_historicos_cargos_unidades", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "a_cargo_id", null: false
+    t.bigint "a_unidade_id", null: false
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["a_cargo_id"], name: "index_a_usuarios_historicos_cargos_unidades_on_a_cargo_id"
+    t.index ["a_unidade_id"], name: "index_a_usuarios_historicos_cargos_unidades_on_a_unidade_id"
+    t.index ["user_id"], name: "index_a_usuarios_historicos_cargos_unidades_on_user_id"
+  end
+
+  create_table "a_usuarios_papeis", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "a_papel_id", null: false
+    t.bigint "a_unidade_id", null: false
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["a_papel_id"], name: "index_a_usuarios_papeis_on_a_papel_id"
+    t.index ["a_unidade_id"], name: "index_a_usuarios_papeis_on_a_unidade_id"
+    t.index ["user_id"], name: "index_a_usuarios_papeis_on_user_id"
   end
 
   create_table "cargos", force: :cascade do |t|
@@ -322,6 +350,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_032733) do
   add_foreign_key "a_cargos", "a_status"
   add_foreign_key "a_papeis", "a_status"
   add_foreign_key "a_papeis_permissoes", "a_permissoes"
+  add_foreign_key "a_usuarios_historicos_cargos_unidades", "a_cargos"
+  add_foreign_key "a_usuarios_historicos_cargos_unidades", "a_unidades"
+  add_foreign_key "a_usuarios_historicos_cargos_unidades", "users"
+  add_foreign_key "a_usuarios_papeis", "a_papeis"
+  add_foreign_key "a_usuarios_papeis", "a_unidades"
+  add_foreign_key "a_usuarios_papeis", "users"
   add_foreign_key "g_bairros", "g_municipios"
   add_foreign_key "g_distritos", "g_municipios"
   add_foreign_key "g_estados", "g_paises"

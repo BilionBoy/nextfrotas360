@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :a_usuarios_historicos_cargos_unidades
   devise_for :users
   root 'home#index'
   get 'home/index'
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
   # Rotas Scaffold
   resources :a_tipos_unidades
   resources :a_tipo_usuarios
+  resources :a_usuarios_papeis
   resources :a_status
   resources :a_papeis_permissoes
   resources :a_permissoes

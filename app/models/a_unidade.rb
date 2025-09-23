@@ -5,6 +5,8 @@ class AUnidade < ApplicationRecord
   belongs_to :a_tipo_unidade
   belongs_to :a_status
   belongs_to :g_municipio
+  has_many   :a_usuarios_papeis
+  has_many   :a_usuarios_historicos_cargos_unidades
 
   validates :nome_fantasia, presence: true
   validates :telefone, presence: true

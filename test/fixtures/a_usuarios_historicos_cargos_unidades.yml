@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  a_cargo: one
+  a_unidade: one
+
+two:
+  user: two
+  a_cargo: two
+  a_unidade: two
