@@ -3,41 +3,39 @@ version: "3.8"
 services:
   app:
     build: .
-    container_name: novosrecomecos_app
+    container_name: nextfrotas360_app
     restart: always
     depends_on:
       - db
     environment:
-      RAILS_ENV: production
-      DATABASE_URL: postgres://novosrecomecos:recomecos112358132134589@db:5432/novos_recomecos_production
-      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
-      DB_NAME: ${DB_NAME}
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
+      RAILS_ENV: development
+      DATABASE_URL: postgres://nextfrotas1123581321345589:DhioRails11235813213455899@db:5432/nextfrotas360_development
+      DB_NAME: nextfrotas360_development
+      DB_USERNAME: nextfrotas1123581321345589
+      DB_PASSWORD: DhioRails11235813213455899
       DB_HOST: db
     volumes:
+      - .:/app               
       - ./storage:/app/storage
       - ./log:/app/log
       - ./tmp:/app/tmp
     ports:
       - "3000:3000"
-    env_file:
-      - .env
     command:
       [
         "sh",
         "-c",
-        "bundle exec rails db:migrate && bundle exec rails assets:precompile && bundle exec rails server -b 0.0.0.0",
+        "bundle exec rails db:create db:migrate && bundle exec rails server -b 0.0.0.0",
       ]
 
   db:
     image: postgres:latest
-    container_name: novosrecomecos_db
+    container_name: nextfrotas360_db
     restart: always
     environment:
-      POSTGRES_USER: novosrecomecos
-      POSTGRES_PASSWORD: recomecos112358132134589
-      POSTGRES_DB: novos_recomecos_production
+      POSTGRES_USER: nextfrotas1123581321345589
+      POSTGRES_PASSWORD: DhioRails11235813213455899
+      POSTGRES_DB: nextfrotas360_development
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
@@ -48,5 +46,4 @@ volumes:
 
 networks:
   default:
-    external: true
-    name: novosrecomecos_default
+    name: nextfrotas360_default
