@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :g_tipos_centros_custos
   root 'home#index'
   get 'home/index'
   
@@ -8,6 +9,7 @@ Rails.application.routes.draw do
   resources :a_tipo_usuarios
   resources :a_status
   resources :g_status
+  resources :g_tipos_veiculos
   # Rotas Scaffold
   
 end

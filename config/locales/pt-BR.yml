@@ -23,6 +23,9 @@ pt-BR:
       g_status:
         one: "Status de Gestão"
         other: "Status de Gestão"
+      g_tipo_veiculo:
+        one: "Tipo de Veículo"
+        other: "Tipos de Veículos"
     attributes:
       funcao:
         nome: "Nome"
