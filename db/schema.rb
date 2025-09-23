@@ -10,9 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_23_021351) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_23_024751) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "a_cargos", force: :cascade do |t|
+    t.string "nome"
+    t.string "descricao"
+    t.integer "nivel"
+    t.bigint "a_status_id", null: false
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["a_status_id"], name: "index_a_cargos_on_a_status_id"
+  end
+
+  create_table "a_papeis", force: :cascade do |t|
+    t.string "nome"
+    t.string "descricao"
+    t.bigint "a_status_id", null: false
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["a_status_id"], name: "index_a_papeis_on_a_status_id"
+  end
 
   create_table "a_status", force: :cascade do |t|
     t.string "descricao"
@@ -39,6 +64,25 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_021351) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "a_unidades", force: :cascade do |t|
+    t.string "nome_fantasia"
+    t.bigint "a_tipo_unidade_id"
+    t.string "cnpj"
+    t.string "endereco"
+    t.string "telefone"
+    t.bigint "a_status_id"
+    t.string "codigo_interno"
+    t.bigint "g_municipio_id"
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["a_status_id"], name: "index_a_unidades_on_a_status_id"
+    t.index ["a_tipo_unidade_id"], name: "index_a_unidades_on_a_tipo_unidade_id"
+    t.index ["g_municipio_id"], name: "index_a_unidades_on_g_municipio_id"
   end
 
   create_table "cargos", force: :cascade do |t|
@@ -240,6 +284,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_021351) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "a_cargos", "a_status"
+  add_foreign_key "a_papeis", "a_status"
   add_foreign_key "g_bairros", "g_municipios"
   add_foreign_key "g_distritos", "g_municipios"
   add_foreign_key "g_estados", "g_paises"

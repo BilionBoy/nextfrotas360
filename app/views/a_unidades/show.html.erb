@@ -1,0 +1,53 @@
+<div class="container">
+  <%= render "shared/notice" %>
+  <div class="card border-0 shadow shadow-sm">
+    <div class="card-header border-0 d-flex justify-content-between">
+      <span class="fs-4">Visualizar A Unidade</span>
+    </div>
+    <div class="card-body">
+      <div id="<%= dom_id @a_unidade %>">
+          <p>
+            <strong>Nome Fantasia:</strong>
+            <%= @a_unidade.nome_fantasia %>
+          </p>
+          <p>
+            <strong>A Tipo Unidade:</strong>
+            <%= @a_unidade.a_tipo_unidade %>
+          </p>
+          <p>
+            <strong>Cnpj:</strong>
+            <%= @a_unidade.cnpj %>
+          </p>
+          <p>
+            <strong>Endereco:</strong>
+            <%= @a_unidade.endereco %>
+          </p>
+          <p>
+            <strong>Telefone:</strong>
+            <%= @a_unidade.telefone %>
+          </p>
+          <p>
+            <strong>A Status:</strong>
+            <%= @a_unidade.a_status %>
+          </p>
+          <p>
+            <strong>Codigo Interno:</strong>
+            <%= @a_unidade.codigo_interno %>
+          </p>
+          <p>
+            <strong>G Municipio:</strong>
+            <%= @a_unidade.g_municipio %>
+          </p>
+      </div>
+    </div>
+    <div class="card-footer border-0 d-flex justify-content-between">
+      <div>
+        <%= link_to edit_a_unidade_path(@a_unidade), class: "btn btn-primary" do %>
+        <i class="bi bi-pencil-square"></i> Editar
+        <% end %>
+        <%= link_to "Voltar", a_unidades_path, class: "btn btn-secondary" %>
+      </div>
+      <%= button_to "Deletar", @a_unidade, method: :delete, class: "btn btn-outline-danger border-0" %>
+    </div>
+  </div>
+</div>

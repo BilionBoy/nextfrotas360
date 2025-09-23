@@ -68,6 +68,12 @@ pt-BR:
       a_unidade:
         one: "Unidade"
         other: "Unidades"
+      a_cargo:
+        one: "Cargo"
+        other: "Cargos"
+      a_papel:
+        one: "Papel"
+        other: "Papéis"
     attributes:
       a_status:
         descricao: "Descrição"
@@ -117,6 +123,27 @@ pt-BR:
         nome: "Nome"
         descricao: "Descrição"
         percentual: "Percentual"
+        a_status_id: "Status"
+      a_unidade:
+        nome_fantasia: "Nome"
+        descricao: "Descrição"
+        a_tipo_unidade_id: "Tipo de Unidade"
+        a_status_id: "Status"
+        g_municipio_id: "Município"
+        cnpj: "Cnpj"
+        telefone: "Telefone"
+        codigo_interno: "Código Interno"
+        endereco: "Endereço"
+        numero: "Número"
+        complemento: "Complemento"
+      a_cargo:
+        nome: "Nome"
+        descricao: "Descrição"
+        nivel: "Nível"
+        a_status_id: "Status"
+      a_papel:
+        nome: "Nome"
+        descricao: "Descrição"
         a_status_id: "Status"
     errors:
       messages:

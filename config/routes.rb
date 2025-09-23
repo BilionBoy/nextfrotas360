@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :a_papeis
+  resources :a_cargos
   root 'home#index'
   get 'home/index'
   
@@ -24,5 +26,6 @@ Rails.application.routes.draw do
   resources :o_visibilidades
   resources :o_urgencias
   resources :t_taxas
+  resources :a_unidades
   
 end

@@ -6,7 +6,6 @@ class CreateGLocalidades < ActiveRecord::Migration[7.2]
      create_table :g_localidades do |t|
        t.string :descricao
        t.references :g_distrito
-           
        t.string :created_by
        t.string :updated_by
        t.datetime :deleted_at

@@ -19,4 +19,6 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'o_visibilidade',        'o_visibilidades'
   inflect.irregular 't_taxa',                't_taxas'
   inflect.irregular 'a_unidade',             'a_unidades'
+  inflect.irregular 'a_cargo',               'a_cargos'
+  inflect.irregular 'a_papel',               'a_papeis'
 end
