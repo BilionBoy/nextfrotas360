@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  resources :o_visibilidades
-  resources :o_urgencias
+  resources :t_taxas
   root 'home#index'
   get 'home/index'
   
@@ -17,5 +16,7 @@ Rails.application.routes.draw do
   resources :o_tipos_solicitacoes
   resources :o_status
   resources :o_categorias_servicos
+  resources :o_visibilidades
+  resources :o_urgencias
   
 end

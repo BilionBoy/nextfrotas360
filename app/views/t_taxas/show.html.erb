@@ -1,0 +1,37 @@
+<div class="container">
+  <%= render "shared/notice" %>
+  <div class="card border-0 shadow shadow-sm">
+    <div class="card-header border-0 d-flex justify-content-between">
+      <span class="fs-4">Visualizar T Taxa</span>
+    </div>
+    <div class="card-body">
+      <div id="<%= dom_id @t_taxa %>">
+          <p>
+            <strong>Nome:</strong>
+            <%= @t_taxa.nome %>
+          </p>
+          <p>
+            <strong>Descricao:</strong>
+            <%= @t_taxa.descricao %>
+          </p>
+          <p>
+            <strong>Percentual:</strong>
+            <%= @t_taxa.percentual %>
+          </p>
+          <p>
+            <strong>A Status:</strong>
+            <%= @t_taxa.a_status %>
+          </p>
+      </div>
+    </div>
+    <div class="card-footer border-0 d-flex justify-content-between">
+      <div>
+        <%= link_to edit_t_taxa_path(@t_taxa), class: "btn btn-primary" do %>
+        <i class="bi bi-pencil-square"></i> Editar
+        <% end %>
+        <%= link_to "Voltar", t_taxas_path, class: "btn btn-secondary" %>
+      </div>
+      <%= button_to "Deletar", @t_taxa, method: :delete, class: "btn btn-outline-danger border-0" %>
+    </div>
+  </div>
+</div>

@@ -44,6 +44,9 @@ pt-BR:
       o_visibilidade:
         one: "Visibilidade"
         other: "Visibilidades"
+      t_taxa:
+        one: "Taxa"
+        other: "Taxas"
     attributes:
       a_status:
         descricao: "Descrição"
@@ -67,6 +70,11 @@ pt-BR:
         descricao: "Descrição"
       o_visibilidade:
         descricao: "Descrição"
+      t_taxa:
+        nome: "Nome"
+        descricao: "Descrição"
+        percentual: "Percentual"
+        a_status_id: "Status"
     errors:
       messages:
         record_invalid: "A validação falhou: %{errors}"

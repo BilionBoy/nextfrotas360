@@ -13,5 +13,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'o_categoria_servico',   'o_categorias_servicos'
   inflect.irregular 'o_urgencia',            'o_urgencias'
   inflect.irregular 'o_visibilidade',        'o_visibilidades'
-  
+  inflect.irregular 't_taxa',                't_taxas'
 end
