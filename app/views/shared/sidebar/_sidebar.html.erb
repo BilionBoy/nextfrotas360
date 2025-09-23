@@ -51,6 +51,8 @@
         <li class="nav-item-header pv-nav-header">
           <span>ADMINISTRAÇÃO</span>
         </li>
+
+        <!-- Taxas e Unidades -->
         <li class="nav-item">
           <a href="<%= t_taxas_path %>" class="nav-link pv-nav-link">
             <i class="ph-file-text"></i>
@@ -62,15 +64,53 @@
             <i class="ph-buildings "></i>
             <span>Unidades</span>
           </a>
-         </li>
-        <li class="nav-item">
-          <a href="<%= root_path %>" class="nav-link pv-nav-link">
-            <i class="ph-user"></i>
-            <span>Condutores</span>
+        </li>
+
+        <!-- Papéis e Permissões -->
+        <li class="nav-item nav-item-submenu">
+          <a href="#" class="nav-link pv-nav-link">
+            <i class="ph-shield-check me-2"></i>
+            <span>Papéis e Permissões</span>
           </a>
+          <ul class="nav nav-group-sub">
+            <li class="nav-item">
+              <a href="<%= a_papeis_path %>" class="nav-link"><i class="ph-user-circle me-2"></i>Papéis</a>
+            </li>
+            <li class="nav-item">
+              <a href="<%= a_permissoes_path %>" class="nav-link"><i class="ph-key me-2"></i>Permissões</a>
+            </li>
+            <li class="nav-item">
+              <a href="<%= a_papeis_permissoes_path %>" class="nav-link"><i class="ph-link me-2"></i>Papéis x Permissões</a>
+            </li>
+            <li class="nav-item">
+              <a href="<%= a_cargos_path %>" class="nav-link"><i class="ph-briefcase me-2"></i>Cargos</a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Usuários -->
+        <li class="nav-item nav-item-submenu">
+          <a href="#" class="nav-link pv-nav-link">
+            <i class="ph-users me-2"></i>
+            <span>Usuários</span>
+          </a>
+          <ul class="nav nav-group-sub">
+            <li class="nav-item">
+              <a href="<%= root_path %>" class="nav-link"><i class="ph-user me-2"></i>Cadastro de Usuários</a>
+            </li>
+            <li class="nav-item">
+              <a href="<%= root_path %>" class="nav-link"><i class="ph-shield me-2"></i>Usuário x Papéis</a>
+            </li>
+            <li class="nav-item">
+              <a href="<%= root_path %>" class="nav-link"><i class="ph-clock me-2"></i>Histórico de Cargos/Unidade</a>
+            </li>
+          </ul>
         </li>
 
         <!-- REFERENCIAIS -->
+        <li class="nav-item-header pv-nav-header">
+          <span>REFERENCIAIS</span>
+        </li>
         <li class="nav-item nav-item-submenu">
           <a href="#" class="nav-link pv-nav-link">
             <i class="ph-database"></i>
@@ -78,7 +118,7 @@
           </a>
           <ul class="nav nav-group-sub">
 
-            <!-- Submenu Usuários -->
+            <!-- Usuários / Tipos e Status -->
             <li class="nav-item nav-item-submenu">
               <a href="#" class="nav-link"><i class="ph-users-three me-2"></i>Usuários</a>
               <ul class="nav nav-group-sub">
@@ -94,7 +134,7 @@
               </ul>
             </li>
 
-            <!-- Submenu Veículos / Gerais -->
+            <!-- Veículos / Gerais -->
             <li class="nav-item nav-item-submenu">
               <a href="#" class="nav-link"><i class="ph-car me-2"></i>Veículos / Gerais</a>
               <ul class="nav nav-group-sub">
@@ -110,7 +150,7 @@
               </ul>
             </li>
 
-            <!-- Submenu Orçamentos -->
+            <!-- Orçamentos / Solicitações -->
             <li class="nav-item nav-item-submenu">
               <a href="#" class="nav-link"><i class="ph-currency-dollar-simple me-2"></i>Orçamentos</a>
               <ul class="nav nav-group-sub">
@@ -132,7 +172,7 @@
               </ul>
             </li>
 
-            <!-- Submenu Localidades -->
+            <!-- Localidades -->
             <li class="nav-item nav-item-submenu">
               <a href="#" class="nav-link"><i class="ph-map-pin-line me-2"></i>Localidades</a>
               <ul class="nav nav-group-sub">
