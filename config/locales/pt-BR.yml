@@ -41,6 +41,9 @@ pt-BR:
       o_urgencia:
         one: "Urgência"
         other: "Urgências"
+      o_visibilidade:
+        one: "Visibilidade"
+        other: "Visibilidades"
     attributes:
       a_status:
         descricao: "Descrição"
@@ -61,6 +64,8 @@ pt-BR:
       o_categoria_servico:
         descricao: "Descrição"
       o_urgencia:
+        descricao: "Descrição"
+      o_visibilidade:
         descricao: "Descrição"
     errors:
       messages:

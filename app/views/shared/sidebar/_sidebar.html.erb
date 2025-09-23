@@ -51,8 +51,6 @@
         <li class="nav-item-header pv-nav-header">
           <span>ADMINISTRAÇÃO</span>
         </li>
-
-        <!-- Outros módulos -->
         <li class="nav-item">
           <a href="<%= root_path %>" class="nav-link pv-nav-link">
             <i class="ph-file-text"></i>
@@ -66,44 +64,71 @@
           </a>
         </li>
 
-        <!-- Referenciais -->
+        <!-- REFERENCIAIS -->
         <li class="nav-item nav-item-submenu">
           <a href="#" class="nav-link pv-nav-link">
             <i class="ph-database"></i>
             <span>Referenciais</span>
           </a>
           <ul class="nav nav-group-sub">
-            <li class="nav-item">
-              <a href="<%= a_status_index_path %>" class="nav-link">Status dos Usuários</a>
+
+            <!-- Submenu Usuários -->
+            <li class="nav-item nav-item-submenu">
+              <a href="#" class="nav-link">Usuários</a>
+              <ul class="nav nav-group-sub">
+                <li class="nav-item">
+                  <a href="<%= a_status_index_path %>" class="nav-link">Status dos Usuários</a>
+                </li>
+                <li class="nav-item">
+                  <a href="<%= a_tipos_unidades_path %>" class="nav-link">Tipos de Unidade</a>
+                </li>
+                <li class="nav-item">
+                  <a href="<%= a_tipo_usuarios_path %>" class="nav-link">Tipos de Usuários</a>
+                </li>
+              </ul>
             </li>
-            <li class="nav-item">
-              <a href="<%= a_tipos_unidades_path %>" class="nav-link">Tipos de Unidade</a>
+
+            <!-- Submenu Veículos / Gerais -->
+            <li class="nav-item nav-item-submenu">
+              <a href="#" class="nav-link">Veículos / Gerais</a>
+              <ul class="nav nav-group-sub">
+                <li class="nav-item">
+                  <a href="<%= g_status_index_path %>" class="nav-link">Status Gerais</a>
+                </li>
+                <li class="nav-item">
+                  <a href="<%= g_tipos_veiculos_path %>" class="nav-link">Tipos de Veículos</a>
+                </li>
+                <li class="nav-item">
+                  <a href="<%= g_tipos_centros_custos_path %>" class="nav-link">Tipos de Centro de Custo</a>
+                </li>
+              </ul>
             </li>
-            <li class="nav-item">
-              <a href="<%= a_tipo_usuarios_path %>" class="nav-link">Tipos de Usuários</a>
+
+            <!-- Submenu Orçamentos -->
+            <li class="nav-item nav-item-submenu">
+              <a href="#" class="nav-link">Orçamentos</a>
+              <ul class="nav nav-group-sub">
+                <li class="nav-item">
+                  <a href="<%= o_status_index_path %>" class="nav-link">Status dos Orçamentos</a>
+                </li>
+                <li class="nav-item">
+                  <a href="<%= o_tipos_solicitacoes_path %>" class="nav-link">Tipos de Orçamentos</a>
+                </li>
+                <li class="nav-item">
+                  <a href="<%= o_categorias_servicos_path %>" class="nav-link">Categorias </a>
+                </li>
+                <li class="nav-item">
+                  <a href="<%= o_urgencias_path %>" class="nav-link">Urgência do Orçamento</a>
+                </li>
+                <li class="nav-item">
+                  <a href="<%= o_visibilidades_path %>" class="nav-link">Visibilidade </a>
+                </li>
+              </ul>
             </li>
-            <li class="nav-item">
-              <a href="<%= g_status_index_path %>" class="nav-link">Status Gerais</a>
-            </li>
-            <li class="nav-item">
-              <a href="<%= g_tipos_veiculos_path %>" class="nav-link">Tipos de Veiculos</a>
-            </li>
-             <li class="nav-item">
-              <a href="<%= g_tipos_centros_custos_path %>" class="nav-link">Tipos de Centro de Custo</a>
-            </li>
-             <li class="nav-item">
-              <a href="<%= o_status_index_path %>" class="nav-link">Status dos Orçamentos</a>
-            </li>
-            <li class="nav-item">
-                <a href="<%= o_tipos_solicitacoes_path %>" class="nav-link">Tipos de Orçamentos</a>
-            <li class="nav-item">
-              <a href="<%= o_categorias_servicos_path %>" class="nav-link">Categorias do Orçamento</a>
-            </li>
-            <li class="nav-item">
-              <a href="<%= o_urgencias_path %>" class="nav-link">Urgência do Orçamento</a>
-            </li>
+
           </ul>
         </li>
+
       </ul>
     </div>
   </div>
@@ -170,3 +195,4 @@ document.addEventListener("DOMContentLoaded", function() {
   document.querySelectorAll('.nav-item-submenu').forEach(submenu => submenu.classList.remove('open'));
 });
 </script>
+

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :o_visibilidades
   resources :o_urgencias
   root 'home#index'
   get 'home/index'
