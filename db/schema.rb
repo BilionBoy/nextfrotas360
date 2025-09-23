@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_23_031411) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_23_032733) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -302,8 +302,19 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_031411) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "nome"
+    t.string "telefone"
+    t.string "cpf"
+    t.bigint "a_cargo_id", null: false
+    t.bigint "a_unidade_id", null: false
+    t.bigint "a_tipo_usuario_id", null: false
+    t.bigint "a_status_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["a_cargo_id"], name: "index_users_on_a_cargo_id"
+    t.index ["a_status_id"], name: "index_users_on_a_status_id"
+    t.index ["a_tipo_usuario_id"], name: "index_users_on_a_tipo_usuario_id"
+    t.index ["a_unidade_id"], name: "index_users_on_a_unidade_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -316,4 +327,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_031411) do
   add_foreign_key "g_estados", "g_paises"
   add_foreign_key "g_municipios", "g_estados"
   add_foreign_key "t_taxas", "a_status"
+  add_foreign_key "users", "a_cargos"
+  add_foreign_key "users", "a_status"
+  add_foreign_key "users", "a_tipo_usuarios"
+  add_foreign_key "users", "a_unidades"
 end

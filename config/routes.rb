@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
-  resources :a_papeis_permissoes
-  resources :a_permissoes
-  resources :a_papeis
-  resources :a_cargos
+  devise_for :users
   root 'home#index'
   get 'home/index'
   
@@ -13,6 +10,11 @@ Rails.application.routes.draw do
   resources :a_tipos_unidades
   resources :a_tipo_usuarios
   resources :a_status
+  resources :a_papeis_permissoes
+  resources :a_permissoes
+  resources :a_papeis
+  resources :a_cargos
+  resources :a_unidades
   resources :g_status
   resources :g_tipos_veiculos
   resources :g_tipos_centros_custos
@@ -28,6 +30,4 @@ Rails.application.routes.draw do
   resources :o_visibilidades
   resources :o_urgencias
   resources :t_taxas
-  resources :a_unidades
-  
 end
