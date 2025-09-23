@@ -1,5 +1,648 @@
-<div class="container-fluid">
-  <div class="row">
-    <h1>Olá</h1>
+<div class="observatory-dashboard">
+  <!-- Enhanced Metrics Grid -->
+  <div class="metrics-observatory">
+    <div class="metric-card primary-metric">
+      <div class="metric-header">
+        <div class="metric-icon-wrapper">
+          <div class="metric-icon budget">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91 2.28.6 4.18 1.58 4.18 3.91 0 1.82-1.33 2.96-3.12 3.16z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="metric-content">
+          <h2 class="metric-value">R$ 0</h2>
+          <p class="metric-label">Orçamento Total Disponível</p>
+          <div class="metric-trend">
+            <span class="trend-indicator positive">↗</span>
+            <span class="trend-text">+0%% vs mês anterior</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-header">
+        <div class="metric-icon-wrapper">
+          <div class="metric-icon vehicles-budgeted">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.22.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="metric-content">
+          <h2 class="metric-value">0</h2>
+          <p class="metric-label">Veículos em Orçamento</p>
+          <div class="metric-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 60%"></div>
+            </div>
+            <span class="progress-text">0% do total</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-header">
+        <div class="metric-icon-wrapper">
+          <div class="metric-icon total-vehicles">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17 5H3c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zM3 17V7h14v10H3zm6.5-7.5h5v3h-5v-3zm-6 0h5v3h-5v-3z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="metric-content">
+          <h2 class="metric-value">0</h2>
+          <p class="metric-label">Frota Total Registrada</p>
+          <div class="metric-status">
+            <span class="status-badge active">Operacional</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="metric-card requests-card">
+      <div class="metric-header">
+        <div class="metric-icon-wrapper">
+          <div class="metric-icon requests">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="metric-content">
+          <h2 class="metric-label-main">Solicitações Ativas</h2>
+          <div class="requests-breakdown">
+            <div class="request-item">
+              <div class="request-indicator status-0"></div>
+              <span class="request-status">Aguardando</span>
+              <span class="request-count">0</span>
+            </div>
+            <div class="request-item">
+              <div class="request-indicator status-1"></div>
+              <span class="request-status">Em andamento</span>
+              <span class="request-count">0</span>
+            </div>
+            <div class="request-item">
+              <div class="request-indicator status-2"></div>
+              <span class="request-status">Concluídas</span>
+              <span class="request-count">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Analytics Section -->
+  <div class="analytics-observatory">
+    <div class="analytics-grid">
+      <div class="chart-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <div class="title-icon">📊</div>
+            <div class="title-content">
+              <h3>Distribuição de Solicitações</h3>
+              <p>Análise por status atual</p>
+            </div>
+          </div>
+          <div class="panel-controls">
+            <button class="control-btn active">Mensal</button>
+            <button class="control-btn">Anual</button>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="solicitacoesChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <div class="title-icon">🚛</div>
+            <div class="title-content">
+              <h3>Performance da Frota</h3>
+              <p>Comparativo operacional</p>
+            </div>
+          </div>
+          <div class="panel-controls">
+            <button class="control-btn active">Atual</button>
+            <button class="control-btn">Histórico</button>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="veiculosChart"></canvas>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Mock gráfico de solicitações
+  new Chart(document.getElementById('solicitacoesChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ["Aguardando", "Em andamento", "Concluídas"],
+      datasets: [{
+        data: [0, 0 ,1],
+        backgroundColor: ['#f6c23e', '#36a2eb', '#1cc88a']
+      }]
+    },
+    options: { responsive: true }
+  });
+
+  // Mock gráfico da frota
+  new Chart(document.getElementById('veiculosChart'), {
+    type: 'bar',
+    data: {
+      labels: ["Jan", "Fev", "Mar", "Abr"],
+      datasets: [{
+        label: "Operacionais",
+        data: [12, 15, 14, 13],
+        backgroundColor: '#36a2eb'
+      },{
+        label: "Inativos",
+        data: [3, 2, 4, 3],
+        backgroundColor: '#e74a3b'
+      }]
+    },
+    options: { responsive: true }
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  .observatory-dashboard {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    min-height: 100vh;
+    padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .quick-stat {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+  }
+
+  .stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+
+  /* Enhanced Metrics Grid */
+  .metrics-observatory {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding: 0 2rem;
+  }
+
+  .metric-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .metric-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3b82f6, #10b981);
+  }
+
+  .metric-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+
+  .primary-metric {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+  }
+
+  .primary-metric::before {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .metric-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .metric-icon-wrapper {
+    flex-shrink: 0;
+  }
+
+  .metric-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+
+  .metric-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .metric-icon.budget { background: linear-gradient(135deg, #10b981, #059669); }
+  .metric-icon.vehicles-budgeted { background: linear-gradient(135deg, #f59e0b, #d97706); }
+  .metric-icon.total-vehicles { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+  .metric-icon.requests { background: linear-gradient(135deg, #ef4444, #dc2626); }
+
+  .primary-metric .metric-icon {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+
+  .metric-content {
+    flex: 1;
+  }
+
+  .metric-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 0.25rem;
+    line-height: 1;
+  }
+
+  .primary-metric .metric-value {
+    color: white;
+  }
+
+  .metric-label {
+    color: #6b7280;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+
+  .primary-metric .metric-label {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .metric-trend {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .trend-indicator {
+    font-size: 1.2rem;
+  }
+
+  .trend-indicator.positive {
+    color: #10b981;
+  }
+
+  .primary-metric .trend-indicator.positive {
+    color: #86efac;
+  }
+
+  .trend-text {
+    font-size: 0.8rem;
+    color: #6b7280;
+  }
+
+  .primary-metric .trend-text {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .metric-progress {
+    margin-top: 0.75rem;
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f59e0b, #d97706);
+    border-radius: 3px;
+    transition: width 1s ease;
+  }
+
+  .progress-text {
+    font-size: 0.8rem;
+    color: #6b7280;
+    font-weight: 500;
+  }
+
+  .metric-status {
+    margin-top: 0.75rem;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: #dcfdf7;
+    color: #065f46;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .requests-card .metric-label-main {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 1rem;
+  }
+
+  .requests-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .request-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .request-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .request-indicator.status-0 { background: #3b82f6; }
+  .request-indicator.status-1 { background: #10b981; }
+  .request-indicator.status-2 { background: #f59e0b; }
+  .request-indicator.status-3 { background: #ef4444; }
+
+  .request-status {
+    flex: 1;
+    font-size: 0.9rem;
+    color: #374151;
+    font-weight: 500;
+  }
+
+  .request-count {
+    font-weight: 700;
+    color: #111827;
+    background: #f3f4f6;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+  }
+
+  /* Enhanced Analytics Section */
+  .analytics-observatory {
+    padding: 0 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .analytics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .chart-panel {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .chart-panel:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+
+  .panel-header {
+    padding: 1.5rem 1.5rem 1rem;
+    border-bottom: 1px solid #f3f4f6;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .panel-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .title-icon {
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .title-content h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.25rem;
+  }
+
+  .title-content p {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin: 0;
+  }
+
+  .panel-controls {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .control-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #e5e7eb;
+    background: white;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .control-btn.active {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+  }
+
+  .chart-container {
+    height: 300px;
+    padding: 1rem 1.5rem;
+  }
+
+  .chart-insights {
+    padding: 1rem 1.5rem 1.5rem;
+    background: #f8fafc;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .insight-item {
+    text-align: center;
+  }
+
+  .insight-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-bottom: 0.25rem;
+  }
+
+  .insight-value {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  /* Observatory Footer */
+  .observatory-footer {
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    padding: 1.5rem 2rem;
+    margin: 2rem -2rem -1rem;
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-info {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .update-time {
+    font-size: 0.9rem;
+    color: #6b7280;
+  }
+
+  .system-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #374151;
+    font-weight: 500;
+  }
+
+  .status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .status-indicator.online {
+    background: #10b981;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+  }
+
+  .footer-actions {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .action-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .action-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+  }
+
+  .action-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .metrics-observatory {
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .dashboard-hero {
+      flex-direction: column;
+      text-align: center;
+      gap: 1.5rem;
+    }
+
+    .hero-stats {
+      justify-content: center;
+    }
+
+    .metrics-observatory {
+      grid-template-columns: 1fr;
+      padding: 0 1rem;
+    }
+
+    .analytics-observatory {
+      padding: 0 1rem;
+    }
+
+    .analytics-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .observatory-footer {
+      padding: 1rem;
+    }
+
+    .footer-content {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .footer-actions {
+      justify-content: center;
+    }
+  }
+</style>

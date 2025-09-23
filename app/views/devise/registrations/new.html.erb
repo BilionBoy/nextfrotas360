@@ -1,0 +1,100 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-logo">S</div>
+    <h1 class="auth-title">Crie sua conta</h1>
+    <p class="auth-subtitle">Preencha os campos abaixo para se registrar</p>
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "auth-form", novalidate: true }) do |f| %>
+      <% if resource.errors.any? %>
+        <div class="auth-errors">
+          <strong>⚠️ Verifique os erros abaixo:</strong>
+          <ul>
+            <% resource.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <!-- Credenciais -->
+      <div class="row g-3">
+        <div class="col-md-6">
+          <%= f.input :email, label: "E-mail", required: true, autofocus: true, input_html: { autocomplete: "email", placeholder: "seu@email.com" } %>
+        </div>
+        <div class="col-md-6">
+          <%= f.input :nome, label: "Nome completo", required: true, input_html: { placeholder: "Ex: João da Silva" } %>
+        </div>
+        <div class="col-md-6">
+          <%= f.input :password, label: "Senha", required: true, hint: ("Mínimo #{@minimum_password_length} caracteres" if @minimum_password_length), input_html: { autocomplete: "new-password", placeholder: "••••••••" } %>
+        </div>
+        <div class="col-md-6">
+          <%= f.input :password_confirmation, label: "Confirme a senha", required: true, input_html: { autocomplete: "new-password", placeholder: "••••••••" } %>
+        </div>
+      </div>
+      <!-- Dados pessoais -->
+      <div class="row g-3 mt-2">
+        <div class="col-md-6">
+          <%= f.input :cpf, label: "CPF", required: true, input_html: { maxlength: 11, placeholder: "Somente números" } %>
+        </div>
+        <div class="col-md-6">
+          <%= f.input :telefone, label: "Telefone", required: true, input_html: { placeholder: "(99) 99999-9999" } %>
+        </div>
+      </div>
+      <!-- Informações corporativas -->
+      <div class="row g-3 mt-2">
+        <div class="col-md-6">
+          <%= f.input :a_tipo_usuario_id, label: "Tipo de Usuário", required: true, collection: ATipoUsuario.all, prompt: "Selecione o tipo de usuário", label_method: :descricao, value_method: :id %>
+        </div>
+        <div class="col-md-6">
+          <%= f.input :a_unidade_id, label: "Unidade", required: true, collection: AUnidade.all, prompt: "Selecione a Unidade", label_method: :nome_fantasia, value_method: :id %>
+        </div>
+        <div class="col-md-6">
+          <%= f.input :a_cargo_id, label: "Cargo", required: true, collection: ACargo.all, prompt: "Selecione o Cargo", label_method: :descricao, value_method: :id %>
+        </div>
+        <div class="col-md-6">
+          <%= f.input :a_status_id, label: "Status do Usuário", required: true, collection: AStatus.all, prompt: "Selecione o Status do Usuário", label_method: :descricao, value_method: :id %>
+        </div>
+      </div>
+      <!-- Botão -->
+      <div class="form-actions mt-4">
+        <%= f.button :submit, "Criar conta", class: "btn-primary", data: { disable_with: "Criando..." } %>
+      </div>
+    <% end %>
+    <!-- Link para login -->
+    <div class="auth-links mt-3">
+      <%= link_to "Já possui uma conta? Entre aqui", new_session_path(resource_name), class: "auth-link" %>
+    </div>
+  </div>
+</div>
+<style>
+  .auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f8f9fc;
+  padding: 20px;
+  }
+
+  .auth-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 800px;   /* <<--- aumenta a largura máxima */
+  transition: all 0.3s ease;
+  }
+
+  .auth-logo {
+  width: 60px;
+  height: 60px;
+  background: #4e73df;
+  color: #fff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin: 0 auto 20px auto;
+  }
+</style>
