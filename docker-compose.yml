@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    container_name: novosrecomecos_app
+    restart: always
+    depends_on:
+      - db
+    environment:
+      RAILS_ENV: production
+      DATABASE_URL: postgres://novosrecomecos:recomecos112358132134589@db:5432/novos_recomecos_production
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: db
+    volumes:
+      - ./storage:/app/storage
+      - ./log:/app/log
+      - ./tmp:/app/tmp
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    command:
+      [
+        "sh",
+        "-c",
+        "bundle exec rails db:migrate && bundle exec rails assets:precompile && bundle exec rails server -b 0.0.0.0",
+      ]
+
+  db:
+    image: postgres:latest
+    container_name: novosrecomecos_db
+    restart: always
+    environment:
+      POSTGRES_USER: novosrecomecos
+      POSTGRES_PASSWORD: recomecos112358132134589
+      POSTGRES_DB: novos_recomecos_production
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  pgdata:
+
+networks:
+  default:
+    external: true
+    name: novosrecomecos_default

@@ -92,7 +92,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_142942) do
 
   create_table "a_unidades", force: :cascade do |t|
     t.string "nome_fantasia"
-    t.bigint "a_tipo_unidade_id"
+    t.bigint "a_tipo_unidade_id", null: false
     t.string "cnpj"
     t.string "endereco"
     t.string "telefone"
@@ -137,15 +137,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_142942) do
     t.index ["user_id"], name: "index_a_usuarios_papeis_on_user_id"
   end
 
-  create_table "cargos", force: :cascade do |t|
-    t.string "descricao"
-    t.string "created_by"
-    t.string "updated_by"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "g_bairros", force: :cascade do |t|
     t.string "descricao"
     t.bigint "g_municipio_id", null: false
@@ -183,7 +174,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_142942) do
 
   create_table "g_localidades", force: :cascade do |t|
     t.string "descricao"
-    t.bigint "g_distrito_id"
+    t.bigint "g_distrito_id", null: false
     t.string "created_by"
     t.string "updated_by"
     t.datetime "deleted_at"
@@ -286,31 +277,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_142942) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "servidors", force: :cascade do |t|
-    t.string "nome"
-    t.string "matricula"
-    t.string "email"
-    t.date "data_admissao"
-    t.bigint "setor_id"
-    t.bigint "cargo_id"
-    t.string "created_by"
-    t.string "updated_by"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["cargo_id"], name: "index_servidors_on_cargo_id"
-    t.index ["setor_id"], name: "index_servidors_on_setor_id"
-  end
-
-  create_table "setors", force: :cascade do |t|
-    t.string "descricao"
-    t.string "created_by"
-    t.string "updated_by"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "t_taxas", force: :cascade do |t|
     t.string "nome", null: false
     t.string "descricao"
@@ -350,6 +316,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_142942) do
   add_foreign_key "a_cargos", "a_status"
   add_foreign_key "a_papeis", "a_status"
   add_foreign_key "a_papeis_permissoes", "a_permissoes"
+  add_foreign_key "a_unidades", "a_tipos_unidades"
   add_foreign_key "a_usuarios_historicos_cargos_unidades", "a_cargos"
   add_foreign_key "a_usuarios_historicos_cargos_unidades", "a_unidades"
   add_foreign_key "a_usuarios_historicos_cargos_unidades", "users"
@@ -359,6 +326,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_142942) do
   add_foreign_key "g_bairros", "g_municipios"
   add_foreign_key "g_distritos", "g_municipios"
   add_foreign_key "g_estados", "g_paises"
+  add_foreign_key "g_localidades", "g_distritos"
   add_foreign_key "g_municipios", "g_estados"
   add_foreign_key "t_taxas", "a_status"
   add_foreign_key "users", "a_cargos"
