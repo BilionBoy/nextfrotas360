@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :a_usuarios_historicos_cargos_unidades
   devise_for :users
   root 'home#index'
   get 'home/index'
@@ -13,6 +12,7 @@ Rails.application.routes.draw do
   resources :a_usuarios_papeis
   resources :a_status
   resources :a_papeis_permissoes
+  resources :a_usuarios_historicos_cargos_unidades
   resources :a_permissoes
   resources :a_papeis
   resources :a_cargos

@@ -54,15 +54,15 @@
 
         <!-- Taxas e Unidades -->
         <li class="nav-item">
-          <a href="<%= t_taxas_path %>" class="nav-link pv-nav-link">
-            <i class="ph-file-text"></i>
-            <span>Taxas</span>
-          </a>
-        </li>
-        <li class="nav-item">
           <a href="<%= a_unidades_path %>" class="nav-link pv-nav-link">
             <i class="ph-buildings "></i>
             <span>Unidades</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<%= t_taxas_path %>" class="nav-link pv-nav-link">
+            <i class="ph-file-text"></i>
+            <span>Taxas</span>
           </a>
         </li>
 
@@ -95,9 +95,6 @@
             <span>Usuários</span>
           </a>
           <ul class="nav nav-group-sub">
-            <li class="nav-item">
-              <a href="<%= root_path %>" class="nav-link"><i class="ph-user me-2"></i>Cadastro de Usuários</a>
-            </li>
             <li class="nav-item">
               <a href="<%= a_usuarios_papeis_path %>" class="nav-link"><i class="ph-shield me-2"></i>Usuário x Papéis</a>
             </li>
