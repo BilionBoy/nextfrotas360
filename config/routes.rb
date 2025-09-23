@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :o_status
   resources :g_tipos_centros_custos
   root 'home#index'
   get 'home/index'

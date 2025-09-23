@@ -1,0 +1,2 @@
+module OStatusHelper
+end

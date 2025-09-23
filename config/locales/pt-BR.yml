@@ -29,6 +29,9 @@ pt-BR:
       g_tipo_centro_custo:
         one: "Tipo de Centro de Custo"
         other: "Tipos de Centros de Custos"
+      o_status:
+        one: "Status do Orçamento"
+        other: "Status dos Orçamentos"
     attributes:
       funcao:
         nome: "Nome"
@@ -39,10 +42,6 @@ pt-BR:
         restrict_dependent_destroy:
           has_one: Não é possível excluir o registro pois existe um %{record} dependente
           has_many: Não é possível excluir o registro pois existem %{record} dependentes
-      models:
-        funcao:
-          one: "Funcao"
-          other: "Funcões"
       attributes:
         a_status:
           descricao: "Descrição"
@@ -55,6 +54,8 @@ pt-BR:
         g_tipo_veiculo:
           descricao: "Descrição"
         g_tipo_centro_custo:
+          descricao: "Descrição"
+        o_status:
           descricao: "Descrição"
   date:
     abbr_day_names:
