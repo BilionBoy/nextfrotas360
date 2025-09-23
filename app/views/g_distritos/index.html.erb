@@ -1,12 +1,12 @@
-<%= render "shared/context_nav", title: t("activerecord.models.#{GBairro.model_name.i18n_key}.other"), new_path: new_g_bairro_path do  %>
-  <span class="breadcrumb-item active"><%= t("activerecord.models.#{GBairro.model_name.i18n_key}.other") %></span>
+<%= render "shared/context_nav", title: t("activerecord.models.#{GDistrito.model_name.i18n_key}.other"), new_path: new_g_distrito_path do  %>
+  <span class="breadcrumb-item active"><%= t("activerecord.models.#{GDistrito.model_name.i18n_key}.other") %></span>
 <% end %>
 <div class="card">
   <div class="card-header d-flex">
     <%= search_form_for @q, html: { class: "d-flex gap-2" , autocomplete: "off"} do |f| %>
       <%= f.search_field :descricao_cont, class: "form-control", placeholder: "Pesquisar" %>
       <%= f.button(type: 'submit', class: 'btn btn-info') { tag.i(class: 'ph-magnifying-glass') } %>
-      <%= link_to  tag.i(class: 'ph-x-circle'), g_bairros_path, class: "btn btn-light" if params[:q] %>
+      <%= link_to  tag.i(class: 'ph-x-circle'), g_distritos_path, class: "btn btn-light" if params[:q] %>
     <% end %>
   </div>
   <div class="card-body">
@@ -15,12 +15,13 @@
         <thead>
           <tr>
             <th class="text-center">Ações</th>
-            <th><%= sort_link(@q, :descricao, t("activerecord.attributes.g_bairro.descricao")) %></th>
-            <th><%= sort_link(@q, :g_municipio, t("activerecord.attributes.g_bairro.municipio")) %></th>
+            <th><%= sort_link(@q, :descricao, t("activerecord.attributes.g_distrito.descricao")) %></th>
+            <th><%= sort_link(@q, :codigo_ibge, t("activerecord.attributes.g_distrito.codigo_ibge")) %></th>
+            <th><%= sort_link(@q, :g_municipio, t("activerecord.attributes.g_distrito.municipio")) %></th>
           </tr>
         </thead>
         <tbody>
-          <% @g_bairros.each do |g_bairro| %>
+          <% @g_distritos.each do |g_distrito| %>
             <tr>
               <td class="text-center">
                 <div class="dropdown-toggle">
@@ -29,16 +30,17 @@
                   </a>
                   <div class="dropdown-menu" style="">
                     <div class="dropdown-header">Opções</div>
-                    <%= link_to edit_g_bairro_path(g_bairro), class: "dropdown-item" do %>
+                    <%= link_to edit_g_distrito_path(g_distrito), class: "dropdown-item" do %>
                       <i class="ph-pen me-2"></i> Editar
                     <% end %>
-                    <%= form_for g_bairro, method: :delete do |f| %>
-                      <a class="dropdown-item hand-pointer " data-confirm-delete="<%= g_bairro_path(g_bairro) %>" data-csrf-token="<%= form_authenticity_token %>">
+                    <%= form_for g_distrito, method: :delete do |f| %>
+                      <a class="dropdown-item hand-pointer " data-confirm-delete="<%= g_distrito_path(g_distrito) %>" data-csrf-token="<%= form_authenticity_token %>">
                         <i class="ph-trash-simple me-2"></i>Excluir
                       </a>
                     <% end %>
-                    <td><%= g_bairro.descricao %></td>
-                    <td><%= g_bairro.g_municipio&.descricao %></td>
+                    <td><%= g_distrito.descricao %></td>
+                    <td><%= g_distrito.codigo_ibge %></td>
+                    <td><%= g_distrito.g_municipio&.descricao %></td>
                   </div>
                 </div>
               </td>

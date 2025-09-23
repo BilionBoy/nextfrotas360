@@ -1,5 +1,3 @@
-# config/initializers/inflections.rb
-
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'a_status', 'a_status'
   inflect.irregular 'a_tipo_unidade',        'a_tipos_unidades'
@@ -11,6 +9,8 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'g_estado',              'g_estados'
   inflect.irregular 'g_bairro',              'g_bairros'
   inflect.irregular 'g_municipio',           'g_municipios'
+  inflect.irregular "g_distrito",            "g_distritos"
+  inflect.irregular 'g_localidade',          'g_localidades'
   inflect.irregular 'o_status',              'o_status'
   inflect.irregular 'o_tipo_solicitacao',    'o_tipos_solicitacoes'
   inflect.irregular 'o_tipo_solicitacao',    'o_tipos_solicitacoes'

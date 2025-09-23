@@ -74,54 +74,79 @@
 
             <!-- Submenu Usuários -->
             <li class="nav-item nav-item-submenu">
-              <a href="#" class="nav-link">Usuários</a>
+              <a href="#" class="nav-link"><i class="ph-users-three me-2"></i>Usuários</a>
               <ul class="nav nav-group-sub">
                 <li class="nav-item">
-                  <a href="<%= a_status_index_path %>" class="nav-link">Status dos Usuários</a>
+                  <a href="<%= a_status_index_path %>" class="nav-link"><i class="ph-toggle-left me-2"></i>Status dos Usuários</a>
                 </li>
                 <li class="nav-item">
-                  <a href="<%= a_tipos_unidades_path %>" class="nav-link">Tipos de Unidade</a>
+                  <a href="<%= a_tipos_unidades_path %>" class="nav-link"><i class="ph-buildings me-2"></i>Tipos de Unidade</a>
                 </li>
                 <li class="nav-item">
-                  <a href="<%= a_tipo_usuarios_path %>" class="nav-link">Tipos de Usuários</a>
+                  <a href="<%= a_tipo_usuarios_path %>" class="nav-link"><i class="ph-identification-card me-2"></i>Tipos de Usuários</a>
                 </li>
               </ul>
             </li>
 
             <!-- Submenu Veículos / Gerais -->
             <li class="nav-item nav-item-submenu">
-              <a href="#" class="nav-link">Veículos / Gerais</a>
+              <a href="#" class="nav-link"><i class="ph-car me-2"></i>Veículos / Gerais</a>
               <ul class="nav nav-group-sub">
                 <li class="nav-item">
-                  <a href="<%= g_status_index_path %>" class="nav-link">Status Gerais</a>
+                  <a href="<%= g_status_index_path %>" class="nav-link"><i class="ph-check-circle me-2"></i>Status Gerais</a>
                 </li>
                 <li class="nav-item">
-                  <a href="<%= g_tipos_veiculos_path %>" class="nav-link">Tipos de Veículos</a>
+                  <a href="<%= g_tipos_veiculos_path %>" class="nav-link"><i class="ph-truck me-2"></i>Tipos de Veículos</a>
                 </li>
                 <li class="nav-item">
-                  <a href="<%= g_tipos_centros_custos_path %>" class="nav-link">Tipos de Centro de Custo</a>
+                  <a href="<%= g_tipos_centros_custos_path %>" class="nav-link"><i class="ph-coins me-2"></i>Tipos de Centro de Custo</a>
                 </li>
               </ul>
             </li>
 
             <!-- Submenu Orçamentos -->
             <li class="nav-item nav-item-submenu">
-              <a href="#" class="nav-link">Orçamentos</a>
+              <a href="#" class="nav-link"><i class="ph-currency-dollar-simple me-2"></i>Orçamentos</a>
               <ul class="nav nav-group-sub">
                 <li class="nav-item">
-                  <a href="<%= o_status_index_path %>" class="nav-link">Status dos Orçamentos</a>
+                  <a href="<%= o_status_index_path %>" class="nav-link"><i class="ph-flag me-2"></i>Status dos Orçamentos</a>
                 </li>
                 <li class="nav-item">
-                  <a href="<%= o_tipos_solicitacoes_path %>" class="nav-link">Tipos de Orçamentos</a>
+                  <a href="<%= o_tipos_solicitacoes_path %>" class="nav-link"><i class="ph-list-plus me-2"></i>Tipos de Orçamentos</a>
                 </li>
                 <li class="nav-item">
-                  <a href="<%= o_categorias_servicos_path %>" class="nav-link">Categorias </a>
+                  <a href="<%= o_categorias_servicos_path %>" class="nav-link"><i class="ph-grid-four me-2"></i>Categorias</a>
                 </li>
                 <li class="nav-item">
-                  <a href="<%= o_urgencias_path %>" class="nav-link">Urgência do Orçamento</a>
+                  <a href="<%= o_urgencias_path %>" class="nav-link"><i class="ph-warning-circle me-2"></i>Urgência do Orçamento</a>
                 </li>
                 <li class="nav-item">
-                  <a href="<%= o_visibilidades_path %>" class="nav-link">Visibilidade </a>
+                  <a href="<%= o_visibilidades_path %>" class="nav-link"><i class="ph-eye me-2"></i>Visibilidade</a>
+                </li>
+              </ul>
+            </li>
+
+            <!-- Submenu Localidades -->
+            <li class="nav-item nav-item-submenu">
+              <a href="#" class="nav-link"><i class="ph-map-pin-line me-2"></i>Localidades</a>
+              <ul class="nav nav-group-sub">
+                <li class="nav-item">
+                  <a href="<%= g_paises_path %>" class="nav-link"><i class="ph-globe me-2"></i>Países</a>
+                </li>
+                <li class="nav-item">
+                  <a href="<%= g_estados_path %>" class="nav-link"><i class="ph-map-trifold me-2"></i>Estados</a>
+                </li>
+                <li class="nav-item">
+                  <a href="<%= g_municipios_path %>" class="nav-link"><i class="ph-buildings me-2"></i>Municípios</a>
+                </li>
+                <li class="nav-item">
+                  <a href="<%= g_distritos_path %>" class="nav-link"><i class="ph-compass me-2"></i>Distritos</a>
+                </li>
+                <li class="nav-item">
+                  <a href="<%= g_bairros_path %>" class="nav-link"><i class="ph-house-line me-2"></i>Bairros</a>
+                </li>
+                <li class="nav-item">
+                  <a href="<%= g_localidades_path %>" class="nav-link"><i class="ph-map-pin me-2"></i>Localidades</a>
                 </li>
               </ul>
             </li>
@@ -195,4 +220,3 @@ document.addEventListener("DOMContentLoaded", function() {
   document.querySelectorAll('.nav-item-submenu').forEach(submenu => submenu.classList.remove('open'));
 });
 </script>
-

@@ -41,6 +41,12 @@ pt-BR:
       g_bairro:
         one: "Bairro"
         other: "Bairros"
+      g_distrito:
+        one: "Distrito"
+        other: "Distritos"
+      g_localidade:
+        one: "Localidade"
+        other: "Localidades"
       o_status:
         one: "Status do Orçamento"
         other: "Status dos Orçamentos"
@@ -89,6 +95,14 @@ pt-BR:
       g_bairro:
         descricao: "Descrição"
         g_municipio_id: "Município"
+      g_distrito:
+        descricao: "Descrição"
+        codigo_ibge: "Código Ibge"
+        g_municipio_id: "Município"
+      g_localidade:
+        descricao: "Descrição"
+        cep: "Cep"
+        g_distrito_id: "Distrito"
       o_status:
         descricao: "Descrição"
       o_tipo_solicitacao:

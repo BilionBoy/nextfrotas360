@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_23_015826) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_23_021351) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,6 +50,29 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_015826) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "g_bairros", force: :cascade do |t|
+    t.string "descricao"
+    t.bigint "g_municipio_id", null: false
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["g_municipio_id"], name: "index_g_bairros_on_g_municipio_id"
+  end
+
+  create_table "g_distritos", force: :cascade do |t|
+    t.string "descricao"
+    t.integer "codigo_ibge"
+    t.bigint "g_municipio_id", null: false
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["g_municipio_id"], name: "index_g_distritos_on_g_municipio_id"
+  end
+
   create_table "g_estados", force: :cascade do |t|
     t.string "descricao"
     t.string "uf"
@@ -60,6 +83,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_015826) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["g_pais_id"], name: "index_g_estados_on_g_pais_id"
+  end
+
+  create_table "g_localidades", force: :cascade do |t|
+    t.string "descricao"
+    t.bigint "g_distrito_id"
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["g_distrito_id"], name: "index_g_localidades_on_g_distrito_id"
   end
 
   create_table "g_municipios", force: :cascade do |t|
@@ -206,6 +240,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_015826) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "g_bairros", "g_municipios"
+  add_foreign_key "g_distritos", "g_municipios"
   add_foreign_key "g_estados", "g_paises"
   add_foreign_key "g_municipios", "g_estados"
   add_foreign_key "t_taxas", "a_status"
