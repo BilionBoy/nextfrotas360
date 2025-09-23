@@ -32,9 +32,25 @@ pt-BR:
       o_status:
         one: "Status do Orçamento"
         other: "Status dos Orçamentos"
+      o_tipo_solicitacao:
+        one: "Tipo de Solicitação"
+        other: "Tipos de Solicitações"
     attributes:
-      funcao:
-        nome: "Nome"
+      a_status:
+        descricao: "Descrição"
+      a_tipo_unidade:
+        descricao: "Descrição"
+      a_tipo_usuario:
+        descricao: "Descrição"
+      g_status:
+        descricao: "Descrição"
+      g_tipo_veiculo:
+        descricao: "Descrição"
+      g_tipo_centro_custo:
+        descricao: "Descrição"
+      o_status:
+        descricao: "Descrição"
+      o_tipo_solicitacao:
         descricao: "Descrição"
     errors:
       messages:
