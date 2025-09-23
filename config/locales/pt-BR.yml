@@ -35,6 +35,12 @@ pt-BR:
       o_tipo_solicitacao:
         one: "Tipo de Solicitação"
         other: "Tipos de Solicitações"
+      o_categoria_servico:
+        one: "Categoria de Serviço"
+        other: "Categorias de Serviços"
+      o_urgencia:
+        one: "Urgência"
+        other: "Urgências"
     attributes:
       a_status:
         descricao: "Descrição"
@@ -51,6 +57,10 @@ pt-BR:
       o_status:
         descricao: "Descrição"
       o_tipo_solicitacao:
+        descricao: "Descrição"
+      o_categoria_servico:
+        descricao: "Descrição"
+      o_urgencia:
         descricao: "Descrição"
     errors:
       messages:
