@@ -26,6 +26,9 @@ pt-BR:
       g_tipo_veiculo:
         one: "Tipo de Veículo"
         other: "Tipos de Veículos"
+      g_tipo_centro_custo:
+        one: "Tipo de Centro de Custo"
+        other: "Tipos de Centros de Custos"
     attributes:
       funcao:
         nome: "Nome"
@@ -41,8 +44,17 @@ pt-BR:
           one: "Funcao"
           other: "Funcões"
       attributes:
-        funcoes:
-          nome: "Nome"
+        a_status:
+          descricao: "Descrição"
+        a_tipo_unidade:
+          descricao: "Descrição"
+        a_tipo_usuario:
+          descricao: "Descrição"
+        g_status:
+          descricao: "Descrição"
+        g_tipo_veiculo:
+          descricao: "Descrição"
+        g_tipo_centro_custo:
           descricao: "Descrição"
   date:
     abbr_day_names:
