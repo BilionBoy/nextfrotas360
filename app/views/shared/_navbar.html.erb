@@ -46,7 +46,8 @@
           </a>
           <hr class="pv-divider">
           <div id="userMenu" class="custom-dropdown-menu">
-            <%= button_to '<i class="ph-sign-out me-2"></i>Sair'.html_safe,  class: "btn btn-logout"   %>
+            <%= button_to destroy_user_session_path, method: :delete, class: "btn btn-logout" do %><i class="ph-sign-out me-2"></i>Sair
+            <% end %>
           </div>
         </div>
       </div>
