@@ -16,15 +16,20 @@ class GCentrosCustosMovimentosController < ApplicationController
   def edit
   end
 
-  def create
+   def create
     @g_centro_custo_movimento = GCentroCustoMovimento.new(g_centro_custo_movimento_params)
-
+  
+    if params[:referenciavel_type] && params[:referenciavel_id]
+      klass = params[:referenciavel_type].constantize
+      @g_centro_custo_movimento.referenciavel = klass.find(params[:referenciavel_id])
+    end
+  
     if @g_centro_custo_movimento.save
       redirect_to g_centros_custos_movimentos_path, notice: t('messages.created_successfully')
     else
       render :new, status: :unprocessable_entity
     end
-  end
+   end
 
   def update
     if @g_centro_custo_movimento.update(g_centro_custo_movimento_params)
