@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :g_centros_custos_movimentos
+  resources :g_tipos_movimentos
   resources :g_centros_custos
   devise_for :users
   root 'home#index'

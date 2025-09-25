@@ -1,0 +1,35 @@
+<%= render "shared/context_nav", title: t("activerecord.models.#{GCentroCustoMovimento.model_name.i18n_key}.other") do  %>
+  <span class="breadcrumb-item"><%= link_to t("activerecord.models.#{GCentroCustoMovimento.model_name.i18n_key}.other"), g_centros_custos_movimentos_path, class: "text-dark" %></span>
+  <span class="breadcrumb-item active"><%= t("helpers.submit.#{params[:action]}") %></span>
+<% end %>
+<%= simple_form_for(@g_centro_custo_movimento) do |f| %>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="my-0">
+        <%= @g_centro_custo_movimento.new_record? ? "Incluir " : "Editar " %><%= t("activerecord.models.#{GCentroCustoMovimento.model_name.i18n_key}.one") %>
+      </h5>
+    </div>
+    <div class="card-body">
+      <%= f.error_notification %>
+      <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+      <div class="row">
+        <div class="col-3">
+          <%= f.input :g_centro_custo_id, collection: GCentroCusto.all, label_method: :nome, value_method: :id, prompt: "Selecione o Centro de Custo" %>
+        </div>
+        <div class="col-3">
+          <%= f.input :g_tipo_movimento_id, collection: GTipoMovimento.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Tipo de Centro de Custo" %>
+        </div>
+        <div class="col-3">
+          <%= f.input :valor, input_html: { class: "capitalize"}, placeholder: "Valor"  %>
+        </div>
+        <div class="col-12">
+          <%= f.input :descricao, input_html: { class: "capitalize"}, placeholder: "Descricao"  %>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <%= btn_submit(f) %>
+      <%= link_to "Voltar", g_centros_custos_movimentos_path, class: "btn btn-light" %>
+    </div>
+  </div>
+<% end %>

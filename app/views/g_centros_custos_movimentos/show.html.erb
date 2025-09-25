@@ -1,0 +1,45 @@
+<div class="container">
+  <%= render "shared/notice" %>
+  <div class="card border-0 shadow shadow-sm">
+    <div class="card-header border-0 d-flex justify-content-between">
+      <span class="fs-4">Visualizar G Centro Custo Movimento</span>
+    </div>
+    <div class="card-body">
+      <div id="<%= dom_id @g_centro_custo_movimento %>">
+          <p>
+            <strong>G Centro Custo:</strong>
+            <%= @g_centro_custo_movimento.g_centro_custo %>
+          </p>
+          <p>
+            <strong>G Tipo Movimento:</strong>
+            <%= @g_centro_custo_movimento.g_tipo_movimento %>
+          </p>
+          <p>
+            <strong>Valor:</strong>
+            <%= @g_centro_custo_movimento.valor %>
+          </p>
+          <p>
+            <strong>Referencia Tipo:</strong>
+            <%= @g_centro_custo_movimento.referencia_tipo %>
+          </p>
+          <p>
+            <strong>Referencia:</strong>
+            <%= @g_centro_custo_movimento.referencia_id %>
+          </p>
+          <p>
+            <strong>Descricao:</strong>
+            <%= @g_centro_custo_movimento.descricao %>
+          </p>
+      </div>
+    </div>
+    <div class="card-footer border-0 d-flex justify-content-between">
+      <div>
+        <%= link_to edit_g_centro_custo_movimento_path(@g_centro_custo_movimento), class: "btn btn-primary" do %>
+        <i class="bi bi-pencil-square"></i> Editar
+        <% end %>
+        <%= link_to "Voltar", g_centros_custos_movimentos_path, class: "btn btn-secondary" %>
+      </div>
+      <%= button_to "Deletar", @g_centro_custo_movimento, method: :delete, class: "btn btn-outline-danger border-0" %>
+    </div>
+  </div>
+</div>

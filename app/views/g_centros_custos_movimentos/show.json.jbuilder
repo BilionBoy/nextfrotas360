@@ -1,0 +1,1 @@
+json.partial! "g_centros_custos_movimentos/g_centro_custo_movimento", g_centro_custo_movimento: @g_centro_custo_movimento

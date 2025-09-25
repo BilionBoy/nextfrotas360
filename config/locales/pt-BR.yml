@@ -50,6 +50,12 @@ pt-BR:
       g_localidade:
         one: "Localidade"
         other: "Localidades"
+      g_tipo_movimento:
+        one: "Tipo de Movimento"
+        other: "Tipos de Movimentos"
+      g_centro_custo_movimento:
+        one: "Movimento do Centro de Custo"
+        other: "Movimentos dos Centros de Custos"
       o_status:
         one: "Status do Orçamento"
         other: "Status dos Orçamentos"
@@ -128,6 +134,14 @@ pt-BR:
         g_tipo_centro_custo_id: "Tipo de Centro de Custo"
         valor_inicial: "Valor Inicial"
         valor_atual: "Valor Atual"
+      g_tipo_movimento:
+        descricao: "Descrição"
+      g_centro_custo_movimento:
+        g_centro_custo_id: "Centro de Custo"
+        g_tipo_movimento_id: "Tipo de Movimento"
+        valor: "Valor"
+        data_movimento: "Data do Movimento"
+        observacao: "Observação"
       o_status:
         descricao: "Descrição"
       o_tipo_solicitacao:
