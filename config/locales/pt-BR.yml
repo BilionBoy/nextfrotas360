@@ -29,6 +29,9 @@ pt-BR:
       g_tipo_centro_custo:
         one: "Tipo de Centro de Custo"
         other: "Tipos de Centros de Custos"
+      g_centro_custo:
+        one: "Centro de Custo"
+        other: "Centros de Custos"
       g_pais:
         one: "País"
         other: "Países"
@@ -118,6 +121,13 @@ pt-BR:
         descricao: "Descrição"
         cep: "Cep"
         g_distrito_id: "Distrito"
+      g_centro_custo:
+        nome: "Nome"
+        codigo_dotacao: "Código de Dotação"
+        a_unidade_id: "Unidade"
+        g_tipo_centro_custo_id: "Tipo de Centro de Custo"
+        valor_inicial: "Valor Inicial"
+        valor_atual: "Valor Atual"
       o_status:
         descricao: "Descrição"
       o_tipo_solicitacao:

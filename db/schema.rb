@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_23_142942) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_25_044151) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -146,6 +146,22 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_142942) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["g_municipio_id"], name: "index_g_bairros_on_g_municipio_id"
+  end
+
+  create_table "g_centros_custos", force: :cascade do |t|
+    t.string "nome"
+    t.string "codigo_dotacao"
+    t.bigint "g_tipo_centro_custo_id"
+    t.bigint "a_unidade_id"
+    t.decimal "valor_inicial", precision: 15, scale: 2
+    t.decimal "saldo_atual", precision: 15, scale: 2
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["a_unidade_id"], name: "index_g_centros_custos_on_a_unidade_id"
+    t.index ["g_tipo_centro_custo_id"], name: "index_g_centros_custos_on_g_tipo_centro_custo_id"
   end
 
   create_table "g_distritos", force: :cascade do |t|
@@ -324,6 +340,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_23_142942) do
   add_foreign_key "a_usuarios_papeis", "a_unidades"
   add_foreign_key "a_usuarios_papeis", "users"
   add_foreign_key "g_bairros", "g_municipios"
+  add_foreign_key "g_centros_custos", "a_unidades"
+  add_foreign_key "g_centros_custos", "g_tipos_centros_custos"
   add_foreign_key "g_distritos", "g_municipios"
   add_foreign_key "g_estados", "g_paises"
   add_foreign_key "g_localidades", "g_distritos"

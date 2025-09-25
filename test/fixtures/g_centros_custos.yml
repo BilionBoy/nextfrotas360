@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome: MyString
+  codigo_dotacao: MyString
+  g_tipo_centro_custo: one
+  a_unidade: one
+  valor_inicial: 9.99
+  saldo_atual: 9.99
+
+two:
+  nome: MyString
+  codigo_dotacao: MyString
+  g_tipo_centro_custo: two
+  a_unidade: two
+  valor_inicial: 9.99
+  saldo_atual: 9.99

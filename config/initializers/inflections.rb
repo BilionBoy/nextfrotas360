@@ -17,6 +17,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'g_bairro',                          'g_bairros'
   inflect.irregular 'g_municipio',                       'g_municipios'
   inflect.irregular "g_distrito",                        "g_distritos"
+  inflect.irregular 'g_centro_custo',                    'g_centros_custos'
   inflect.irregular 'g_localidade',                      'g_localidades'
   inflect.irregular 'o_status',                          'o_status'
   inflect.irregular 'o_tipo_solicitacao',                'o_tipos_solicitacoes'

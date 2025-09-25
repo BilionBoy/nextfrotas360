@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :g_centros_custos
   devise_for :users
   root 'home#index'
   get 'home/index'

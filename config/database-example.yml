@@ -1,0 +1,25 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: <%= ENV['DB_NAME'] || "nextfrotas360_development" %>
+  username: <%= ENV['DB_USERNAME'] || "nextfrotas1123581321345589" %>
+  password: <%= ENV['DB_PASSWORD'] || "DhioRails11235813213455899" %>
+  host: <%= ENV['DB_HOST'] || "db" %>
+
+test:
+  <<: *default
+  database: <%= ENV['DB_NAME'] || "nextfrotas360_test" %>
+  username: <%= ENV['DB_USERNAME'] || "nextfrotas1123581321345589" %>
+  password: <%= ENV['DB_PASSWORD'] || "DhioRails11235813213455899" %>
+  host: <%= ENV['DB_HOST'] || "db" %>
+
+production:
+  <<: *default
+  database: <%= ENV['DB_NAME'] || "nextfrotas360_production" %>
+  username: <%= ENV['DB_USERNAME'] || "nextfrotas1123581321345589" %>
+  password: <%= ENV['DB_PASSWORD'] || "DhioRails11235813213455899" %>
+  host: <%= ENV['DB_HOST'] || "db" %>
