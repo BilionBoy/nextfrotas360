@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  resources :g_condutores
-  resources :g_carteiras_orgaos_emissores
-  resources :g_categorias_carteiras_condutores
-  resources :g_veiculos
   devise_for :users
   root 'home#index'
   get 'home/index'
@@ -24,6 +20,10 @@ Rails.application.routes.draw do
   resources :g_status
   resources :g_tipos_veiculos
   resources :g_tipos_centros_custos
+  resources :g_condutores
+  resources :g_carteiras_orgaos_emissores
+  resources :g_categorias_carteiras_condutores
+  resources :g_veiculos
   resources :g_paises
   resources :g_localidades
   resources :g_distritos
