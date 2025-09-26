@@ -65,6 +65,9 @@ pt-BR:
       g_categoria_carteira_condutor:
         one: "Categoria da Carteira do Condutor"
         other: "Categorias das Carteiras dos Condutores"
+      g_carteira_orgao_emissor:
+        one: "Órgão Emissor da Carteira"
+        other: "Órgãos Emissores das Carteiras"
       o_status:
         one: "Status do Orçamento"
         other: "Status dos Orçamentos"
@@ -175,6 +178,8 @@ pt-BR:
         g_categoria_carteira_condutor_id: "Categoria da Carteira do Condutor"
         a_status_id: "Status"
       g_categoria_carteira_condutor:
+        descricao: "Descrição"
+      g_carteira_orgao_emissor:
         descricao: "Descrição"
       o_status:
         descricao: "Descrição"

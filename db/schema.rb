@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_26_050702) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_26_051445) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -146,6 +146,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_26_050702) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["g_municipio_id"], name: "index_g_bairros_on_g_municipio_id"
+  end
+
+  create_table "g_carteiras_orgaos_emissores", force: :cascade do |t|
+    t.string "descricao"
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "g_categorias_carteiras_condutores", force: :cascade do |t|

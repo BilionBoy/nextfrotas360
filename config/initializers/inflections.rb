@@ -12,6 +12,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'g_status',                          'g_status'
   inflect.irregular 'g_tipo_veiculo',                    'g_tipos_veiculos'
   inflect.irregular 'g_categoria_carteira_condutor',     'g_categorias_carteiras_condutores'
+  inflect.irregular 'g_carteira_orgao_emissor',          'g_carteiras_orgaos_emissores'
   inflect.irregular 'g_tipo_movimento',                  'g_tipos_movimentos'
   inflect.irregular 'g_tipo_centro_custo',               'g_tipos_centros_custos'
   inflect.irregular 'g_centro_custo',                    'g_centros_custos'

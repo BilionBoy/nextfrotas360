@@ -1,0 +1,1 @@
+json.partial! "g_carteiras_orgaos_emissores/g_carteira_orgao_emissor", g_carteira_orgao_emissor: @g_carteira_orgao_emissor
