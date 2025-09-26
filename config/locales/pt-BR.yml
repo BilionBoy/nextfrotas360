@@ -59,6 +59,12 @@ pt-BR:
       g_veiculo:
         one: "Veículo"
         other: "Veículos"
+      g_condutor:
+        one: "Condutor"
+        other: "Condutores"
+      g_categoria_carteira_condutor:
+        one: "Categoria da Carteira do Condutor"
+        other: "Categorias das Carteiras dos Condutores"
       o_status:
         one: "Status do Orçamento"
         other: "Status dos Orçamentos"
@@ -158,6 +164,18 @@ pt-BR:
         g_tipo_veiculo_id: "Tipo de Veículo"
         a_unidade_id: "Unidade"
         g_centro_custo_id: "Centro de Custo"
+      g_condutor:
+        nome: "Nome"
+        cpf: "Cpf"
+        telefone: "Telefone"
+        email: "Email"
+        data_nascimento: "Data de Nascimento"
+        numero_carteira: "Número da Carteira"
+        data_validade_carteira: "Data de Validade da Carteira"
+        g_categoria_carteira_condutor_id: "Categoria da Carteira do Condutor"
+        a_status_id: "Status"
+      g_categoria_carteira_condutor:
+        descricao: "Descrição"
       o_status:
         descricao: "Descrição"
       o_tipo_solicitacao:

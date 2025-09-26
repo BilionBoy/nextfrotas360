@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :g_categorias_carteiras_condutores
   resources :g_veiculos
   devise_for :users
   root 'home#index'

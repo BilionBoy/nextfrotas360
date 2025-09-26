@@ -1,0 +1,1 @@
+json.partial! "g_categorias_carteiras_condutores/g_categoria_carteira_condutor", g_categoria_carteira_condutor: @g_categoria_carteira_condutor
