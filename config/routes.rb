@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :g_condutores
   resources :g_carteiras_orgaos_emissores
   resources :g_categorias_carteiras_condutores
   resources :g_veiculos

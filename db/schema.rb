@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_26_051445) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_26_051643) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -196,6 +196,25 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_26_051445) do
     t.datetime "updated_at", null: false
     t.index ["g_centro_custo_id"], name: "index_g_centros_custos_movimentos_on_g_centro_custo_id"
     t.index ["g_tipo_movimento_id"], name: "index_g_centros_custos_movimentos_on_g_tipo_movimento_id"
+  end
+
+  create_table "g_condutores", force: :cascade do |t|
+    t.string "nome"
+    t.string "email"
+    t.string "telefone"
+    t.string "cnh_numero"
+    t.datetime "validade_cnh"
+    t.bigint "g_categoria_carteira_condutor_id", null: false
+    t.bigint "g_status_id", null: false
+    t.bigint "g_carteira_orgao_emissor_id", null: false
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["g_carteira_orgao_emissor_id"], name: "index_g_condutores_on_g_carteira_orgao_emissor_id"
+    t.index ["g_categoria_carteira_condutor_id"], name: "index_g_condutores_on_g_categoria_carteira_condutor_id"
+    t.index ["g_status_id"], name: "index_g_condutores_on_g_status_id"
   end
 
   create_table "g_distritos", force: :cascade do |t|
@@ -411,6 +430,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_26_051445) do
   add_foreign_key "g_centros_custos", "g_tipos_centros_custos"
   add_foreign_key "g_centros_custos_movimentos", "g_centros_custos"
   add_foreign_key "g_centros_custos_movimentos", "g_tipos_movimentos"
+  add_foreign_key "g_condutores", "g_carteiras_orgaos_emissores"
+  add_foreign_key "g_condutores", "g_categorias_carteiras_condutores"
+  add_foreign_key "g_condutores", "g_status"
   add_foreign_key "g_distritos", "g_municipios"
   add_foreign_key "g_estados", "g_paises"
   add_foreign_key "g_localidades", "g_distritos"

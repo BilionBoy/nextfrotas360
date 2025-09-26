@@ -1,0 +1,53 @@
+<div class="container">
+  <%= render "shared/notice" %>
+  <div class="card border-0 shadow shadow-sm">
+    <div class="card-header border-0 d-flex justify-content-between">
+      <span class="fs-4">Visualizar G Condutor</span>
+    </div>
+    <div class="card-body">
+      <div id="<%= dom_id @g_condutor %>">
+          <p>
+            <strong>Nome:</strong>
+            <%= @g_condutor.nome %>
+          </p>
+          <p>
+            <strong>Email:</strong>
+            <%= @g_condutor.email %>
+          </p>
+          <p>
+            <strong>Telefone:</strong>
+            <%= @g_condutor.telefone %>
+          </p>
+          <p>
+            <strong>Cnh Numero:</strong>
+            <%= @g_condutor.cnh_numero %>
+          </p>
+          <p>
+            <strong>G Categoria Carteira Condutor:</strong>
+            <%= @g_condutor.g_categoria_carteira_condutor %>
+          </p>
+          <p>
+            <strong>Validace Cnh:</strong>
+            <%= @g_condutor.validace_cnh %>
+          </p>
+          <p>
+            <strong>G Status:</strong>
+            <%= @g_condutor.g_status %>
+          </p>
+          <p>
+            <strong>G Carteira Orgao Emissor:</strong>
+            <%= @g_condutor.g_carteira_orgao_emissor %>
+          </p>
+      </div>
+    </div>
+    <div class="card-footer border-0 d-flex justify-content-between">
+      <div>
+        <%= link_to edit_g_condutor_path(@g_condutor), class: "btn btn-primary" do %>
+        <i class="bi bi-pencil-square"></i> Editar
+        <% end %>
+        <%= link_to "Voltar", g_condutores_path, class: "btn btn-secondary" %>
+      </div>
+      <%= button_to "Deletar", @g_condutor, method: :delete, class: "btn btn-outline-danger border-0" %>
+    </div>
+  </div>
+</div>

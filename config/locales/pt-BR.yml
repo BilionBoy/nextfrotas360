@@ -176,7 +176,9 @@ pt-BR:
         numero_carteira: "Número da Carteira"
         data_validade_carteira: "Data de Validade da Carteira"
         g_categoria_carteira_condutor_id: "Categoria da Carteira do Condutor"
-        a_status_id: "Status"
+        g_status_id: "Status"
+        g_carteira_orgao_emissor_id: "Órgão Emissor da Carteira"
+
       g_categoria_carteira_condutor:
         descricao: "Descrição"
       g_carteira_orgao_emissor:

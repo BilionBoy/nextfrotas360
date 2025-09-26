@@ -52,12 +52,29 @@
           <span>ADMINISTRAÇÃO</span>
         </li>
 
-        <!-- Taxas e Unidades -->
         <li class="nav-item">
           <a href="<%= a_unidades_path %>" class="nav-link pv-nav-link">
-            <i class="ph-buildings "></i>
+            <i class="ph-buildings"></i>
             <span>Unidades</span>
           </a>
+        </li>
+        <!-- Centro de Custo -->
+        <li class="nav-item nav-item-submenu">
+          <a href="#" class="nav-link pv-nav-link">
+            <i class="ph-coins me-2"></i>
+            <span>Centro de Custo</span>
+          </a>
+          <ul class="nav nav-group-sub">
+            <li class="nav-item">
+              <a href="<%= g_centros_custos_path %>" class="nav-link"><i class="ph-list me-2"></i>Centros de Custo</a>
+            </li>
+            <li class="nav-item">
+              <a href="<%= g_tipos_movimentos_path %>" class="nav-link"><i class="ph-list me-2"></i>Tipos de Movimentos</a>
+            </li>
+            <li class="nav-item">
+              <a href="<%= g_centros_custos_movimentos_path %>" class="nav-link"><i class="ph-swap me-2"></i>Movimentos</a>
+            </li>
+          </ul>
         </li>
         <li class="nav-item">
           <a href="<%= t_taxas_path %>" class="nav-link pv-nav-link">
@@ -65,54 +82,21 @@
             <span>Taxas</span>
           </a>
         </li>
-         <!-- Centro de Custo -->
-      <li class="nav-item nav-item-submenu">
-        <a href="#" class="nav-link pv-nav-link">
-          <i class="ph-coins me-2"></i>
-          <span>Centro de Custo</span>
-        </a>
-        <ul class="nav nav-group-sub">
-          <li class="nav-item">
-            <a href="<%= g_centros_custos_path %>" class="nav-link">
-              <i class="ph-list me-2"></i>Centros de Custo
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="<%= g_tipos_movimentos_path %>" class="nav-link">
-              <i class="ph-list me-2"></i>Tipos de Movimentos
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="<%= g_centros_custos_movimentos_path %>" class="nav-link">
-              <i class="ph-swap me-2"></i>Movimentos de Centros de Custo
-            </a>
-          </li>
-        </ul>
-      </li>
-
-
-        <!-- Papéis e Permissões -->
-        <li class="nav-item nav-item-submenu">
-          <a href="#" class="nav-link pv-nav-link">
-            <i class="ph-shield-check me-2"></i>
-            <span>Papéis e Permissões</span>
+          <!-- VEÍCULOS -->
+        <li class="nav-item">
+          <a href="<%= g_veiculos_path %>" class="nav-link pv-nav-link">
+            <i class="ph ph-car"></i>
+            <span>Veículos</span>
           </a>
-          <ul class="nav nav-group-sub">
-            <li class="nav-item">
-              <a href="<%= a_papeis_path %>" class="nav-link"><i class="ph-user-circle me-2"></i>Papéis</a>
-            </li>
-            <li class="nav-item">
-              <a href="<%= a_permissoes_path %>" class="nav-link"><i class="ph-key me-2"></i>Permissões</a>
-            </li>
-            <li class="nav-item">
-              <a href="<%= a_papeis_permissoes_path %>" class="nav-link"><i class="ph-link me-2"></i>Papéis x Permissões</a>
-            </li>
-            <li class="nav-item">
-              <a href="<%= a_cargos_path %>" class="nav-link"><i class="ph-briefcase me-2"></i>Cargos</a>
-            </li>
-          </ul>
         </li>
 
+
+        <li class="nav-item">
+          <a href="<%= g_condutores_path %>" class="nav-link pv-nav-link">
+            <i class="ph-user-circle"></i>
+            <span>Condutores</span>
+          </a>
+        </li>
         <!-- Usuários -->
         <li class="nav-item nav-item-submenu">
           <a href="#" class="nav-link pv-nav-link">
@@ -120,14 +104,26 @@
             <span>Usuários</span>
           </a>
           <ul class="nav nav-group-sub">
-            <li class="nav-item">
-              <a href="<%= a_usuarios_papeis_path %>" class="nav-link"><i class="ph-shield me-2"></i>Usuário x Papéis</a>
-            </li>
-            <li class="nav-item">
-              <a href="<%= a_usuarios_historicos_cargos_unidades_path %>" class="nav-link"><i class="ph-clock me-2"></i>Histórico de Cargos/Unidade</a>
-            </li>
+            <li><a href="<%= a_usuarios_papeis_path %>" class="nav-link"><i class="ph-shield me-2"></i>Usuário x Papéis</a></li>
+            <li><a href="<%= a_usuarios_historicos_cargos_unidades_path %>" class="nav-link"><i class="ph-clock me-2"></i>Histórico de Cargos/Unidade</a></li>
           </ul>
         </li>
+        <!-- Papéis e Permissões -->
+        <li class="nav-item nav-item-submenu">
+          <a href="#" class="nav-link pv-nav-link">
+            <i class="ph-shield-check me-2"></i>
+            <span>Papéis e Permissões</span>
+          </a>
+          <ul class="nav nav-group-sub">
+            <li><a href="<%= a_papeis_path %>" class="nav-link"><i class="ph-user-circle me-2"></i>Papéis</a></li>
+            <li><a href="<%= a_permissoes_path %>" class="nav-link"><i class="ph-key me-2"></i>Permissões</a></li>
+            <li><a href="<%= a_papeis_permissoes_path %>" class="nav-link"><i class="ph-link me-2"></i>Papéis x Permissões</a></li>
+            <li><a href="<%= a_cargos_path %>" class="nav-link"><i class="ph-briefcase me-2"></i>Cargos</a></li>
+          </ul>
+        </li>
+
+
+       
 
         <!-- REFERENCIAIS -->
         <li class="nav-item-header pv-nav-header">
@@ -140,57 +136,46 @@
           </a>
           <ul class="nav nav-group-sub">
 
-            <!-- Usuários / Tipos e Status -->
+            <!-- Usuários -->
             <li class="nav-item nav-item-submenu">
               <a href="#" class="nav-link"><i class="ph-users-three me-2"></i>Usuários</a>
               <ul class="nav nav-group-sub">
-                <li class="nav-item">
-                  <a href="<%= a_status_index_path %>" class="nav-link"><i class="ph-toggle-left me-2"></i>Status dos Usuários</a>
-                </li>
-                <li class="nav-item">
-                  <a href="<%= a_tipos_unidades_path %>" class="nav-link"><i class="ph-buildings me-2"></i>Tipos de Unidade</a>
-                </li>
-                <li class="nav-item">
-                  <a href="<%= a_tipo_usuarios_path %>" class="nav-link"><i class="ph-identification-card me-2"></i>Tipos de Usuários</a>
-                </li>
+                <li><a href="<%= a_status_index_path %>" class="nav-link"><i class="ph-toggle-left me-2"></i>Status</a></li>
+                <li><a href="<%= a_tipos_unidades_path %>" class="nav-link"><i class="ph-buildings me-2"></i>Tipos de Unidade</a></li>
+                <li><a href="<%= a_tipo_usuarios_path %>" class="nav-link"><i class="ph-identification-card me-2"></i>Tipos de Usuários</a></li>
               </ul>
             </li>
 
-            <!-- Veículos / Gerais -->
+            <!-- Condutores -->
             <li class="nav-item nav-item-submenu">
-              <a href="#" class="nav-link"><i class="ph-car me-2"></i>Veículos / Gerais</a>
+              <a href="#" class="nav-link"><i class="ph-identification-badge me-2"></i>Condutores</a>
               <ul class="nav nav-group-sub">
-                <li class="nav-item">
-                  <a href="<%= g_status_index_path %>" class="nav-link"><i class="ph-check-circle me-2"></i>Status Gerais</a>
-                </li>
-                <li class="nav-item">
-                  <a href="<%= g_tipos_veiculos_path %>" class="nav-link"><i class="ph-truck me-2"></i>Tipos de Veículos</a>
-                </li>
-                <li class="nav-item">
-                  <a href="<%= g_tipos_centros_custos_path %>" class="nav-link"><i class="ph-coins me-2"></i>Tipos de Centro de Custo</a>
-                </li>
+                <li><a href="<%= g_carteiras_orgaos_emissores_path %>" class="nav-link"><i class="ph-office-chair me-2"></i>Órgãos Emissores</a></li>
+                <li><a href="<%= g_categorias_carteiras_condutores_path %>" class="nav-link"><i class="ph-cards me-2"></i>Categorias de Carteira</a></li>
               </ul>
             </li>
 
-            <!-- Orçamentos / Solicitações -->
+            <!-- Veículos -->
+            <li class="nav-item nav-item-submenu">
+              <a href="#" class="nav-link"><i class="ph-car me-2"></i>Veículos</a>
+              <ul class="nav nav-group-sub">
+                <li><a href="<%= g_status_index_path %>" class="nav-link"><i class="ph-check-circle me-2"></i>Status</a></li>
+                <li><a href="<%= g_tipos_veiculos_path %>" class="nav-link"><i class="ph-truck me-2"></i>Tipos</a></li>
+              </ul>
+            </li>
+
+            <!-- Centro de Custo -->
+            <li><a href="<%= g_tipos_centros_custos_path %>" class="nav-link"><i class="ph-coins me-2"></i>Tipos de Centro de Custo</a></li>
+
+            <!-- Orçamentos -->
             <li class="nav-item nav-item-submenu">
               <a href="#" class="nav-link"><i class="ph-currency-dollar-simple me-2"></i>Orçamentos</a>
               <ul class="nav nav-group-sub">
-                <li class="nav-item">
-                  <a href="<%= o_status_index_path %>" class="nav-link"><i class="ph-flag me-2"></i>Status dos Orçamentos</a>
-                </li>
-                <li class="nav-item">
-                  <a href="<%= o_tipos_solicitacoes_path %>" class="nav-link"><i class="ph-list-plus me-2"></i>Tipos de Orçamentos</a>
-                </li>
-                <li class="nav-item">
-                  <a href="<%= o_categorias_servicos_path %>" class="nav-link"><i class="ph-grid-four me-2"></i>Categorias</a>
-                </li>
-                <li class="nav-item">
-                  <a href="<%= o_urgencias_path %>" class="nav-link"><i class="ph-warning-circle me-2"></i>Urgência do Orçamento</a>
-                </li>
-                <li class="nav-item">
-                  <a href="<%= o_visibilidades_path %>" class="nav-link"><i class="ph-eye me-2"></i>Visibilidade</a>
-                </li>
+                <li><a href="<%= o_status_index_path %>" class="nav-link"><i class="ph-flag me-2"></i>Status</a></li>
+                <li><a href="<%= o_tipos_solicitacoes_path %>" class="nav-link"><i class="ph-list-plus me-2"></i>Tipos</a></li>
+                <li><a href="<%= o_categorias_servicos_path %>" class="nav-link"><i class="ph-grid-four me-2"></i>Categorias</a></li>
+                <li><a href="<%= o_urgencias_path %>" class="nav-link"><i class="ph-warning-circle me-2"></i>Urgência</a></li>
+                <li><a href="<%= o_visibilidades_path %>" class="nav-link"><i class="ph-eye me-2"></i>Visibilidade</a></li>
               </ul>
             </li>
 
@@ -198,30 +183,17 @@
             <li class="nav-item nav-item-submenu">
               <a href="#" class="nav-link"><i class="ph-map-pin-line me-2"></i>Localidades</a>
               <ul class="nav nav-group-sub">
-                <li class="nav-item">
-                  <a href="<%= g_paises_path %>" class="nav-link"><i class="ph-globe me-2"></i>Países</a>
-                </li>
-                <li class="nav-item">
-                  <a href="<%= g_estados_path %>" class="nav-link"><i class="ph-map-trifold me-2"></i>Estados</a>
-                </li>
-                <li class="nav-item">
-                  <a href="<%= g_municipios_path %>" class="nav-link"><i class="ph-buildings me-2"></i>Municípios</a>
-                </li>
-                <li class="nav-item">
-                  <a href="<%= g_distritos_path %>" class="nav-link"><i class="ph-compass me-2"></i>Distritos</a>
-                </li>
-                <li class="nav-item">
-                  <a href="<%= g_bairros_path %>" class="nav-link"><i class="ph-house-line me-2"></i>Bairros</a>
-                </li>
-                <li class="nav-item">
-                  <a href="<%= g_localidades_path %>" class="nav-link"><i class="ph-map-pin me-2"></i>Localidades</a>
-                </li>
+                <li><a href="<%= g_paises_path %>" class="nav-link"><i class="ph-globe me-2"></i>Países</a></li>
+                <li><a href="<%= g_estados_path %>" class="nav-link"><i class="ph-map-trifold me-2"></i>Estados</a></li>
+                <li><a href="<%= g_municipios_path %>" class="nav-link"><i class="ph-buildings me-2"></i>Municípios</a></li>
+                <li><a href="<%= g_distritos_path %>" class="nav-link"><i class="ph-compass me-2"></i>Distritos</a></li>
+                <li><a href="<%= g_bairros_path %>" class="nav-link"><i class="ph-house-line me-2"></i>Bairros</a></li>
+                <li><a href="<%= g_localidades_path %>" class="nav-link"><i class="ph-map-pin me-2"></i>Localidades</a></li>
               </ul>
             </li>
 
           </ul>
         </li>
-
       </ul>
     </div>
   </div>
