@@ -23,7 +23,7 @@
           <%= f.input :nivel, input_html: { class: "capitalize"}, placeholder: "Nivel"  %>
         </div>
         <div class="col-3">
-          <%= f.input :a_status_id, collection: AStatus.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Cargo" %>
+          <%= f.input :a_status_id, collection: AStatus.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Status" %>
         </div>
       </div>
     </div>

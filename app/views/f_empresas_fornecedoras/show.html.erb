@@ -1,0 +1,57 @@
+<div class="container">
+  <%= render "shared/notice" %>
+  <div class="card border-0 shadow shadow-sm">
+    <div class="card-header border-0 d-flex justify-content-between">
+      <span class="fs-4">Visualizar F Empresa Fornecedora</span>
+    </div>
+    <div class="card-body">
+      <div id="<%= dom_id @f_empresa_fornecedora %>">
+          <p>
+            <strong>Nome Fantasia:</strong>
+            <%= @f_empresa_fornecedora.nome_fantasia %>
+          </p>
+          <p>
+            <strong>Razao Social:</strong>
+            <%= @f_empresa_fornecedora.razao_social %>
+          </p>
+          <p>
+            <strong>Cnjp:</strong>
+            <%= @f_empresa_fornecedora.cnjp %>
+          </p>
+          <p>
+            <strong>Endereco:</strong>
+            <%= @f_empresa_fornecedora.endereco %>
+          </p>
+          <p>
+            <strong>Telefone:</strong>
+            <%= @f_empresa_fornecedora.telefone %>
+          </p>
+          <p>
+            <strong>Contato:</strong>
+            <%= @f_empresa_fornecedora.contato %>
+          </p>
+          <p>
+            <strong>Email:</strong>
+            <%= @f_empresa_fornecedora.email %>
+          </p>
+          <p>
+            <strong>A Status:</strong>
+            <%= @f_empresa_fornecedora.a_status %>
+          </p>
+          <p>
+            <strong>G Municipio:</strong>
+            <%= @f_empresa_fornecedora.g_municipio %>
+          </p>
+      </div>
+    </div>
+    <div class="card-footer border-0 d-flex justify-content-between">
+      <div>
+        <%= link_to edit_f_empresa_fornecedora_path(@f_empresa_fornecedora), class: "btn btn-primary" do %>
+        <i class="bi bi-pencil-square"></i> Editar
+        <% end %>
+        <%= link_to "Voltar", f_empresas_fornecedoras_path, class: "btn btn-secondary" %>
+      </div>
+      <%= button_to "Deletar", @f_empresa_fornecedora, method: :delete, class: "btn btn-outline-danger border-0" %>
+    </div>
+  </div>
+</div>

@@ -20,6 +20,9 @@ pt-BR:
       a_tipo_usuario:
         one: "Tipo de Usuário"
         other: "Tipos de Usuários"
+      f_empresa_fornecedora:
+        one: "Empresa Fornecedora"
+        other: "Empresas Fornecedoras"
       g_status:
         one: "Status de Gestão"
         other: "Status de Gestão"
@@ -114,6 +117,17 @@ pt-BR:
         descricao: "Descrição"
       a_tipo_usuario:
         descricao: "Descrição"
+      f_empresa_fornecedora:
+        nome_fantasia: "Nome Fantasia"
+        razao_social: "Razão Social"
+        cnpj: "Cnpj"
+        telefone: "Telefone"
+        email: "Email"
+        endereco: "Endereço"
+        numero: "Número"
+        complemento: "Complemento"
+        g_municipio_id: "Município"
+        a_status_id: "Status"
       g_status:
         descricao: "Descrição"
       g_tipo_veiculo:

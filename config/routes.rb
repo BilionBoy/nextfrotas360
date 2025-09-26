@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :f_empresas_fornecedoras
   resources :g_condutores_veiculos
   devise_for :users
   root 'home#index'

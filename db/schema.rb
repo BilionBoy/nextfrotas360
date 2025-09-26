@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_26_153134) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_26_163241) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -135,6 +135,25 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_26_153134) do
     t.index ["a_papel_id"], name: "index_a_usuarios_papeis_on_a_papel_id"
     t.index ["a_unidade_id"], name: "index_a_usuarios_papeis_on_a_unidade_id"
     t.index ["user_id"], name: "index_a_usuarios_papeis_on_user_id"
+  end
+
+  create_table "f_empresas_fornecedoras", force: :cascade do |t|
+    t.string "nome_fantasia"
+    t.string "razao_social"
+    t.string "cnjp"
+    t.string "endereco"
+    t.string "telefone"
+    t.string "contato"
+    t.string "email"
+    t.bigint "a_status_id", null: false
+    t.bigint "g_municipio_id", null: false
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["a_status_id"], name: "index_f_empresas_fornecedoras_on_a_status_id"
+    t.index ["g_municipio_id"], name: "index_f_empresas_fornecedoras_on_g_municipio_id"
   end
 
   create_table "g_bairros", force: :cascade do |t|
@@ -438,6 +457,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_26_153134) do
   add_foreign_key "a_usuarios_papeis", "a_papeis"
   add_foreign_key "a_usuarios_papeis", "a_unidades"
   add_foreign_key "a_usuarios_papeis", "users"
+  add_foreign_key "f_empresas_fornecedoras", "a_status"
+  add_foreign_key "f_empresas_fornecedoras", "g_municipios"
   add_foreign_key "g_bairros", "g_municipios"
   add_foreign_key "g_centros_custos", "a_unidades"
   add_foreign_key "g_centros_custos", "g_tipos_centros_custos"
