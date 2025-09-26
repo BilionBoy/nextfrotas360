@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  resources :g_centros_custos_movimentos
-  resources :g_tipos_movimentos
-  resources :g_centros_custos
+  resources :g_veiculos
   devise_for :users
   root 'home#index'
   get 'home/index'
@@ -29,6 +27,9 @@ Rails.application.routes.draw do
   resources :g_bairros
   resources :g_municipios
   resources :g_estados
+  resources :g_centros_custos_movimentos
+  resources :g_tipos_movimentos
+  resources :g_centros_custos
   resources :o_tipos_solicitacoes
   resources :o_status
   resources :o_categorias_servicos

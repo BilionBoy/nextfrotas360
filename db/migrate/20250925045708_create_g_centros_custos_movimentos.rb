@@ -10,7 +10,6 @@ class CreateGCentrosCustosMovimentos < ActiveRecord::Migration[7.2]
         t.string :referencia_tipo
         t.bigint :referencia_id
         t.string :descricao
-        
         t.string :created_by
         t.string :updated_by
         t.datetime :deleted_at

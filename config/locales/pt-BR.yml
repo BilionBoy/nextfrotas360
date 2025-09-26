@@ -56,6 +56,9 @@ pt-BR:
       g_centro_custo_movimento:
         one: "Movimento do Centro de Custo"
         other: "Movimentos dos Centros de Custos"
+      g_veiculo:
+        one: "Veículo"
+        other: "Veículos"
       o_status:
         one: "Status do Orçamento"
         other: "Status dos Orçamentos"
@@ -142,6 +145,19 @@ pt-BR:
         valor: "Valor"
         data_movimento: "Data do Movimento"
         observacao: "Observação"
+      g_veiculo:
+        placa: "Placa"
+        chassi: "Chassi"
+        renavam: "Renavam"
+        modelo: "Modelo"
+        ano: "Ano"
+        marca: "Marca"
+        cor: "Cor"
+        km_atual: "Km Atual"
+        a_status_id: "Status"
+        g_tipo_veiculo_id: "Tipo de Veículo"
+        a_unidade_id: "Unidade"
+        g_centro_custo_id: "Centro de Custo"
       o_status:
         descricao: "Descrição"
       o_tipo_solicitacao:

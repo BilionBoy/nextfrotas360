@@ -1,0 +1,59 @@
+<%= render "shared/context_nav", title: t("activerecord.models.#{GVeiculo.model_name.i18n_key}.other") do  %>
+  <span class="breadcrumb-item"><%= link_to t("activerecord.models.#{GVeiculo.model_name.i18n_key}.other"), g_veiculos_path, class: "text-dark" %></span>
+  <span class="breadcrumb-item active"><%= t("helpers.submit.#{params[:action]}") %></span>
+<% end %>
+<%= simple_form_for(@g_veiculo) do |f| %>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="my-0">
+        <%= @g_veiculo.new_record? ? "Incluir " : "Editar " %><%= t("activerecord.models.#{GVeiculo.model_name.i18n_key}.one") %>
+      </h5>
+    </div>
+    <div class="card-body">
+      <%= f.error_notification %>
+      <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+      <div class="row">
+        <div class="col-3">
+          <%= f.input :placa, input_html: { class: "capitalize"}, placeholder: "Placa"  %>
+        </div>
+        <div class="col-3">
+          <%= f.input :chassi, input_html: { class: "capitalize"}, placeholder: "Chassi"  %>
+        </div>
+        <div class="col-3">
+          <%= f.input :renavam, input_html: { class: "capitalize"}, placeholder: "Renavam"  %>
+        </div>
+        <div class="col-3">
+          <%= f.input :modelo, input_html: { class: "capitalize"}, placeholder: "Modelo"  %>
+        </div>
+        <div class="col-3">
+          <%= f.input :ano, input_html: { class: "capitalize"}, placeholder: "Ano"  %>
+        </div>
+        <div class="col-3">
+          <%= f.input :marca, input_html: { class: "capitalize"}, placeholder: "Marca"  %>
+        </div>
+        <div class="col-3">
+          <%= f.input :cor, input_html: { class: "capitalize"}, placeholder: "Cor"  %>
+        </div>
+        <div class="col-3">
+          <%= f.input :km_atual, input_html: { class: "capitalize"}, placeholder: "Km atual"  %>
+        </div>
+        <div class="col-6">
+          <%= f.input :a_status_id, collection: AStatus.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Papel do Usuário" %>
+        </div>
+        <div class="col-6">
+          <%= f.input :g_tipo_veiculo_id, collection: GTipoVeiculo.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Papel do Usuário" %>
+        </div>
+        <div class="col-6">
+          <%= f.input :a_unidade_id, collection: AUnidade.all, label_method: :nome_fantasia, value_method: :id, prompt: "Selecione a Unidade" %>
+        </div>
+        <div class="col-6">
+          <%= f.input :g_centro_custo_id, collection: GCentroCusto.all, label_method: :nome, value_method: :id, prompt: "Selecione a Unidade" %>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <%= btn_submit(f) %>
+      <%= link_to "Voltar", g_veiculos_path, class: "btn btn-light" %>
+    </div>
+  </div>
+<% end %>
