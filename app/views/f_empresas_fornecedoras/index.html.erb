@@ -19,8 +19,8 @@
             <th><%= sort_link(@q, :razao_social, t("activerecord.attributes.f_empresa_fornecedora.razao_social")) %></th>
             <th><%= sort_link(@q, :cnjp, t("activerecord.attributes.f_empresa_fornecedora.cnjp")) %></th>
             <th><%= sort_link(@q, :contato, t("activerecord.attributes.f_empresa_fornecedora.contato")) %></th>
-            <th><%= sort_link(@q, :a_status, t("activerecord.attributes.f_empresa_fornecedora.a_status")) %></th>
-            <th><%= sort_link(@q, :g_municipio, t("activerecord.attributes.f_empresa_fornecedora.g_municipio")) %></th>
+            <th><%= sort_link(@q, :a_status, t("activerecord.attributes.f_empresa_fornecedora.status")) %></th>
+            <th><%= sort_link(@q, :g_municipio, t("activerecord.attributes.f_empresa_fornecedora.municipio")) %></th>
           </tr>
         </thead>
         <tbody>
@@ -45,8 +45,8 @@
                     <td><%= f_empresa_fornecedora.razao_social %></td>
                     <td><%= f_empresa_fornecedora.cnjp %></td>
                     <td><%= f_empresa_fornecedora.contato %></td>
-                    <td><%= f_empresa_fornecedora.a_status %></td>
-                    <td><%= f_empresa_fornecedora.g_municipio %></td>
+                    <td><%= f_empresa_fornecedora.a_status&.descricao %></td>
+                    <td><%= f_empresa_fornecedora.g_municipio&.descricao%></td>
                   </div>
                 </div>
               </td>

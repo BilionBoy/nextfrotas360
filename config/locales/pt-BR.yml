@@ -152,10 +152,6 @@ pt-BR:
         descricao: "Descrição"
         codigo_ibge: "Código Ibge"
         g_municipio_id: "Município"
-      g_condutor_veiculo:
-        g_condutor_id: "Condutor"
-        g_veiculo_id: "Veículo"
-        data_inicio: "Data Início"
       g_localidade:
         descricao: "Descrição"
         cep: "Cep"
@@ -199,11 +195,18 @@ pt-BR:
         g_categoria_carteira_condutor_id: "Categoria da Carteira do Condutor"
         g_status_id: "Status"
         g_carteira_orgao_emissor_id: "Órgão Emissor da Carteira"
-
+        g_condutor_id: "Condutor"
+        g_veiculo_id: "Veículo"
+        data_inicio: "Data Início"
+        data_fim: "Data Fim"
       g_categoria_carteira_condutor:
         descricao: "Descrição"
       g_carteira_orgao_emissor:
         descricao: "Descrição"
+      g_condutor_veiculo:
+        g_condutor_id: "Condutor"
+        g_veiculo_id: "Veículo"
+        data_inicio: "Data Início"
       o_status:
         descricao: "Descrição"
       o_tipo_solicitacao:
