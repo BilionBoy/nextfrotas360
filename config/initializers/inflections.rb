@@ -19,6 +19,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'g_centro_custo_movimento',          'g_centros_custos_movimentos'
   inflect.irregular 'g_veiculo',                         'g_veiculos'
   inflect.irregular 'g_condutor',                        'g_condutores'
+  inflect.irregular 'g_condutor_veiculo',                 'g_condutores_veiculos'
   inflect.irregular 'g_pais',                            'g_paises'
   inflect.irregular 'g_estado',                          'g_estados'
   inflect.irregular 'g_bairro',                          'g_bairros'

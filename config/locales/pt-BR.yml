@@ -62,6 +62,9 @@ pt-BR:
       g_condutor:
         one: "Condutor"
         other: "Condutores"
+      g_condutor_veiculo:
+        one: "Condutor Veículo"
+        other: "Condutores Veículos"
       g_categoria_carteira_condutor:
         one: "Categoria da Carteira do Condutor"
         other: "Categorias das Carteiras dos Condutores"
@@ -135,6 +138,10 @@ pt-BR:
         descricao: "Descrição"
         codigo_ibge: "Código Ibge"
         g_municipio_id: "Município"
+      g_condutor_veiculo:
+        g_condutor_id: "Condutor"
+        g_veiculo_id: "Veículo"
+        data_inicio: "Data Início"
       g_localidade:
         descricao: "Descrição"
         cep: "Cep"

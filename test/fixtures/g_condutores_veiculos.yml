@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  g_condutor: one
+  g_veiculo: one
+  data_inicio: 2025-09-26
+
+two:
+  g_condutor: two
+  g_veiculo: two
+  data_inicio: 2025-09-26
