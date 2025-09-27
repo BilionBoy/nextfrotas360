@@ -20,7 +20,7 @@
           <%= f.input :descricao, input_html: { class: "capitalize"}, placeholder: "Descricao"  %>
         </div>
         <div class="col-12">
-          <%= f.input :a_status_id, collection: AStatus.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Papel do Usuário" %>
+          <%= f.input :a_status_id, collection: AStatus.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Status do Usuário" %>
         </div>
       </div>
     </div>

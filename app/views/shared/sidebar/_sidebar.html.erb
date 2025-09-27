@@ -31,6 +31,11 @@
         <li class="nav-item-header pv-nav-header"><span>GESTÃO</span></li>
         <li><a href="<%= a_unidades_path %>" class="nav-link"><i class="ph-buildings"></i> Unidades</a></li>
         <li><a href="<%= t_taxas_path %>" class="nav-link"><i class="ph-file-text"></i> Taxas</a></li>
+        <li>
+          <a href="<%= new_user_path(a_tipo_usuario_id: ATipoUsuario.find_by(descricao: "Gestor")&.id) %>" class="nav-link">
+            <i class="ph-user-plus"></i> Novo Gestor
+          </a>
+        </li>
         <li class="nav-item nav-item-submenu">
           <a href="#" class="nav-link"><i class="ph-coins"></i> Centros de Custo</a>
           <ul class="nav nav-group-sub">
@@ -41,7 +46,6 @@
         </li>
         <!-- FROTA -->
         <li class="nav-item-header pv-nav-header"><span>FROTA</span></li>
-        <!-- Condutores -->
         <li class="nav-item nav-item-submenu">
           <a href="#" class="nav-link"><i class="ph-user-circle"></i> Condutores</a>
           <ul class="nav nav-group-sub">
@@ -51,7 +55,6 @@
             <li><a href="<%= g_categorias_carteiras_condutores_path %>" class="nav-link"><i class="ph-cards"></i> Categorias de Carteira</a></li>
           </ul>
         </li>
-        <!-- Veículos -->
         <li class="nav-item nav-item-submenu">
           <a href="#" class="nav-link"><i class="ph-car"></i> Veículos</a>
           <ul class="nav nav-group-sub">
@@ -63,25 +66,17 @@
         <!-- FORNECEDORES -->
         <li class="nav-item-header pv-nav-header"><span>FORNECEDORES</span></li>
         <li><a href="<%= f_empresas_fornecedoras_path %>" class="nav-link"><i class="ph-storefront"></i> Empresas Fornecedoras</a></li>
+        <li>
+          <a href="<%= new_user_path(a_tipo_usuario_id: ATipoUsuario.find_by(descricao: "Fornecedor")&.id) %>" class="nav-link">
+            <i class="ph-user-plus"></i> Novo Fornecedor
+          </a>
+        </li>
         <!-- USUÁRIOS -->
         <li class="nav-item-header pv-nav-header"><span>USUÁRIOS</span></li>
-        <li class="nav-item nav-item-submenu">
-          <a href="#" class="nav-link"><i class="ph-users"></i> Usuários</a>
-          <ul class="nav nav-group-sub">
-            <li><a href="<%= a_usuarios_papeis_path %>" class="nav-link"><i class="ph-shield"></i> Papéis</a></li>
-            <li><a href="<%= a_usuarios_historicos_cargos_unidades_path %>" class="nav-link"><i class="ph-clock"></i> Histórico de Cargos/Unidade</a></li>
-          </ul>
-        </li>
-        <li class="nav-item nav-item-submenu">
-          <a href="#" class="nav-link"><i class="ph-shield-check"></i> Papéis & Permissões</a>
-          <ul class="nav nav-group-sub">
-            <li><a href="<%= a_papeis_path %>" class="nav-link"><i class="ph-user-circle"></i> Papéis</a></li>
-            <li><a href="<%= a_permissoes_path %>" class="nav-link"><i class="ph-key"></i> Permissões</a></li>
-            <li><a href="<%= a_papeis_permissoes_path %>" class="nav-link"><i class="ph-link"></i> Associações</a></li>
-            <li><a href="<%= a_cargos_path %>" class="nav-link"><i class="ph-briefcase"></i> Cargos</a></li>
-          </ul>
-        </li>
-        <!-- CONFIGURAÇÕES -->
+        <li><a href="<%= users_path %>" class="nav-link"><i class="ph-users"></i> Lista / Cadastro de Usuários</a></li>
+        <li><a href="<%= a_usuarios_papeis_path %>" class="nav-link"><i class="ph-shield"></i> Papéis</a></li>
+        <li><a href="<%= a_usuarios_historicos_cargos_unidades_path %>" class="nav-link"><i class="ph-clock"></i> Histórico Cargos/Unidade</a></li>
+        <!-- CONFIGURAÇÕES / REFERENCIAIS -->
         <li class="nav-item-header pv-nav-header"><span>CONFIGURAÇÕES</span></li>
         <li class="nav-item nav-item-submenu">
           <a href="#" class="nav-link"><i class="ph-database"></i> Referenciais</a>

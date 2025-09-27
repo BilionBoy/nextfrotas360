@@ -1,6 +1,7 @@
 module ApplicationHelper
   include Pagy::Frontend
 
+  
   def btn_submit(form)
     text = form.object.new_record? ? 'Incluir' : 'Atualizar'
     icon_class = 'ph-paper-plane-tilt ms-1'
@@ -12,6 +13,14 @@ module ApplicationHelper
 
   def formatar_boolean_xlsx(value)
     value ? 'Sim' : 'Não'
+  end 
+  
+  def formatar_cpf(cpf)
+    cpf.gsub(/(\d{3})(\d{3})(\d{3})(\d{2})/, '\1.\2.\3-\4') if cpf
+  end
+
+  def formatar_cep(cep)
+    cep.gsub(/(\d{5})(\d{3})/, '\1-\2') if cep
   end
 
   def formatar_data(data)
