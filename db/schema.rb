@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_26_163241) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_27_192504) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -135,6 +135,34 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_26_163241) do
     t.index ["a_papel_id"], name: "index_a_usuarios_papeis_on_a_papel_id"
     t.index ["a_unidade_id"], name: "index_a_usuarios_papeis_on_a_unidade_id"
     t.index ["user_id"], name: "index_a_usuarios_papeis_on_user_id"
+  end
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "f_empresas_fornecedoras", force: :cascade do |t|
@@ -439,11 +467,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_26_163241) do
     t.bigint "a_status_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "f_empresa_fornecedora_id"
+    t.string "created_by"
     t.index ["a_cargo_id"], name: "index_users_on_a_cargo_id"
     t.index ["a_status_id"], name: "index_users_on_a_status_id"
     t.index ["a_tipo_usuario_id"], name: "index_users_on_a_tipo_usuario_id"
     t.index ["a_unidade_id"], name: "index_users_on_a_unidade_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["f_empresa_fornecedora_id"], name: "index_users_on_f_empresa_fornecedora_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -457,6 +488,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_26_163241) do
   add_foreign_key "a_usuarios_papeis", "a_papeis"
   add_foreign_key "a_usuarios_papeis", "a_unidades"
   add_foreign_key "a_usuarios_papeis", "users"
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "f_empresas_fornecedoras", "a_status"
   add_foreign_key "f_empresas_fornecedoras", "g_municipios"
   add_foreign_key "g_bairros", "g_municipios"
@@ -482,4 +515,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_26_163241) do
   add_foreign_key "users", "a_status"
   add_foreign_key "users", "a_tipo_usuarios"
   add_foreign_key "users", "a_unidades"
+  add_foreign_key "users", "f_empresas_fornecedoras"
 end

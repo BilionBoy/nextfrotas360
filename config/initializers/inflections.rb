@@ -9,6 +9,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'a_tipo_usuario',                    'a_tipo_usuarios'
   inflect.irregular 'a_usuario_papel',                   'a_usuarios_papeis'
   inflect.irregular 'f_empresa_fornecedora',             'f_empresas_fornecedoras'
+  inflect.irregular 'f_usuario_fornecedor',              'f_usuarios_fornecedores'
   inflect.irregular 'a_usuario_historico_cargo_unidade', 'a_usuarios_historicos_cargos_unidades'
   inflect.irregular 'g_status',                          'g_status'
   inflect.irregular 'g_tipo_veiculo',                    'g_tipos_veiculos'

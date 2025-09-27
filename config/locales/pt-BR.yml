@@ -20,6 +20,27 @@ pt-BR:
       a_tipo_usuario:
         one: "Tipo de Usuário"
         other: "Tipos de Usuários"
+      a_usuario_historico_cargo_unidade:
+        one: "Histórico de Cargo da Unidade do Usuário"
+        other: "Históricos de Cargos das Unidades dos Usuários"
+      a_unidade:
+        one: "Unidade"
+        other: "Unidades"
+      a_cargo:
+        one: "Cargo"
+        other: "Cargos"
+      a_papel:
+        one: "Papel"
+        other: "Papéis"
+      a_permissao:
+        one: "Permissão do Papel"
+        other: "Permissões dos Papéis"
+      a_papel_permissao:
+        one: "Papel Permissão"
+        other: "Papéis Permissões"
+      a_usuario_papel:
+        one: "Usuário Papel"
+        other: "Usuários Papéis"
       f_empresa_fornecedora:
         one: "Empresa Fornecedora"
         other: "Empresas Fornecedoras"
@@ -92,24 +113,9 @@ pt-BR:
       t_taxa:
         one: "Taxa"
         other: "Taxas"
-      a_unidade:
-        one: "Unidade"
-        other: "Unidades"
-      a_cargo:
-        one: "Cargo"
-        other: "Cargos"
-      a_papel:
-        one: "Papel"
-        other: "Papéis"
-      a_permissao:
-        one: "Permissão do Papel"
-        other: "Permissões dos Papéis"
-      a_papel_permissao:
-        one: "Papel Permissão"
-        other: "Papéis Permissões"
-      a_usuario_papel:
-        one: "Usuário Papel"
-        other: "Usuários Papéis"
+      user:
+        one: "Usuário"
+        other: "Usuários"
     attributes:
       a_status:
         descricao: "Descrição"
@@ -239,6 +245,12 @@ pt-BR:
         descricao: "Descrição"
         nivel: "Nível"
         a_status_id: "Status"
+      a_usuario_historico_cargo_uniade:
+        user_id: "Usuário"
+        a_cargo_id: "Cargo"
+        a_unidade_id: "Unidade"
+        data_inicio: "Data Início"
+        data_fim: "Data Fim"
       a_papel:
         nome: "Nome"
         descricao: "Descrição"
@@ -256,6 +268,16 @@ pt-BR:
         a_unidade_id: "Unidade"
         user_id: "Usuário"
         a_papel_id: "Papel"
+      user:
+        nome: "Nome"
+        email: "Email"
+        password: "Senha"
+        password_confirmation: "Confirmação de Senha"
+        a_tipo_usuario_id: "Tipo de Usuário"
+        a_status_id: "Status"
+        a_unidade_id: "Unidade"
+        a_cargo_id: "Cargo"
+        f_empresa_fornecedora_id: "Empresa Fornecedora"
     errors:
       messages:
         record_invalid: "A validação falhou: %{errors}"

@@ -1,13 +1,26 @@
 Rails.application.routes.draw do
-  resources :f_empresas_fornecedoras
-  resources :g_condutores_veiculos
   devise_for :users
+
+  resources :users, path: "usuarios" do
+    collection do
+      get  :novo_gestor,       to: 'users#new_gestor'
+      post :create_gestor,     to: 'users#create_gestor'
+      get  :novo_fornecedor,   to: 'users#new_fornecedor'
+      post :create_fornecedor, to: 'users#create_fornecedor'
+    end
+
+    member do
+      delete :remove_foto_perfil
+      delete :remove_foto_rg
+    end
+  end
+
   root 'home#index'
   get 'home/index'
-  
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+
+  # Health check
   get 'up' => 'rails/health#show', as: :rails_health_check
-  
+
   # Rotas Scaffold
   resources :a_tipos_unidades
   resources :a_tipo_usuarios
@@ -19,10 +32,12 @@ Rails.application.routes.draw do
   resources :a_papeis
   resources :a_cargos
   resources :a_unidades
+  resources :f_empresas_fornecedoras
   resources :g_status
   resources :g_tipos_veiculos
   resources :g_tipos_centros_custos
   resources :g_condutores
+  resources :g_condutores_veiculos
   resources :g_carteiras_orgaos_emissores
   resources :g_categorias_carteiras_condutores
   resources :g_veiculos
