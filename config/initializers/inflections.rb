@@ -35,4 +35,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'o_urgencia',                        'o_urgencias'
   inflect.irregular 'o_visibilidade',                    'o_visibilidades'
   inflect.irregular 't_taxa',                            't_taxas'
+  inflect.irregular 't_taxa_empresa_fornecedora',        't_taxas_empresas_fornecedoras'
 end
