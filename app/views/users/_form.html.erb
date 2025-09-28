@@ -26,17 +26,19 @@
         <div class="col-md-4">
           <%= f.input :email, input_html: { placeholder: "Digite o e-mail" } %>
         </div>
+        <!-- Tipo de Usuário -->
         <div class="col-md-4">
           <%= f.input :a_tipo_usuario_id, collection: ATipoUsuario.all, label_method: :descricao,
-              value_method: :id, prompt: "Selecione a Tipo de Usuário" %>
+              value_method: :id, prompt: "Selecione o Tipo de Usuário", input_html: { id: "tipo-usuario-select" } %>
         </div>
-        <!-- Campos condicionais -->
-        <div class="col-md-4" id="campo-unidade" style="<%= @user.gestor? || @user.admin? ? '' : 'display:none;' %>">
+        <!-- Campo Unidade -->
+        <div class="col-md-4" id="campo-unidade">
           <%= f.input :a_unidade_id, collection: AUnidade.all, label_method: :nome_fantasia,
-              value_method: :id, prompt: "Selecione a " %>
+              value_method: :id, prompt: "Selecione a Unidade" %>
         </div>
-        <div class="col-md-4" id="campo-empresa" style="<%= @user.fornecedor? ? '' : 'display:none;' %>">
-          <%= f.input :f_empresa_fornecedora_id, collection: AStatus.all, label_method: :descricao,
+        <!-- Campo Empresa -->
+        <div class="col-md-4" id="campo-empresa">
+          <%= f.input :f_empresa_fornecedora_id, collection: FEmpresaFornecedora.all, label_method: :nome_fantasia,
               value_method: :id, prompt: "Selecione a Empresa do Usuário" %>
         </div>
         <!-- Cargo e Status -->
@@ -95,12 +97,17 @@
     const campoEmpresa = document.getElementById("campo-empresa");
 
     function toggleFields() {
+      if (!select) return;
+
       const selectedText = select.options[select.selectedIndex].text.toLowerCase();
+
+      // Mostrar unidade apenas para admin e gestor
       campoUnidade.style.display = (selectedText === "admin" || selectedText === "gestor") ? "block" : "none";
+      // Mostrar empresa apenas para fornecedor
       campoEmpresa.style.display = (selectedText === "fornecedor") ? "block" : "none";
     }
 
     select.addEventListener("change", toggleFields);
-    toggleFields(); // garante que ao carregar a página já exiba o correto
+    toggleFields(); // Garante que o campo correto apareça ao carregar a página (edição)
   });
 </script>
