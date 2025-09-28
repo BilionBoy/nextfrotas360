@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_27_192504) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_28_082003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -452,6 +452,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_27_192504) do
     t.index ["a_status_id"], name: "index_t_taxas_on_a_status_id"
   end
 
+  create_table "t_taxas_empresas_fornecedoras", force: :cascade do |t|
+    t.bigint "t_taxa_id", null: false
+    t.bigint "f_empresa_fornecedora_id", null: false
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["f_empresa_fornecedora_id"], name: "idx_on_f_empresa_fornecedora_id_0c789feaac"
+    t.index ["t_taxa_id"], name: "index_t_taxas_empresas_fornecedoras_on_t_taxa_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -511,6 +523,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_27_192504) do
   add_foreign_key "g_veiculos", "g_centros_custos"
   add_foreign_key "g_veiculos", "g_tipos_veiculos"
   add_foreign_key "t_taxas", "a_status"
+  add_foreign_key "t_taxas_empresas_fornecedoras", "f_empresas_fornecedoras"
+  add_foreign_key "t_taxas_empresas_fornecedoras", "t_taxas"
   add_foreign_key "users", "a_cargos"
   add_foreign_key "users", "a_status"
   add_foreign_key "users", "a_tipo_usuarios"

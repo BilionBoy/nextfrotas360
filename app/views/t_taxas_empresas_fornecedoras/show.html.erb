@@ -1,0 +1,29 @@
+<div class="container">
+  <%= render "shared/notice" %>
+  <div class="card border-0 shadow shadow-sm">
+    <div class="card-header border-0 d-flex justify-content-between">
+      <span class="fs-4">Visualizar T Taxa Empresa Fornecedora</span>
+    </div>
+    <div class="card-body">
+      <div id="<%= dom_id @t_taxa_empresa_fornecedora %>">
+          <p>
+            <strong>T Taxa:</strong>
+            <%= @t_taxa_empresa_fornecedora.t_taxa %>
+          </p>
+          <p>
+            <strong>F Empresa Fornecedora:</strong>
+            <%= @t_taxa_empresa_fornecedora.f_empresa_fornecedora %>
+          </p>
+      </div>
+    </div>
+    <div class="card-footer border-0 d-flex justify-content-between">
+      <div>
+        <%= link_to edit_t_taxa_empresa_fornecedora_path(@t_taxa_empresa_fornecedora), class: "btn btn-primary" do %>
+        <i class="bi bi-pencil-square"></i> Editar
+        <% end %>
+        <%= link_to "Voltar", t_taxas_empresas_fornecedoras_path, class: "btn btn-secondary" %>
+      </div>
+      <%= button_to "Deletar", @t_taxa_empresa_fornecedora, method: :delete, class: "btn btn-outline-danger border-0" %>
+    </div>
+  </div>
+</div>

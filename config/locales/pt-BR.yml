@@ -113,6 +113,9 @@ pt-BR:
       t_taxa:
         one: "Taxa"
         other: "Taxas"
+      t_taxa_empresa_fornecedora:
+        one: "Taxa da Empresa Fornecedora"
+        other: "Taxas das Empresas Fornecedoras"
       user:
         one: "Usuário"
         other: "Usuários"
@@ -228,6 +231,9 @@ pt-BR:
         descricao: "Descrição"
         percentual: "Percentual"
         a_status_id: "Status"
+      t_taxa_empresa_fornecedora:
+        t_taxa_id: "Taxa"
+        f_empresa_fornecedora_id: "Empresa Fornecedora"
       a_unidade:
         nome_fantasia: "Nome"
         descricao: "Descrição"

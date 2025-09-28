@@ -1,0 +1,1 @@
+json.partial! "t_taxas_empresas_fornecedoras/t_taxa_empresa_fornecedora", t_taxa_empresa_fornecedora: @t_taxa_empresa_fornecedora

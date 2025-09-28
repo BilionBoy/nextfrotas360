@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :t_taxas_empresas_fornecedoras
   devise_for :users
 
   resources :users, path: "usuarios" do
