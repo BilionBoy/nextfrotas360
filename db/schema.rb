@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_29_041905) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_29_044023) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -501,7 +501,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_29_041905) do
     t.string "telefone"
     t.string "cpf"
     t.bigint "a_cargo_id", null: false
-    t.bigint "a_unidade_id", null: false
+    t.bigint "a_unidade_id"
     t.bigint "a_tipo_usuario_id", null: false
     t.bigint "a_status_id", null: false
     t.datetime "created_at", null: false
