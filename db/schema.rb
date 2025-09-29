@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_29_035935) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_29_041905) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -194,6 +194,21 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_29_035935) do
     t.datetime "updated_at", null: false
     t.index ["f_empresa_fornecedora_id"], name: "index_f_empresas_servicos_on_f_empresa_fornecedora_id"
     t.index ["o_categoria_servico_id"], name: "index_f_empresas_servicos_on_o_categoria_servico_id"
+  end
+
+  create_table "f_financeiros", force: :cascade do |t|
+    t.bigint "f_empresa_fornecedora_id", null: false
+    t.bigint "o_categoria_servico_id", null: false
+    t.decimal "saldo_total", precision: 15, scale: 2, default: "0.0", null: false
+    t.decimal "saldo_disponivel", precision: 15, scale: 2, default: "0.0", null: false
+    t.decimal "saldo_reservado", precision: 15, scale: 2, default: "0.0", null: false
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["f_empresa_fornecedora_id"], name: "index_f_financeiros_on_f_empresa_fornecedora_id"
+    t.index ["o_categoria_servico_id"], name: "index_f_financeiros_on_o_categoria_servico_id"
   end
 
   create_table "g_bairros", force: :cascade do |t|
@@ -518,6 +533,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_29_035935) do
   add_foreign_key "f_empresas_fornecedoras", "g_municipios"
   add_foreign_key "f_empresas_servicos", "f_empresas_fornecedoras"
   add_foreign_key "f_empresas_servicos", "o_categorias_servicos"
+  add_foreign_key "f_financeiros", "f_empresas_fornecedoras"
+  add_foreign_key "f_financeiros", "o_categorias_servicos"
   add_foreign_key "g_bairros", "g_municipios"
   add_foreign_key "g_centros_custos", "a_unidades"
   add_foreign_key "g_centros_custos", "g_tipos_centros_custos"

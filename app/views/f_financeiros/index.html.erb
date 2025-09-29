@@ -1,0 +1,60 @@
+<%= render "shared/context_nav", title: t("activerecord.models.#{FFinanceiro.model_name.i18n_key}.other"), new_path: new_f_financeiro_path do  %>
+  <span class="breadcrumb-item active"><%= t("activerecord.models.#{FFinanceiro.model_name.i18n_key}.other") %></span>
+<% end %>
+<div class="card">
+  <div class="card-header d-flex">
+    <%= search_form_for @q, html: { class: "d-flex gap-2" , autocomplete: "off"} do |f| %>
+      <%= f.search_field :f_empresa_fornecedora_nome_fantasia_cont, class: "form-control", placeholder: "Pesquisar" %>
+      <%= f.button(type: 'submit', class: 'btn btn-info') { tag.i(class: 'ph-magnifying-glass') } %>
+      <%= link_to  tag.i(class: 'ph-x-circle'), f_financeiros_path, class: "btn btn-light" if params[:q] %>
+    <% end %>
+  </div>
+  <div class="card-body">
+    <div class= "table-responsive">
+      <table class="table table-sm table-bordered table-striped">
+        <thead>
+          <tr>
+            <th class="text-center">Ações</th>
+            <th><%= sort_link(@q, :f_empresa_fornecedora, t("activerecord.attributes.f_financeiro.empresa_fornecedora")) %></th>
+            <th><%= sort_link(@q, :o_categoria_servico, t("activerecord.attributes.f_financeiro.categoria_servico")) %></th>
+            <th><%= sort_link(@q, :saldo_total, t("activerecord.attributes.f_financeiro.saldo_total")) %></th>
+            <th><%= sort_link(@q, :saldo_disponivel, t("activerecord.attributes.f_financeiro.saldo_disponivel")) %></th>
+            <th><%= sort_link(@q, :saldo_reservado, t("activerecord.attributes.f_financeiro.saldo_reservado")) %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @f_financeiros.each do |f_financeiro| %>
+            <tr>
+              <td class="text-center">
+                <div class="dropdown-toggle">
+                  <a href="#" class="text-body dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="ph-gear"></i>
+                  </a>
+                  <div class="dropdown-menu" style="">
+                    <div class="dropdown-header">Opções</div>
+                    <%= link_to edit_f_financeiro_path(f_financeiro), class: "dropdown-item" do %>
+                      <i class="ph-pen me-2"></i> Editar
+                    <% end %>
+                    <%= form_for f_financeiro, method: :delete do |f| %>
+                      <a class="dropdown-item hand-pointer " data-confirm-delete="<%= f_financeiro_path(f_financeiro) %>" data-csrf-token="<%= form_authenticity_token %>">
+                        <i class="ph-trash-simple me-2"></i>Excluir
+                      </a>
+                    <% end %>
+                    <td><%= f_financeiro.f_empresa_fornecedora&.nome_fantasia %></td>
+                    <td><%= f_financeiro.o_categoria_servico&.descricao%></td>
+                    <td><%= f_financeiro.saldo_total %></td>
+                    <td><%= f_financeiro.saldo_disponivel %></td>
+                    <td><%= f_financeiro.saldo_reservado %></td>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= pagy_bootstrap_nav(@pagy, link_extra: 'class="btn btn-outline-secondary btn-sm mx-1"').html_safe %>
+  </div>
+</div>

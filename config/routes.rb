@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :f_financeiros
   resources :f_empresas_servicos
   devise_for :users
   
