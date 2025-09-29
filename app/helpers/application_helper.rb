@@ -1,6 +1,6 @@
 module ApplicationHelper
   include Pagy::Frontend
-
+  include SidebarHelper
   
   def btn_submit(form)
     text = form.object.new_record? ? 'Incluir' : 'Atualizar'
