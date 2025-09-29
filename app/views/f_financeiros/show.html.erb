@@ -1,0 +1,41 @@
+<div class="container">
+  <%= render "shared/notice" %>
+  <div class="card border-0 shadow shadow-sm">
+    <div class="card-header border-0 d-flex justify-content-between">
+      <span class="fs-4">Visualizar F Financeiro</span>
+    </div>
+    <div class="card-body">
+      <div id="<%= dom_id @f_financeiro %>">
+          <p>
+            <strong>F Empresa Fornecedora:</strong>
+            <%= @f_financeiro.f_empresa_fornecedora %>
+          </p>
+          <p>
+            <strong>O Categoria Servico:</strong>
+            <%= @f_financeiro.o_categoria_servico %>
+          </p>
+          <p>
+            <strong>Saldo Total:</strong>
+            <%= @f_financeiro.saldo_total %>
+          </p>
+          <p>
+            <strong>Saldo Disponivel:</strong>
+            <%= @f_financeiro.saldo_disponivel %>
+          </p>
+          <p>
+            <strong>Saldo Reservado:</strong>
+            <%= @f_financeiro.saldo_reservado %>
+          </p>
+      </div>
+    </div>
+    <div class="card-footer border-0 d-flex justify-content-between">
+      <div>
+        <%= link_to edit_f_financeiro_path(@f_financeiro), class: "btn btn-primary" do %>
+        <i class="bi bi-pencil-square"></i> Editar
+        <% end %>
+        <%= link_to "Voltar", f_financeiros_path, class: "btn btn-secondary" %>
+      </div>
+      <%= button_to "Deletar", @f_financeiro, method: :delete, class: "btn btn-outline-danger border-0" %>
+    </div>
+  </div>
+</div>

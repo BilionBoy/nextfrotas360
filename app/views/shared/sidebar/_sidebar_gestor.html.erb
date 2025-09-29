@@ -63,40 +63,11 @@
             <li><a href="<%= g_status_index_path %>" class="nav-link"><i class="ph-check-circle"></i> Status</a></li>
           </ul>
         </li>
-        <!-- FORNECEDORES -->
-        <li class="nav-item-header pv-nav-header"><span>FORNECEDORES</span></li>
-        <li><a href="<%= f_empresas_fornecedoras_path %>" class="nav-link"><i class="ph-storefront"></i> Empresas Fornecedoras</a></li>
-        <li>
-          <a href="<%= new_user_path(a_tipo_usuario_id: ATipoUsuario.find_by(descricao: "Fornecedor")&.id) %>" class="nav-link">
-            <i class="ph-user-plus"></i> Novo Fornecedor
-          </a>
-        </li>
-        <li class="nav-item nav-item-submenu">
-          <a href="#" class="nav-link"><i class="ph-coins"></i> Financeiro</a>
-          <ul class="nav nav-group-sub">
-            <li><a href="<%= f_financeiros_path %>" class="nav-link"><i class="ph-coins"></i> Saldo / Financeiro</a></li>
-            <li><a href="<%= f_empresas_servicos_path %>" class="nav-link"><i class="ph-clipboard-text"></i> Serviços da Empresa</a></li>
-          </ul>
-        </li>
-        <!-- USUÁRIOS -->
-        <li class="nav-item-header pv-nav-header"><span>USUÁRIOS</span></li>
-        <li><a href="<%= users_path %>" class="nav-link"><i class="ph-users"></i> Lista / Cadastro de Usuários</a></li>
-        <li><a href="<%= a_usuarios_papeis_path %>" class="nav-link"><i class="ph-shield"></i> Papéis</a></li>
-        <li><a href="<%= a_usuarios_historicos_cargos_unidades_path %>" class="nav-link"><i class="ph-clock"></i> Histórico Cargos/Unidade</a></li>
         <!-- CONFIGURAÇÕES / REFERENCIAIS -->
         <li class="nav-item-header pv-nav-header"><span>CONFIGURAÇÕES</span></li>
         <li class="nav-item nav-item-submenu">
           <a href="#" class="nav-link"><i class="ph-database"></i> Referenciais</a>
           <ul class="nav nav-group-sub">
-            <!-- Usuários -->
-            <li class="nav-item nav-item-submenu">
-              <a href="#" class="nav-link"><i class="ph-users"></i> Usuários</a>
-              <ul class="nav nav-group-sub">
-                <li><a href="<%= a_tipo_usuarios_path %>" class="nav-link"><i class="ph-identification-card"></i> Tipos de Usuários</a></li>
-                <li><a href="<%= a_status_index_path %>" class="nav-link"><i class="ph-toggle-left"></i> Status</a></li>
-                <li><a href="<%= a_tipos_unidades_path %>" class="nav-link"><i class="ph-buildings"></i> Tipos de Unidade</a></li>
-              </ul>
-            </li>
             <!-- Condutores -->
             <li class="nav-item nav-item-submenu">
               <a href="#" class="nav-link"><i class="ph-user-circle"></i> Condutores</a>

@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  f_empresa_fornecedora: one
+  o_categoria_servico: one
+  saldo_total: 9.99
+  saldo_disponivel: 9.99
+  saldo_reservado: 9.99
+
+two:
+  f_empresa_fornecedora: two
+  o_categoria_servico: two
+  saldo_total: 9.99
+  saldo_disponivel: 9.99
+  saldo_reservado: 9.99

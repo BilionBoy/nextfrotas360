@@ -44,6 +44,12 @@ pt-BR:
       f_empresa_fornecedora:
         one: "Empresa Fornecedora"
         other: "Empresas Fornecedoras"
+      f_empresa_servico:
+        one: "Empresa de Serviço"
+        other: "Empresas de Serviços"
+      f_financeiro:
+        one: "Financeiro"
+        other: "Financeiros"
       g_status:
         one: "Status de Gestão"
         other: "Status de Gestão"
@@ -137,6 +143,15 @@ pt-BR:
         complemento: "Complemento"
         g_municipio_id: "Município"
         a_status_id: "Status"
+      f_empresa_servico:
+        f_empresa_fornecedora_id: "Empresa Fornecedora"
+        o_categoria_servico_id: "Categoria de Serviço"
+      financeiro:
+        f_empresa_fornecedora_id: "Empresa Fornecedora"
+        o_categoria_servico_id: "Categoria de Serviço"
+        saldo_total: "Saldo Total"
+        saldo_disponivel: "Saldo Disponível"
+        saldo_reservado: "Saldo Reservado"
       g_status:
         descricao: "Descrição"
       g_tipo_veiculo:

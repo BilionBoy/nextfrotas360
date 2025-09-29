@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  resources :t_taxas_empresas_fornecedoras
+  resources :f_financeiros
+  resources :f_empresas_servicos
   devise_for :users
-
+  
   resources :users, path: "usuarios" do
     collection do
       get  :novo_gestor,       to: 'users#new_gestor'
@@ -9,7 +10,7 @@ Rails.application.routes.draw do
       get  :novo_fornecedor,   to: 'users#new_fornecedor'
       post :create_fornecedor, to: 'users#create_fornecedor'
     end
-
+    
     member do
       delete :remove_foto_perfil
       delete :remove_foto_rg
@@ -18,10 +19,10 @@ Rails.application.routes.draw do
 
   root 'home#index'
   get 'home/index'
-
+  
   # Health check
   get 'up' => 'rails/health#show', as: :rails_health_check
-
+  
   # Rotas Scaffold
   resources :a_tipos_unidades
   resources :a_tipo_usuarios
@@ -57,4 +58,5 @@ Rails.application.routes.draw do
   resources :o_visibilidades
   resources :o_urgencias
   resources :t_taxas
+  resources :t_taxas_empresas_fornecedoras
 end

@@ -1,0 +1,105 @@
+<div class="sidebar sidebar-dark sidebar-main sidebar-expand-xl pv-sidebar">
+  <div class="sidebar-content">
+    <!-- HEADER -->
+    <div class="sidebar-section">
+      <div class="sidebar-section-body d-flex justify-content-between align-items-center px-3 py-2">
+        <div class="pv-menu-header d-flex align-items-center gap-2">
+          <i class="ph-storefront pv-menu-icon"></i>
+          <h5 class="sidebar-resize-hide flex-grow-1 my-auto pv-menu-title"><strong>HOME</strong></h5>
+        </div>
+        <button type="button" class="btn btn-flat-white btn-icon btn-sm rounded-pill border-transparent sidebar-mobile-main-toggle d-xl-none pv-close-btn">
+          <i class="ph-x"></i>
+        </button>
+      </div>
+    </div>
+    <!-- SEARCH -->
+    <div class="sidebar-section-body">
+      <div class="form-control-feedback form-control-feedback-end">
+        <input type="search" id="sidebar-search-input" class="form-control" placeholder="Pesquisar" />
+        <div class="form-control-feedback-icon"><i class="ph-magnifying-glass opacity-50"></i></div>
+      </div>
+    </div>
+    <!-- NAVIGATION -->
+    <div class="sidebar-section">
+      <ul class="nav nav-sidebar pv-nav" data-nav-type="accordion" id="sidebar-items">
+        <!-- HOME -->
+        <li class="nav-item">
+          <a href="<%= root_path %>" class="nav-link pv-nav-link active"><i class="ph-house-line"></i> Página Inicial</a>
+        </li>
+        <!-- SERVIÇOS -->
+        <li class="nav-item-header pv-nav-header"><span>SERVIÇOS</span></li>
+        <li><a href="<%= f_empresas_servicos_path %>" class="nav-link"><i class="ph-clipboard-text"></i> Meus Serviços</a></li>
+        <!-- FINANCEIRO -->
+        <li class="nav-item-header pv-nav-header"><span>FINANCEIRO</span></li>
+        <li><a href="<%= f_financeiros_path %>" class="nav-link"><i class="ph-coins"></i> Saldo</a></li>
+        <li><a href="<%= f_financeiros_movimentos_path %>" class="nav-link"><i class="ph-swap"></i> Movimentos</a></li>
+        <!-- ORÇAMENTOS -->
+        <li class="nav-item-header pv-nav-header"><span>ORÇAMENTOS</span></li>
+        <li><a href="<%= o_status_index_path %>" class="nav-link"><i class="ph-flag"></i> Status</a></li>
+        <li><a href="<%= o_tipos_solicitacoes_path %>" class="nav-link"><i class="ph-list-plus"></i> Tipos Solicitação</a></li>
+        <li><a href="<%= o_categorias_servicos_path %>" class="nav-link"><i class="ph-grid-four"></i> Categorias Serviço</a></li>
+        <li><a href="<%= o_urgencias_path %>" class="nav-link"><i class="ph-warning-circle"></i> Urgências</a></li>
+        <li><a href="<%= o_visibilidades_path %>" class="nav-link"><i class="ph-eye"></i> Visibilidades</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const input = document.getElementById('sidebar-search-input');
+
+    function filterSidebar() {
+      const filter = input.value.toLowerCase();
+      const navItems = document.querySelectorAll('#sidebar-items .nav-item:not(.nav-item-header)');
+      const navHeaders = document.querySelectorAll('#sidebar-items .nav-item-header');
+      let visibleCount = 0;
+
+      navItems.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(filter) ? '' : 'none';
+        if (text.includes(filter)) visibleCount++;
+      });
+
+      navHeaders.forEach(header => {
+        let next = header.nextElementSibling;
+        let hasVisible = false;
+        while (next && !next.classList.contains('nav-item-header')) {
+          if (next.classList.contains('nav-item') && next.style.display !== 'none') hasVisible = true;
+          next = next.nextElementSibling;
+        }
+        header.style.display = hasVisible || filter === '' ? '' : 'none';
+      });
+
+      const sidebar = document.querySelector('.pv-nav');
+      let noResultMsg = sidebar.querySelector('.no-results-message');
+
+      if (visibleCount === 0 && filter.length > 0) {
+        if (!noResultMsg) {
+          noResultMsg = document.createElement('li');
+          noResultMsg.className = 'nav-item no-results-message';
+          noResultMsg.innerHTML = `
+            <div class="nav-link pv-no-results">
+              <i class="ph-magnifying-glass me-2"></i>
+              <div>
+                <strong>Nenhum resultado encontrado</strong>
+                <small>Tente usar termos diferentes</small>
+              </div>
+            </div>`;
+          sidebar.appendChild(noResultMsg);
+        }
+      } else if (noResultMsg) {
+        noResultMsg.remove();
+      }
+    }
+
+    input.addEventListener('keyup', filterSidebar);
+    document.querySelectorAll('.nav-item-submenu > a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const parent = link.parentElement;
+        parent.classList.toggle('open');
+      });
+    });
+    document.querySelectorAll('.nav-item-submenu').forEach(submenu => submenu.classList.remove('open'));
+  });
+</script>
