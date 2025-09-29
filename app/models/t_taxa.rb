@@ -6,4 +6,8 @@ class TTaxa < ApplicationRecord
   validates :nome,       presence: true
   validates :descricao,  presence: true
   validates :percentual, presence: true
+
+  def nome_com_percentual
+    "#{nome} - #{percentual.to_s.gsub('.', ',')}%"
+  end
 end

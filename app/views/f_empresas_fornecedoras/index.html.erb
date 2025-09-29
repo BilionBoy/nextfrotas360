@@ -3,14 +3,14 @@
 <% end %>
 <div class="card">
   <div class="card-header d-flex">
-    <%= search_form_for @q, html: { class: "d-flex gap-2" , autocomplete: "off"} do |f| %>
+    <%= search_form_for @q, html: { class: "d-flex gap-2", autocomplete: "off" } do |f| %>
       <%= f.search_field :nome_fantasia_cont, class: "form-control", placeholder: "Pesquisar" %>
       <%= f.button(type: 'submit', class: 'btn btn-info') { tag.i(class: 'ph-magnifying-glass') } %>
-      <%= link_to  tag.i(class: 'ph-x-circle'), f_empresas_fornecedoras_path, class: "btn btn-light" if params[:q] %>
+      <%= link_to tag.i(class: 'ph-x-circle'), f_empresas_fornecedoras_path, class: "btn btn-light" if params[:q] %>
     <% end %>
   </div>
   <div class="card-body">
-    <div class= "table-responsive">
+    <div class="table-responsive">
       <table class="table table-sm table-bordered table-striped">
         <thead>
           <tr>
@@ -19,6 +19,7 @@
             <th><%= sort_link(@q, :razao_social, t("activerecord.attributes.f_empresa_fornecedora.razao_social")) %></th>
             <th><%= sort_link(@q, :cnjp, t("activerecord.attributes.f_empresa_fornecedora.cnjp")) %></th>
             <th><%= sort_link(@q, :contato, t("activerecord.attributes.f_empresa_fornecedora.contato")) %></th>
+            <th><%= sort_link(@q, :t_taxas_nome, "Taxas") %></th>
             <th><%= sort_link(@q, :a_status, t("activerecord.attributes.f_empresa_fornecedora.status")) %></th>
             <th><%= sort_link(@q, :g_municipio, t("activerecord.attributes.f_empresa_fornecedora.municipio")) %></th>
           </tr>
@@ -31,25 +32,36 @@
                   <a href="#" class="text-body dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="ph-gear"></i>
                   </a>
-                  <div class="dropdown-menu" style="">
+                  <div class="dropdown-menu">
                     <div class="dropdown-header">Opções</div>
+                    <%= link_to new_t_taxa_empresa_fornecedora_path(f_empresa_fornecedora_id: f_empresa_fornecedora.id), class: "dropdown-item" do %>
+                      <i class="ph-plus-circle me-2"></i> Associar taxa à empresa
+                    <% end %>
                     <%= link_to edit_f_empresa_fornecedora_path(f_empresa_fornecedora), class: "dropdown-item" do %>
                       <i class="ph-pen me-2"></i> Editar
                     <% end %>
                     <%= form_for f_empresa_fornecedora, method: :delete do |f| %>
-                      <a class="dropdown-item hand-pointer " data-confirm-delete="<%= f_empresa_fornecedora_path(f_empresa_fornecedora) %>" data-csrf-token="<%= form_authenticity_token %>">
-                        <i class="ph-trash-simple me-2"></i>Excluir
+                      <a class="dropdown-item hand-pointer" data-confirm-delete="<%= f_empresa_fornecedora_path(f_empresa_fornecedora) %>" data-csrf-token="<%= form_authenticity_token %>">
+                        <i class="ph-trash-simple me-2"></i> Excluir
                       </a>
                     <% end %>
-                    <td><%= f_empresa_fornecedora.nome_fantasia %></td>
-                    <td><%= f_empresa_fornecedora.razao_social %></td>
-                    <td><%= f_empresa_fornecedora.cnjp %></td>
-                    <td><%= f_empresa_fornecedora.contato %></td>
-                    <td><%= f_empresa_fornecedora.a_status&.descricao %></td>
-                    <td><%= f_empresa_fornecedora.g_municipio&.descricao%></td>
                   </div>
                 </div>
               </td>
+              <td><%= f_empresa_fornecedora.nome_fantasia %></td>
+              <td><%= f_empresa_fornecedora.razao_social %></td>
+              <td><%= f_empresa_fornecedora.cnjp %></td>
+              <td><%= f_empresa_fornecedora.contato %></td>
+              <!-- Coluna de Taxas -->
+              <td>
+                <% if f_empresa_fornecedora.t_taxas.any? %>
+                  <%= f_empresa_fornecedora.t_taxas.map(&:nome_com_percentual).join(", ") %>
+                <% else %>
+                  -
+                <% end %>
+              </td>
+              <td><%= f_empresa_fornecedora.a_status&.descricao %></td>
+              <td><%= f_empresa_fornecedora.g_municipio&.descricao %></td>
             </tr>
           <% end %>
         </tbody>

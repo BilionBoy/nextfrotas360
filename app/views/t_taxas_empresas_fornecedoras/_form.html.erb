@@ -14,8 +14,7 @@
       <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
       <div class="row">
         <div class="col-12">
-          <%= f.input :t_taxa_id, collection: TTaxa.all, label_method: :nome, value_method: :id, prompt: "Selecione a Taxa" %>
-        </div>
+          <%= f.input :t_taxa_id, collection: TTaxa.all, label_method: :nome_com_percentual, value_method: :id, prompt: "Selecione a Taxa" %>        </div>
         <div class="col-12">
           <%= f.input :f_empresa_fornecedora_id, collection: FEmpresaFornecedora.all, label_method: :nome_fantasia, value_method: :id, prompt: "Selecione a Empresa Fornecedora" %>
         </div>
@@ -23,7 +22,7 @@
     </div>
     <div class="card-footer">
       <%= btn_submit(f) %>
-      <%= link_to "Voltar", t_taxas_empresas_fornecedoras_path, class: "btn btn-light" %>
+      <%= link_to "Voltar", f_empresas_fornecedoras_path, class: "btn btn-light" %>
     </div>
   </div>
 <% end %>
