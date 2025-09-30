@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_30_040640) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_30_164231) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -445,6 +445,36 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_30_040640) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "o_solicitacoes", force: :cascade do |t|
+    t.integer "numero", null: false
+    t.string "descricao"
+    t.integer "km_reportado"
+    t.datetime "data_limite_publicacao"
+    t.datetime "publicado_em"
+    t.decimal "saldo_snapshot", precision: 15, scale: 2
+    t.bigint "solicitante_id", null: false
+    t.bigint "publicado_por_id"
+    t.bigint "g_veiculo_id", null: false
+    t.bigint "g_centro_custo_id", null: false
+    t.bigint "o_tipo_solicitacao_id", null: false
+    t.bigint "o_categoria_servico_id", null: false
+    t.bigint "o_status_id", null: false
+    t.bigint "o_urgencia_id"
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["g_centro_custo_id"], name: "index_o_solicitacoes_on_g_centro_custo_id"
+    t.index ["g_veiculo_id"], name: "index_o_solicitacoes_on_g_veiculo_id"
+    t.index ["o_categoria_servico_id"], name: "index_o_solicitacoes_on_o_categoria_servico_id"
+    t.index ["o_status_id"], name: "index_o_solicitacoes_on_o_status_id"
+    t.index ["o_tipo_solicitacao_id"], name: "index_o_solicitacoes_on_o_tipo_solicitacao_id"
+    t.index ["o_urgencia_id"], name: "index_o_solicitacoes_on_o_urgencia_id"
+    t.index ["publicado_por_id"], name: "index_o_solicitacoes_on_publicado_por_id"
+    t.index ["solicitante_id"], name: "index_o_solicitacoes_on_solicitante_id"
+  end
+
   create_table "o_status", force: :cascade do |t|
     t.string "descricao"
     t.string "created_by"
@@ -570,6 +600,14 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_30_040640) do
   add_foreign_key "g_veiculos", "a_unidades"
   add_foreign_key "g_veiculos", "g_centros_custos"
   add_foreign_key "g_veiculos", "g_tipos_veiculos"
+  add_foreign_key "o_solicitacoes", "g_centros_custos"
+  add_foreign_key "o_solicitacoes", "g_veiculos"
+  add_foreign_key "o_solicitacoes", "o_categorias_servicos"
+  add_foreign_key "o_solicitacoes", "o_status"
+  add_foreign_key "o_solicitacoes", "o_tipos_solicitacoes"
+  add_foreign_key "o_solicitacoes", "o_urgencias"
+  add_foreign_key "o_solicitacoes", "users", column: "publicado_por_id"
+  add_foreign_key "o_solicitacoes", "users", column: "solicitante_id"
   add_foreign_key "t_taxas", "a_status"
   add_foreign_key "t_taxas_empresas_fornecedoras", "f_empresas_fornecedoras"
   add_foreign_key "t_taxas_empresas_fornecedoras", "t_taxas"

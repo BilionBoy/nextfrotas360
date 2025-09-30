@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  numero: 1
+  solicitante: one
+  g_veiculo: one
+  g_centro_custo: one
+  o_tipo_solicitacao: one
+  o_categoria_servico: one
+  descricao: MyString
+  km_reportado: 1
+  o_urgencia: one
+  data_limite_publicacao: 2025-09-30 12:42:31
+  o_status: one
+  publicado_por: one
+  publicado_em: 2025-09-30 12:42:31
+  saldo_snapshot: 9.99
+
+two:
+  numero: 1
+  solicitante: two
+  g_veiculo: two
+  g_centro_custo: two
+  o_tipo_solicitacao: two
+  o_categoria_servico: two
+  descricao: MyString
+  km_reportado: 1
+  o_urgencia: two
+  data_limite_publicacao: 2025-09-30 12:42:31
+  o_status: two
+  publicado_por: two
+  publicado_em: 2025-09-30 12:42:31
+  saldo_snapshot: 9.99

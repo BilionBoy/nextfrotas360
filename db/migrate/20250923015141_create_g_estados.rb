@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class CreateGEstados < ActiveRecord::Migration[7.2]
-  unless table_exists?(:g_estados)
-   def up
+  def up
+    unless table_exists?(:g_estados)
      create_table :g_estados do |t|
        t.string :descricao
        t.string :uf
@@ -12,7 +12,7 @@ class CreateGEstados < ActiveRecord::Migration[7.2]
        t.datetime :deleted_at
        t.timestamps
      end
-   end
+    end
   end
 
   def down

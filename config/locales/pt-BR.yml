@@ -119,6 +119,9 @@ pt-BR:
       o_visibilidade:
         one: "Visibilidade"
         other: "Visibilidades"
+      o_solicitacao:
+        one: "Solicitação"
+        other: "Solicitações"
       t_taxa:
         one: "Taxa"
         other: "Taxas"
@@ -240,6 +243,17 @@ pt-BR:
         g_condutor_id: "Condutor"
         g_veiculo_id: "Veículo"
         data_inicio: "Data Início"
+      o_solicitacao:
+        descricao: "Descrição"
+        g_veiculo_id: "Veículo"
+        o_categoria_servico_id: "Categoria de Serviço"
+        o_tipo_solicitacao_id: "Tipo de Solicitação"
+        o_urgencia_id: "Urgência"
+        g_centro_custo_id: "Centro de Custo"
+        o_status_id: "Status"
+        data_solicitacao: "Data da Solicitação"
+        data_prevista_conclusao: "Data Prevista de Conclusão"
+        valor_estimado: "Valor Estimado"
       o_status:
         descricao: "Descrição"
       o_tipo_solicitacao:

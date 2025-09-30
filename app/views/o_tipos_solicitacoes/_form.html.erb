@@ -2,7 +2,7 @@
   <span class="breadcrumb-item"><%= link_to t("activerecord.models.#{OTipoSolicitacao.model_name.i18n_key}.other"), o_tipos_solicitacoes_path, class: "text-dark" %></span>
   <span class="breadcrumb-item active"><%= t("helpers.submit.#{params[:action]}") %></span>
 <% end %>
-<%= simple_form_for(@o_tipo_solicitacao) do |f| %>
+<%= simple_form_for(@o_tipo_solicitacao, url: @o_tipo_solicitacao.new_record? ? o_tipos_solicitacoes_path : o_tipo_solicitacao_path(@o_tipo_solicitacao), method: @o_tipo_solicitacao.new_record? ? :post : :patch) do |f| %>
   <div class="card">
     <div class="card-header">
       <h5 class="my-0">
@@ -14,7 +14,7 @@
       <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
       <div class="row">
         <div class="col-3">
-          <%= f.input :descricao, input_html: { class: "capitalize"}, placeholder: "Descricao"  %>
+          <%= f.input :descricao, input_html: { class: "capitalize"}, placeholder: "Descricao" %>
         </div>
       </div>
     </div>

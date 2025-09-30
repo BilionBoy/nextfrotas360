@@ -1,0 +1,77 @@
+<div class="container">
+  <%= render "shared/notice" %>
+  <div class="card border-0 shadow shadow-sm">
+    <div class="card-header border-0 d-flex justify-content-between">
+      <span class="fs-4">Visualizar O Solicitacao</span>
+    </div>
+    <div class="card-body">
+      <div id="<%= dom_id @o_solicitacao %>">
+        <p>
+          <strong>Numero:</strong>
+          <%= @o_solicitacao.numero %>
+        </p>
+        <p>
+          <strong>Solicitante:</strong>
+          <%= @o_solicitacao.solicitante %>
+        </p>
+        <p>
+          <strong>G Veiculo:</strong>
+          <%= @o_solicitacao.g_veiculo %>
+        </p>
+        <p>
+          <strong>G Centro Custo:</strong>
+          <%= @o_solicitacao.g_centro_custo %>
+        </p>
+        <p>
+          <strong>O Tipo Solicitacao:</strong>
+          <%= @o_solicitacao.o_tipo_solicitacao %>
+        </p>
+        <p>
+          <strong>O Categoria Servico:</strong>
+          <%= @o_solicitacao.o_categoria_servico %>
+        </p>
+        <p>
+          <strong>Descricao:</strong>
+          <%= @o_solicitacao.descricao %>
+        </p>
+        <p>
+          <strong>Km Reportado:</strong>
+          <%= @o_solicitacao.km_reportado %>
+        </p>
+        <p>
+          <strong>O Urgencia:</strong>
+          <%= @o_solicitacao.o_urgencia %>
+        </p>
+        <p>
+          <strong>Data Limite Publicacao:</strong>
+          <%= @o_solicitacao.data_limite_publicacao %>
+        </p>
+        <p>
+          <strong>O Status:</strong>
+          <%= @o_solicitacao.o_status %>
+        </p>
+        <p>
+          <strong>Publicado Por:</strong>
+          <%= @o_solicitacao.publicado_por %>
+        </p>
+        <p>
+          <strong>Publicado Em:</strong>
+          <%= @o_solicitacao.publicado_em %>
+        </p>
+        <p>
+          <strong>Saldo Snapshot:</strong>
+          <%= @o_solicitacao.saldo_snapshot %>
+        </p>
+      </div>
+    </div>
+    <div class="card-footer border-0 d-flex justify-content-between">
+      <div>
+        <%= link_to edit_o_solicitacao_path(@o_solicitacao), class: "btn btn-primary" do %>
+          <i class="bi bi-pencil-square"></i> Editar
+        <% end %>
+        <%= link_to "Voltar", o_solicitacoes_path, class: "btn btn-secondary" %>
+      </div>
+      <%= button_to "Deletar", @o_solicitacao, method: :delete, class: "btn btn-outline-danger border-0" %>
+    </div>
+  </div>
+</div>

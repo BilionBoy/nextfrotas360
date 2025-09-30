@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :f_financeiros_movimentos
+  resources :o_solicitacoes
+
+
   devise_for :users
   
   resources :users, path: "usuarios" do
@@ -36,6 +38,7 @@ Rails.application.routes.draw do
   resources :f_financeiros
   resources :f_empresas_servicos
   resources :f_empresas_fornecedoras
+  resources :f_financeiros_movimentos
   resources :g_status
   resources :g_tipos_veiculos
   resources :g_tipos_centros_custos
