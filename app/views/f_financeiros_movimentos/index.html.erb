@@ -1,0 +1,60 @@
+<%= render "shared/context_nav", title: t("activerecord.models.#{FFinanceiroMovimento.model_name.i18n_key}.other"), new_path: new_f_financeiro_movimento_path do  %>
+  <span class="breadcrumb-item active"><%= t("activerecord.models.#{FFinanceiroMovimento.model_name.i18n_key}.other") %></span>
+<% end %>
+<div class="card">
+  <div class="card-header d-flex">
+    <%= search_form_for @q, html: { class: "d-flex gap-2" , autocomplete: "off"} do |f| %>
+      <%= f.search_field :descricao_cont, class: "form-control", placeholder: "Pesquisar" %>
+      <%= f.button(type: 'submit', class: 'btn btn-info') { tag.i(class: 'ph-magnifying-glass') } %>
+      <%= link_to  tag.i(class: 'ph-x-circle'), f_financeiros_movimentos_path, class: "btn btn-light" if params[:q] %>
+    <% end %>
+  </div>
+  <div class="card-body">
+    <div class= "table-responsive">
+      <table class="table table-sm table-bordered table-striped">
+        <thead>
+          <tr>
+            <th class="text-center">Ações</th>
+            <th><%= sort_link(@q, :descricao, t("activerecord.attributes.f_financeiro_movimento.descricao")) %></th>
+            <th><%= sort_link(@q, :f_financeiro, t("activerecord.attributes.f_financeiro_movimento.financeiro")) %></th>
+            <th><%= sort_link(@q, :g_tipo_movimento, t("activerecord.attributes.f_financeiro_movimento.tipo_movimento")) %></th>
+            <th><%= sort_link(@q, :valor, t("activerecord.attributes.f_financeiro_movimento.valor")) %></th>
+            <th><%= sort_link(@q, :observacao, t("activerecord.attributes.f_financeiro_movimento.observacao")) %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @f_financeiros_movimentos.each do |f_financeiro_movimento| %>
+            <tr>
+              <td class="text-center">
+                <div class="dropdown-toggle">
+                  <a href="#" class="text-body dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="ph-gear"></i>
+                  </a>
+                  <div class="dropdown-menu" style="">
+                    <div class="dropdown-header">Opções</div>
+                    <%= link_to edit_f_financeiro_movimento_path(f_financeiro_movimento), class: "dropdown-item" do %>
+                      <i class="ph-pen me-2"></i> Editar
+                    <% end %>
+                    <%= form_for f_financeiro_movimento, method: :delete do |f| %>
+                      <a class="dropdown-item hand-pointer " data-confirm-delete="<%= f_financeiro_movimento_path(f_financeiro_movimento) %>" data-csrf-token="<%= form_authenticity_token %>">
+                        <i class="ph-trash-simple me-2"></i>Excluir
+                      </a>
+                    <% end %>
+                    <td><%= f_financeiro_movimento.descricao %></td>
+                    <td><%= f_financeiro_movimento.f_financeiro.f_empresa_fornecedora.nome_fantasia if f_financeiro_movimento.f_financeiro.present? %></td>
+                    <td><%= f_financeiro_movimento.g_tipo_movimento&.descricao %></td>
+                    <td><%= f_financeiro_movimento.valor %></td>
+                    <td><%= f_financeiro_movimento.observacao %></td>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer">
+    <%= pagy_bootstrap_nav(@pagy, link_extra: 'class="btn btn-outline-secondary btn-sm mx-1"').html_safe %>
+  </div>
+</div>

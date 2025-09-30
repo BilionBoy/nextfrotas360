@@ -28,10 +28,28 @@
         </li>
         <!-- SERVIÇOS -->
         <li class="nav-item-header pv-nav-header"><span>SERVIÇOS</span></li>
-        <li><a href="<%= f_empresas_servicos_path %>" class="nav-link"><i class="ph-clipboard-text"></i> Meus Serviços</a></li>
+        <li>
+          <a href="<%= f_empresas_servicos_path %>" class="nav-link"><i class="ph-clipboard-text"></i> Meus Serviços</a>
+        </li>
         <!-- FINANCEIRO -->
         <li class="nav-item-header pv-nav-header"><span>FINANCEIRO</span></li>
-        <li><a href="<%= f_financeiros_path %>" class="nav-link"><i class="ph-coins"></i> Saldo</a></li>
+        <li class="nav-item-submenu">
+          <a href="#" class="nav-link">
+            <i class="ph-wallet"></i> Financeiro
+          </a>
+          <ul class="nav nav-group-sub">
+            <li class="nav-item">
+              <a href="<%= f_financeiros_path %>" class="nav-link">
+                <i class="ph-coins"></i> Saldo
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<%= f_financeiros_movimentos_path %>" class="nav-link">
+                <i class="ph-clock-counter-clockwise"></i> Movimentos
+              </a>
+            </li>
+          </ul>
+        </li>
       </ul>
     </div>
   </div>
@@ -85,6 +103,7 @@
     }
 
     input.addEventListener('keyup', filterSidebar);
+
     document.querySelectorAll('.nav-item-submenu > a').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
@@ -92,6 +111,7 @@
         parent.classList.toggle('open');
       });
     });
+
     document.querySelectorAll('.nav-item-submenu').forEach(submenu => submenu.classList.remove('open'));
   });
 </script>

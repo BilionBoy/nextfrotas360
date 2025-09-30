@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-  resources :f_financeiros
-  resources :f_empresas_servicos
+  resources :f_financeiros_movimentos
   devise_for :users
   
   resources :users, path: "usuarios" do
@@ -16,7 +15,7 @@ Rails.application.routes.draw do
       delete :remove_foto_rg
     end
   end
-
+  
   root 'home#index'
   get 'home/index'
   
@@ -34,6 +33,8 @@ Rails.application.routes.draw do
   resources :a_papeis
   resources :a_cargos
   resources :a_unidades
+  resources :f_financeiros
+  resources :f_empresas_servicos
   resources :f_empresas_fornecedoras
   resources :g_status
   resources :g_tipos_veiculos

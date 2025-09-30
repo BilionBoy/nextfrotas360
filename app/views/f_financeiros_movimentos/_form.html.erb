@@ -1,0 +1,53 @@
+<%= render "shared/context_nav", title: t("activerecord.models.#{FFinanceiroMovimento.model_name.i18n_key}.other") do  %>
+  <span class="breadcrumb-item"><%= link_to t("activerecord.models.#{FFinanceiroMovimento.model_name.i18n_key}.other"), f_financeiros_movimentos_path, class: "text-dark" %></span>
+  <span class="breadcrumb-item active"><%= t("helpers.submit.#{params[:action]}") %></span>
+<% end %>
+<%= simple_form_for(@f_financeiro_movimento) do |f| %>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="my-0">
+        <%= @f_financeiro_movimento.new_record? ? "Incluir " : "Editar " %><%= t("activerecord.models.#{FFinanceiroMovimento.model_name.i18n_key}.one") %>
+      </h5>
+    </div>
+    <div class="card-body">
+      <%= f.error_notification %>
+      <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+      <div class="row">
+        <div class="col-3">
+          <%= f.input :descricao, input_html: { class: "capitalize"}, placeholder: "Descricao"  %>
+        </div>
+        <div class="col-3">
+          <%= f.input :f_financeiro_id,collection: FFinanceiro.includes(:f_empresa_fornecedora).all,label_method: ->(financeiro) { financeiro.f_empresa_fornecedora&.nome_fantasia || "—" },value_method: :id,prompt: "Selecione a Empresa" %>
+        </div>
+        <div class="col-3">
+          <%= f.input :g_tipo_movimento_id, collection: GTipoMovimento.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Tipo de Movimento" %>
+        </div>
+        <div class="col-3">
+          <%= f.input :valor, label: "Valor", input_html: { class: "form-control money-mask" } %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <%= f.input :observacao, placeholder: "Observacao" %>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <%= btn_submit(f) %>
+      <%= link_to "Voltar", f_financeiros_movimentos_path, class: "btn btn-light" %>
+    </div>
+  </div>
+<% end %>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const moneyFields = document.querySelectorAll(".money-mask");
+    moneyFields.forEach(field => {
+      new Cleave(field, {
+        numeral: true,
+        numeralDecimalMark: ',',
+        delimiter: '.',
+        numeralDecimalScale: 2
+      });
+    });
+  });
+</script>

@@ -50,6 +50,9 @@ pt-BR:
       f_financeiro:
         one: "Financeiro"
         other: "Financeiros"
+      f_financeiro_movimento:
+        one: "Movimento Financeiro"
+        other: "Movimentos Financeiros"
       g_status:
         one: "Status de Gestão"
         other: "Status de Gestão"
@@ -152,6 +155,12 @@ pt-BR:
         saldo_total: "Saldo Total"
         saldo_disponivel: "Saldo Disponível"
         saldo_reservado: "Saldo Reservado"
+      f_financeiro_movimento:
+        descricao: "Descrição"
+        f_financeiro_id: "Financeiro"
+        g_tipo_movimento_id: "Tipo de Movimento"
+        valor: "Valor"
+        observacao: "Observação"
       g_status:
         descricao: "Descrição"
       g_tipo_veiculo:
