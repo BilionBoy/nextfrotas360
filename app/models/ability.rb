@@ -7,10 +7,11 @@ class Ability
     if user.admin?
       can :manage, :all
     elsif user.gestor?
-      # por exemplo, só pode gerenciar usuários da própria unidade
       can :manage, User, a_unidade_id: user.a_unidade_id
     elsif user.fornecedor?
       can :read, User, f_empresa_fornecedora_id: user.f_empresa_fornecedora_id
     end
+
+    cannot :manage, TTaxa unless user.admin?
   end
 end

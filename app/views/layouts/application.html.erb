@@ -33,19 +33,63 @@
     <%= javascript_include_tag "/layout/assets/js/vendor/tables/datatables/extensions/fixed_columns.min.js", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "/layout/assets/js/vendor/visualization/echarts/echarts.min.js",              "data-turbo-track": "reload" %>
   </head>
-  <body class="">
-    <!-- Main navbar -->
+  <body>
     <%= render "shared/navbar" %>
-    <!-- Page content -->
     <div class="page-content">
-      <!-- Main sidebar -->
       <%= render_sidebar(current_user) %>
-      <!-- /main sidebar -->
       <div class="content-wrapper">
         <div class="content-inner">
           <%= yield :context_nav %>
           <div class="content">
             <%= yield %>
           </div>
-        </body>
-      </html>
+        </div>
+      </div>
+    </div>
+    <!-- Container de Toasts -->
+    <div id="toast-container" style="position: fixed; top: 1rem; right: 1rem; z-index: 9999;"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        <% if flash[:alert] %>
+          showToast("<%= j flash[:alert] %>", "error");
+        <% end %>
+      });
+
+      function showToast(message, type = "error") {
+        const container = document.getElementById("toast-container");
+        const toast = document.createElement("div");
+        toast.textContent = message;
+        toast.className = "toast " + type;
+        container.appendChild(toast);
+
+        setTimeout(() => toast.classList.add("show"), 100);
+        setTimeout(() => {
+          toast.classList.remove("show");
+          setTimeout(() => toast.remove(), 400);
+        }, 4000);
+      }
+
+      const style = document.createElement("style");
+      style.textContent = `
+        .toast {
+          min-width: 220px;
+          margin-bottom: 10px;
+          padding: 12px 20px;
+          background: #f87171;
+          color: white;
+          border-radius: 8px;
+          box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+          opacity: 0;
+          transform: translateX(100%);
+          transition: all 0.4s ease-in-out;
+          font-family: sans-serif;
+        }
+        .toast.show {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      `;
+      document.head.appendChild(style);
+    </script>
+  </body>
+</html>

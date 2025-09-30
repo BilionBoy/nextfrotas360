@@ -27,15 +27,6 @@
         <li class="nav-item">
           <a href="<%= root_path %>" class="nav-link pv-nav-link active"><i class="ph-house-line"></i> Página Inicial</a>
         </li>
-        <!-- GESTÃO -->
-        <li class="nav-item-header pv-nav-header"><span>GESTÃO</span></li>
-        <li><a href="<%= a_unidades_path %>" class="nav-link"><i class="ph-buildings"></i> Unidades</a></li>
-        <li><a href="<%= t_taxas_path %>" class="nav-link"><i class="ph-file-text"></i> Taxas</a></li>
-        <li>
-          <a href="<%= new_user_path(a_tipo_usuario_id: ATipoUsuario.find_by(descricao: "Gestor")&.id) %>" class="nav-link">
-            <i class="ph-user-plus"></i> Novo Gestor
-          </a>
-        </li>
         <li class="nav-item nav-item-submenu">
           <a href="#" class="nav-link"><i class="ph-coins"></i> Centros de Custo</a>
           <ul class="nav nav-group-sub">
@@ -68,22 +59,6 @@
         <li class="nav-item nav-item-submenu">
           <a href="#" class="nav-link"><i class="ph-database"></i> Referenciais</a>
           <ul class="nav nav-group-sub">
-            <!-- Condutores -->
-            <li class="nav-item nav-item-submenu">
-              <a href="#" class="nav-link"><i class="ph-user-circle"></i> Condutores</a>
-              <ul class="nav nav-group-sub">
-                <li><a href="<%= g_carteiras_orgaos_emissores_path %>" class="nav-link"><i class="ph-cards"></i> Órgãos Emissores</a></li>
-                <li><a href="<%= g_categorias_carteiras_condutores_path %>" class="nav-link"><i class="ph-cards"></i> Categorias de Carteira</a></li>
-              </ul>
-            </li>
-            <!-- Veículos -->
-            <li class="nav-item nav-item-submenu">
-              <a href="#" class="nav-link"><i class="ph-car"></i> Veículos</a>
-              <ul class="nav nav-group-sub">
-                <li><a href="<%= g_tipos_veiculos_path %>" class="nav-link"><i class="ph-truck"></i> Tipos de Veículos</a></li>
-                <li><a href="<%= g_status_index_path %>" class="nav-link"><i class="ph-check-circle"></i> Status Veículos</a></li>
-              </ul>
-            </li>
             <!-- Orçamentos -->
             <li class="nav-item nav-item-submenu">
               <a href="#" class="nav-link"><i class="ph-flag"></i> Orçamentos</a>
@@ -93,18 +68,6 @@
                 <li><a href="<%= o_categorias_servicos_path %>" class="nav-link"><i class="ph-grid-four"></i> Categorias Serviço</a></li>
                 <li><a href="<%= o_urgencias_path %>" class="nav-link"><i class="ph-warning-circle"></i> Urgências</a></li>
                 <li><a href="<%= o_visibilidades_path %>" class="nav-link"><i class="ph-eye"></i> Visibilidades</a></li>
-              </ul>
-            </li>
-            <!-- Localidades -->
-            <li class="nav-item nav-item-submenu">
-              <a href="#" class="nav-link"><i class="ph-map-pin-line"></i> Localidades</a>
-              <ul class="nav nav-group-sub">
-                <li><a href="<%= g_paises_path %>" class="nav-link"><i class="ph-globe"></i> Países</a></li>
-                <li><a href="<%= g_estados_path %>" class="nav-link"><i class="ph-map-trifold"></i> Estados</a></li>
-                <li><a href="<%= g_municipios_path %>" class="nav-link"><i class="ph-buildings"></i> Municípios</a></li>
-                <li><a href="<%= g_distritos_path %>" class="nav-link"><i class="ph-compass"></i> Distritos</a></li>
-                <li><a href="<%= g_bairros_path %>" class="nav-link"><i class="ph-house-line"></i> Bairros</a></li>
-                <li><a href="<%= g_localidades_path %>" class="nav-link"><i class="ph-map-pin"></i> Localidades</a></li>
               </ul>
             </li>
           </ul>
