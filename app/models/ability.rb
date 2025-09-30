@@ -4,14 +4,18 @@ class Ability
   def initialize(user)
     return unless user
 
-    if user.admin?
-      can :manage, :all
-    elsif user.gestor?
-      can :manage, User, a_unidade_id: user.a_unidade_id
-    elsif user.fornecedor?
-      can :read, User, f_empresa_fornecedora_id: user.f_empresa_fornecedora_id
+    tipo = user.a_tipo_usuario&.descricao&.downcase
+
+    case tipo
+    when 'admin'
+      Abilities::AdminAbility.new(self, user)
+    when 'gestor'
+      Abilities::GestorAbility.new(self, user)
+    when 'fornecedor'
+      Abilities::FornecedorAbility.new(self, user)
     end
 
+    # Restrição geral: apenas admins podem gerenciar TTaxa
     cannot :manage, TTaxa unless user.admin?
   end
 end

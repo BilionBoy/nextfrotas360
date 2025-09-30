@@ -1,13 +1,18 @@
 # frozen_string_literal: true
 class OSolicitacoesController < ApplicationController
   before_action :set_o_solicitacao, only: %i[show edit update destroy]
-
+  load_and_authorize_resource
   rescue_from ActiveRecord::RecordNotFound, with: :handle_not_found
 
-  def index
-    @q = OSolicitacao.ransack(params[:q])
-    @pagy, @o_solicitacoes = pagy(@q.result)
-  end
+ def index
+  @q = OSolicitacao.ransack(params[:q])
+
+  # filtra pelo que o usuário pode ler
+  @o_solicitacoes = @q.result.accessible_by(current_ability)
+
+  @pagy, @o_solicitacoes = pagy(@o_solicitacoes)
+ end
+
 
   def new
     @o_solicitacao = OSolicitacao.new
@@ -16,16 +21,16 @@ class OSolicitacoesController < ApplicationController
   def edit
   end
 
-def create
-  @o_solicitacao = OSolicitacao.new(o_solicitacao_params)
-  @o_solicitacao.solicitante = current_user 
-  
-  if @o_solicitacao.save
-    redirect_to @o_solicitacao, notice: "Solicitação criada com sucesso."
-  else
+  def create
+    @o_solicitacao = OSolicitacao.new((o_solicitacao_params))
+    @o_solicitacao.solicitante = current_user
+
+    if @o_solicitacao.save
+      redirect_to o_solicitacoes_path, notice: t('messages.created_successfully'), status: :see_other
+    else
       render :new, status: :unprocessable_entity
+    end
   end
-end
 
   def update
     if @o_solicitacao.update(o_solicitacao_params)

@@ -1,7 +1,4 @@
-# frozen_string_literal: true
-
 class OSolicitacao < ApplicationRecord
-  # Associações
   belongs_to :solicitante,         class_name: "User"
   belongs_to :publicado_por,       class_name: "User", optional: true
   belongs_to :o_tipo_solicitacao,  class_name: "OTipoSolicitacao"
