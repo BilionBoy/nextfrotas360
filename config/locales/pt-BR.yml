@@ -122,9 +122,12 @@ pt-BR:
       o_solicitacao:
         one: "Solicitação"
         other: "Solicitações"
-      o_cotacao: 
+      o_cotacao:
         one: "Cotação"
         other: "Cotações"
+      o_cotacao_item:
+        one: "Item da Cotação"
+        other: "Itens da Cotação"
       t_taxa:
         one: "Taxa"
         other: "Taxas"
@@ -262,6 +265,12 @@ pt-BR:
         o_visibilidade_id: "Visibilidade"
         o_status_id: "Status"
         data_expiracao: "Data de Expiração"
+      o_cotacao_item:
+        o_cotacao_id: "Cotação"
+        o_categoria_servico_id: "Categoria do Serviço"
+        valor_unitario: "Valor Unitário"
+        descricao: "Descrição"
+        quantidade: "Quantidade"
       o_status:
         descricao: "Descrição"
       o_tipo_solicitacao:

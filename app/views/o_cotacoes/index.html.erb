@@ -29,23 +29,26 @@
                   <a href="#" class="text-body dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="ph-gear"></i>
                   </a>
-                  <div class="dropdown-menu" style="">
+                  <div class="dropdown-menu">
                     <div class="dropdown-header">Opções</div>
                     <%= link_to edit_o_cotacao_path(o_cotacao), class: "dropdown-item" do %>
                       <i class="ph-pen me-2"></i> Editar
                     <% end %>
+                    <%= link_to new_o_cotacao_item_path(o_cotacao_id: o_cotacao.id), class: "dropdown-item" do %>
+                      <i class="ph-plus-circle me-2"></i> Adicionar Item
+                    <% end %>
                     <%= form_for o_cotacao, method: :delete do |f| %>
-                      <a class="dropdown-item hand-pointer " data-confirm-delete="<%= o_cotacao_path(o_cotacao) %>" data-csrf-token="<%= form_authenticity_token %>">
-                        <i class="ph-trash-simple me-2"></i>Excluir
+                      <a class="dropdown-item hand-pointer" data-confirm-delete="<%= o_cotacao_path(o_cotacao) %>" data-csrf-token="<%= form_authenticity_token %>">
+                        <i class="ph-trash-simple me-2"></i> Excluir
                       </a>
                     <% end %>
-                    <td><%= o_cotacao.o_solicitacao&.descricao %></td>
-                    <td><%= o_cotacao.o_visibilidade&.descricao%></td>
-                    <td><%= o_cotacao.o_status&.descricao %></td>
-                    <td><%= o_cotacao.data_expiracao %></td>
                   </div>
                 </div>
               </td>
+              <td><%= o_cotacao.o_solicitacao&.descricao %></td>
+              <td><%= o_cotacao.o_visibilidade&.descricao %></td>
+              <td><%= o_cotacao.o_status&.descricao %></td>
+              <td><%= o_cotacao.data_expiracao %></td>
             </tr>
           <% end %>
         </tbody>

@@ -27,26 +27,20 @@
         <li class="nav-item">
           <a href="<%= root_path %>" class="nav-link pv-nav-link active"><i class="ph-house-line"></i> Página Inicial</a>
         </li>
-          <li><a href="<%= o_solicitacoes_path %>" class="nav-link"><i class="ph-clipboard-text"></i> Solicitar Orçamento</a></li>
+        <li><a href="<%= o_solicitacoes_path %>" class="nav-link"><i class="ph-clipboard-text"></i> Solicitar Orçamento</a></li>
+        <li><a href="<%= o_cotacoes_path %>" class="nav-link"><i class="ph-coins"></i> Cotações em Andamento</a></li>
+        <!-- CENTROS DE CUSTO -->
+        <li class="nav-item-header pv-nav-header"><span>Centros de Custo</span></li>
         <li class="nav-item nav-item-submenu">
           <a href="#" class="nav-link"><i class="ph-coins"></i> Centros de Custo</a>
           <ul class="nav nav-group-sub">
-            <li><a href="<%= g_centros_custos_path %>" class="nav-link"><i class="ph-list"></i> Lista/Cadastro</a></li>
-            <li><a href="<%= g_tipos_movimentos_path %>" class="nav-link"><i class="ph-list-plus"></i> Tipos de Movimentos</a></li>
+            <li><a href="<%= g_centros_custos_path %>" class="nav-link"><i class="ph-list"></i> Lista / Cadastro</a></li>
             <li><a href="<%= g_centros_custos_movimentos_path %>" class="nav-link"><i class="ph-swap"></i> Movimentos</a></li>
+            <li><a href="<%= g_tipos_movimentos_path %>" class="nav-link"><i class="ph-list-plus"></i> Tipos de Movimentos</a></li>
           </ul>
         </li>
         <!-- FROTA -->
         <li class="nav-item-header pv-nav-header"><span>FROTA</span></li>
-        <li class="nav-item nav-item-submenu">
-          <a href="#" class="nav-link"><i class="ph-user-circle"></i> Condutores</a>
-          <ul class="nav nav-group-sub">
-            <li><a href="<%= g_condutores_path %>" class="nav-link"><i class="ph-users"></i> Lista / Cadastro</a></li>
-            <li><a href="<%= g_condutores_veiculos_path %>" class="nav-link"><i class="ph-arrows-left-right"></i> Vincular Condutor a Veículo</a></li>
-            <li><a href="<%= g_carteiras_orgaos_emissores_path %>" class="nav-link"><i class="ph-cards"></i> Órgãos Emissores</a></li>
-            <li><a href="<%= g_categorias_carteiras_condutores_path %>" class="nav-link"><i class="ph-cards"></i> Categorias de Carteira</a></li>
-          </ul>
-        </li>
         <li class="nav-item nav-item-submenu">
           <a href="#" class="nav-link"><i class="ph-car"></i> Veículos</a>
           <ul class="nav nav-group-sub">
@@ -60,7 +54,6 @@
         <li class="nav-item nav-item-submenu">
           <a href="#" class="nav-link"><i class="ph-database"></i> Referenciais</a>
           <ul class="nav nav-group-sub">
-            <!-- Orçamentos -->
             <li class="nav-item nav-item-submenu">
               <a href="#" class="nav-link"><i class="ph-flag"></i> Orçamentos</a>
               <ul class="nav nav-group-sub">
