@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :o_cotacoes
   resources :o_solicitacoes
 
 

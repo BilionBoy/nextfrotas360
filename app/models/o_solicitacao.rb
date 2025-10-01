@@ -7,17 +7,25 @@ class OSolicitacao < ApplicationRecord
   belongs_to :o_urgencia,          class_name: "OUrgencia", optional: true
   belongs_to :g_veiculo
   belongs_to :g_centro_custo
-
+  has_one :o_cotacao
   # Validações
-  validates :numero,      presence: true
   validates :solicitante, presence: true
 
-  before_create :set_saldo_snapshot
+  before_create     :set_saldo_snapshot
+  before_validation :set_status_pendente, on: :create
+  before_validation :set_numero, on: :create
 
   private
 
-  # Preenche o saldo_snapshot com o saldo atual do centro de custo do solicitante, se existir
   def set_saldo_snapshot
     self.saldo_snapshot ||= g_centro_custo&.saldo_atual || 0.0
+  end
+
+  def set_status_pendente
+    self.o_status ||= OStatus.find_by(descricao: 'Pendente')
+  end
+
+  def set_numero
+    self.numero ||= (OSolicitacao.maximum(:numero) || 0) + 1
   end
 end

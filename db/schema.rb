@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_30_164231) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_01_014536) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -445,6 +445,21 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_30_164231) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "o_cotacoes", force: :cascade do |t|
+    t.bigint "o_solicitacao_id", null: false
+    t.bigint "o_visibilidade_id", null: false
+    t.bigint "o_status_id", null: false
+    t.datetime "data_expiracao"
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["o_solicitacao_id"], name: "index_o_cotacoes_on_o_solicitacao_id"
+    t.index ["o_status_id"], name: "index_o_cotacoes_on_o_status_id"
+    t.index ["o_visibilidade_id"], name: "index_o_cotacoes_on_o_visibilidade_id"
+  end
+
   create_table "o_solicitacoes", force: :cascade do |t|
     t.integer "numero", null: false
     t.string "descricao"
@@ -600,6 +615,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_30_164231) do
   add_foreign_key "g_veiculos", "a_unidades"
   add_foreign_key "g_veiculos", "g_centros_custos"
   add_foreign_key "g_veiculos", "g_tipos_veiculos"
+  add_foreign_key "o_cotacoes", "o_solicitacoes"
+  add_foreign_key "o_cotacoes", "o_status"
+  add_foreign_key "o_cotacoes", "o_visibilidades"
   add_foreign_key "o_solicitacoes", "g_centros_custos"
   add_foreign_key "o_solicitacoes", "g_veiculos"
   add_foreign_key "o_solicitacoes", "o_categorias_servicos"

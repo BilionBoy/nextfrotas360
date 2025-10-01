@@ -3,14 +3,14 @@
 <% end %>
 <div class="card">
   <div class="card-header d-flex">
-    <%= search_form_for @q, html: { class: "d-flex gap-2" , autocomplete: "off"} do |f| %>
+    <%= search_form_for @q, html: { class: "d-flex gap-2", autocomplete: "off"} do |f| %>
       <%= f.search_field :numero_cont, class: "form-control", placeholder: "Pesquisar" %>
       <%= f.button(type: 'submit', class: 'btn btn-info') { tag.i(class: 'ph-magnifying-glass') } %>
-      <%= link_to  tag.i(class: 'ph-x-circle'), o_solicitacoes_path, class: "btn btn-light" if params[:q] %>
+      <%= link_to tag.i(class: 'ph-x-circle'), o_solicitacoes_path, class: "btn btn-light" if params[:q] %>
     <% end %>
   </div>
   <div class="card-body">
-    <div class= "table-responsive">
+    <div class="table-responsive">
       <table class="table table-sm table-bordered table-striped">
         <thead>
           <tr>
@@ -28,30 +28,35 @@
           <% @o_solicitacoes.each do |o_solicitacao| %>
             <tr>
               <td class="text-center">
-                <div class="dropdown-toggle">
-                  <a href="#" class="text-body dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="dropdown">
+                  <a href="#" class="text-body dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="ph-gear"></i>
                   </a>
-                  <div class="dropdown-menu" style="">
+                  <div class="dropdown-menu">
                     <div class="dropdown-header">Opções</div>
                     <%= link_to edit_o_solicitacao_path(o_solicitacao), class: "dropdown-item" do %>
                       <i class="ph-pen me-2"></i> Editar
                     <% end %>
                     <%= form_for o_solicitacao, method: :delete do |f| %>
-                      <a class="dropdown-item hand-pointer " data-confirm-delete="<%= o_solicitacao_path(o_solicitacao) %>" data-csrf-token="<%= form_authenticity_token %>">
-                        <i class="ph-trash-simple me-2"></i>Excluir
+                      <a class="dropdown-item hand-pointer" data-confirm-delete="<%= o_solicitacao_path(o_solicitacao) %>" data-csrf-token="<%= form_authenticity_token %>">
+                        <i class="ph-trash-simple me-2"></i> Excluir
                       </a>
                     <% end %>
-                    <td><%= o_solicitacao.numero %></td>
-                    <td><%= o_solicitacao.solicitante.nome %></td>
-                    <td><%= o_solicitacao.g_veiculo&.modelo %></td>
-                    <td><%= o_solicitacao.g_centro_custo&.nome%></td>
-                    <td><%= o_solicitacao.o_tipo_solicitacao&.descricao %></td>
-                    <td><%= o_solicitacao.o_categoria_servico&.descricao %></td>
-                    <td><%= o_solicitacao.o_status&.descricao %></td>
+                    <% if o_solicitacao.o_status.descricao == "Pendente" %>
+                      <%= link_to new_o_cotacao_path(solicitacao_id: o_solicitacao.id), class: "dropdown-item" do %>
+                        <i class="ph-file-text me-2"></i> Publicar Cotação
+                      <% end %>
+                    <% end %>
                   </div>
                 </div>
               </td>
+              <td><%= o_solicitacao.numero %></td>
+              <td><%= o_solicitacao.solicitante.nome %></td>
+              <td><%= o_solicitacao.g_veiculo&.modelo %></td>
+              <td><%= o_solicitacao.g_centro_custo&.nome %></td>
+              <td><%= o_solicitacao.o_tipo_solicitacao&.descricao %></td>
+              <td><%= o_solicitacao.o_categoria_servico&.descricao %></td>
+              <td><%= o_solicitacao.o_status&.descricao %></td>
             </tr>
           <% end %>
         </tbody>
@@ -62,3 +67,4 @@
     <%= pagy_bootstrap_nav(@pagy, link_extra: 'class="btn btn-outline-secondary btn-sm mx-1"').html_safe %>
   </div>
 </div>
+<style></style>

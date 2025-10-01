@@ -446,6 +446,27 @@ h6 {
   opacity: 0.7;
 }
 
+/* Permite que o dropdown saia dos limites da tabela */
+.table-responsive {
+  overflow: visible !important;
+}
+
+/* Alternativa: Se você precisa manter o scroll horizontal da tabela,
+     use esta abordagem que só afeta o overflow vertical */
+.table-responsive {
+  overflow-x: auto;
+  overflow-y: visible;
+}
+
+/* Garante que o dropdown tenha z-index adequado */
+.dropdown-menu {
+  z-index: 1050;
+}
+
+/* Se ainda tiver problemas, adicione position: static na célula */
+.table td.text-center {
+  position: static;
+}
 /* ========================================
    RESPONSIVIDADE GOVERNAMENTAL
    ======================================== */

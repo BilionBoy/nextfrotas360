@@ -1,0 +1,37 @@
+<div class="container">
+  <%= render "shared/notice" %>
+  <div class="card border-0 shadow shadow-sm">
+    <div class="card-header border-0 d-flex justify-content-between">
+      <span class="fs-4">Visualizar O Cotacao</span>
+    </div>
+    <div class="card-body">
+      <div id="<%= dom_id @o_cotacao %>">
+          <p>
+            <strong>O Solicitacao:</strong>
+            <%= @o_cotacao.o_solicitacao %>
+          </p>
+          <p>
+            <strong>O Visibilidade:</strong>
+            <%= @o_cotacao.o_visibilidade %>
+          </p>
+          <p>
+            <strong>O Status:</strong>
+            <%= @o_cotacao.o_status %>
+          </p>
+          <p>
+            <strong>Data Expiracao:</strong>
+            <%= @o_cotacao.data_expiracao %>
+          </p>
+      </div>
+    </div>
+    <div class="card-footer border-0 d-flex justify-content-between">
+      <div>
+        <%= link_to edit_o_cotacao_path(@o_cotacao), class: "btn btn-primary" do %>
+        <i class="bi bi-pencil-square"></i> Editar
+        <% end %>
+        <%= link_to "Voltar", o_cotacoes_path, class: "btn btn-secondary" %>
+      </div>
+      <%= button_to "Deletar", @o_cotacao, method: :delete, class: "btn btn-outline-danger border-0" %>
+    </div>
+  </div>
+</div>

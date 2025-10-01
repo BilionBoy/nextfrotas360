@@ -122,6 +122,9 @@ pt-BR:
       o_solicitacao:
         one: "Solicitação"
         other: "Solicitações"
+      o_cotacao: 
+        one: "Cotação"
+        other: "Cotações"
       t_taxa:
         one: "Taxa"
         other: "Taxas"
@@ -254,6 +257,11 @@ pt-BR:
         data_solicitacao: "Data da Solicitação"
         data_prevista_conclusao: "Data Prevista de Conclusão"
         valor_estimado: "Valor Estimado"
+      o_cotacao:
+        o_solicitacao_id: "Solicitação"
+        o_visibilidade_id: "Visibilidade"
+        o_status_id: "Status"
+        data_expiracao: "Data de Expiração"
       o_status:
         descricao: "Descrição"
       o_tipo_solicitacao:

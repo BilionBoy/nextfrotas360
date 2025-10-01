@@ -15,55 +15,25 @@
       <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
       <div class="row">
         <div class="col-3">
-          <%= f.input :numero, input_html: { class: "capitalize"}, placeholder: "Numero" %>
-        </div>
-        <div class="col-3">
-          <%= f.input :g_veiculo_id, 
-              collection: GVeiculo.all, 
-              label_method: :placa, 
-              value_method: :id, 
-              prompt: "Selecione o Veículo" %>
-        </div>
-        <div class="col-3">
-          <%= f.input :g_centro_custo_id, 
-              collection: GCentroCusto.all, 
-              label_method: :nome, 
-              value_method: :id, 
-              prompt: "Selecione o Centro de Custo" %>
-        </div>
-        <div class="col-3">
-          <%= f.input :o_tipo_solicitacao_id, 
-              collection: OTipoSolicitacao.all, 
-              label_method: :descricao, 
-              value_method: :id, 
-              prompt: "Selecione o Tipo de Solicitação" %>
-        </div>
-        <div class="col-3">
-          <%= f.input :o_categoria_servico_id, 
-              collection: OCategoriaServico.all, 
-              label_method: :descricao, 
-              value_method: :id, 
-              prompt: "Selecione a Categoria de Serviço" %>
-        </div>
-        <div class="col-3">
           <%= f.input :descricao, input_html: { class: "capitalize"}, placeholder: "Descricao" %>
+        </div>
+        <div class="col-3">
+          <%= f.input :g_veiculo_id, collection: GVeiculo.all, label_method: :placa, value_method: :id, prompt: "Selecione o Veículo" %>
+        </div>
+        <div class="col-3">
+          <%= f.input :g_centro_custo_id, collection: GCentroCusto.all, label_method: :nome, value_method: :id, prompt: "Selecione o Centro de Custo" %>
+        </div>
+        <div class="col-3">
+          <%= f.input :o_tipo_solicitacao_id, collection: OTipoSolicitacao.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Tipo de Solicitação" %>
+        </div>
+        <div class="col-3">
+          <%= f.input :o_categoria_servico_id, collection: OCategoriaServico.all, label_method: :descricao, value_method: :id, prompt: "Selecione a Categoria de Serviço" %>
         </div>
         <div class="col-3">
           <%= f.input :km_reportado, input_html: { class: "capitalize"}, placeholder: "Km reportado" %>
         </div>
         <div class="col-3">
-          <%= f.input :o_urgencia_id, 
-              collection: OUrgencia.all, 
-              label_method: :descricao, 
-              value_method: :id, 
-              prompt: "Selecione a Urgência" %>
-        </div>
-        <div class="col-3">
-          <%= f.input :o_status_id, 
-              collection: OStatus.all, 
-              label_method: :descricao, 
-              value_method: :id, 
-              prompt: "Selecione o Status" %>
+          <%= f.input :o_urgencia_id, collection: OUrgencia.all, label_method: :descricao, value_method: :id, prompt: "Selecione a Urgência" %>
         </div>
         <div class="col-3">
           <%= f.input :saldo_snapshot, input_html: { class: "capitalize"}, placeholder: "Saldo snapshot" %>
