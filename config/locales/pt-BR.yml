@@ -50,6 +50,9 @@ pt-BR:
       f_financeiro:
         one: "Financeiro"
         other: "Financeiros"
+      f_financeiro_movimento:
+        one: "Movimento Financeiro"
+        other: "Movimentos Financeiros"
       g_status:
         one: "Status de Gestão"
         other: "Status de Gestão"
@@ -116,6 +119,15 @@ pt-BR:
       o_visibilidade:
         one: "Visibilidade"
         other: "Visibilidades"
+      o_solicitacao:
+        one: "Solicitação"
+        other: "Solicitações"
+      o_cotacao:
+        one: "Cotação"
+        other: "Cotações"
+      o_cotacao_item:
+        one: "Item da Cotação"
+        other: "Itens da Cotação"
       t_taxa:
         one: "Taxa"
         other: "Taxas"
@@ -152,6 +164,12 @@ pt-BR:
         saldo_total: "Saldo Total"
         saldo_disponivel: "Saldo Disponível"
         saldo_reservado: "Saldo Reservado"
+      f_financeiro_movimento:
+        descricao: "Descrição"
+        f_financeiro_id: "Financeiro"
+        g_tipo_movimento_id: "Tipo de Movimento"
+        valor: "Valor"
+        observacao: "Observação"
       g_status:
         descricao: "Descrição"
       g_tipo_veiculo:
@@ -231,6 +249,28 @@ pt-BR:
         g_condutor_id: "Condutor"
         g_veiculo_id: "Veículo"
         data_inicio: "Data Início"
+      o_solicitacao:
+        descricao: "Descrição"
+        g_veiculo_id: "Veículo"
+        o_categoria_servico_id: "Categoria de Serviço"
+        o_tipo_solicitacao_id: "Tipo de Solicitação"
+        o_urgencia_id: "Urgência"
+        g_centro_custo_id: "Centro de Custo"
+        o_status_id: "Status"
+        data_solicitacao: "Data da Solicitação"
+        data_prevista_conclusao: "Data Prevista de Conclusão"
+        valor_estimado: "Valor Estimado"
+      o_cotacao:
+        o_solicitacao_id: "Solicitação"
+        o_visibilidade_id: "Visibilidade"
+        o_status_id: "Status"
+        data_expiracao: "Data de Expiração"
+      o_cotacao_item:
+        o_cotacao_id: "Cotação"
+        o_categoria_servico_id: "Categoria do Serviço"
+        valor_unitario: "Valor Unitário"
+        descricao: "Descrição"
+        quantidade: "Quantidade"
       o_status:
         descricao: "Descrição"
       o_tipo_solicitacao:
@@ -303,8 +343,14 @@ pt-BR:
       messages:
         record_invalid: "A validação falhou: %{errors}"
         restrict_dependent_destroy:
-          has_one: Não é possível excluir o registro pois existe um %{record} dependente
-          has_many: Não é possível excluir o registro pois existem %{record} dependentes
+          has_one: "Não é possível excluir o registro pois existe um %{record} dependente"
+          has_many: "Não é possível excluir o registro pois existem %{record} dependentes"
+          not_authorized: "Você não tem permissão para acessar esta página"
+          created_successfully: "Registro criado com sucesso"
+          updated_successfully: "Registro atualizado com sucesso"
+          deleted_successfully: "Registro excluído com sucesso"
+          delete_failed_due_to_dependencies: "Não foi possível excluir, existem dependências"
+          not_found: "Registro não encontrado"
       attributes:
         a_status:
           descricao: "Descrição"
@@ -320,6 +366,13 @@ pt-BR:
           descricao: "Descrição"
         o_status:
           descricao: "Descrição"
+  messages:
+    not_authorized: "Você não tem permissão para acessar esta página"
+    created_successfully: "Registro criado com sucesso"
+    updated_successfully: "Registro atualizado com sucesso"
+    deleted_successfully: "Registro excluído com sucesso"
+    delete_failed_due_to_dependencies: "Não foi possível excluir, existem dependências"
+    not_found: "Registro não encontrado"
   date:
     abbr_day_names:
       - dom

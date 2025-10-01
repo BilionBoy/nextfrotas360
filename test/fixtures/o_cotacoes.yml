@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  o_solicitacao: one
+  o_visibilidade: one
+  o_status: one
+  data_expiracao: 2025-09-30 21:45:36
+
+two:
+  o_solicitacao: two
+  o_visibilidade: two
+  o_status: two
+  data_expiracao: 2025-09-30 21:45:36

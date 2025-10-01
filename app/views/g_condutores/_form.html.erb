@@ -2,11 +2,12 @@
   <span class="breadcrumb-item"><%= link_to t("activerecord.models.#{GCondutor.model_name.i18n_key}.other"), g_condutores_path, class: "text-dark" %></span>
   <span class="breadcrumb-item active"><%= t("helpers.submit.#{params[:action]}") %></span>
 <% end %>
-<%= simple_form_for(@g_condutor) do |f| %>
+<%= simple_form_for(@o_solicitacao) do |f| %>
   <div class="card">
     <div class="card-header">
       <h5 class="my-0">
-        <%= @g_condutor.new_record? ? "Incluir " : "Editar " %><%= t("activerecord.models.#{GCondutor.model_name.i18n_key}.one") %>
+        <%= @o_solicitacao.new_record? ? "Incluir " : "Editar " %>
+        <%= t("activerecord.models.#{OSolicitacao.model_name.i18n_key}.one") %>
       </h5>
     </div>
     <div class="card-body">
@@ -14,34 +15,52 @@
       <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
       <div class="row">
         <div class="col-3">
-          <%= f.input :nome, input_html: { class: "capitalize"}, placeholder: "Nome"  %>
+          <%= f.input :numero, input_html: { class: "capitalize"}, placeholder: "Numero"  %>
         </div>
         <div class="col-3">
-          <%= f.input :email, input_html: { class: "capitalize"}, placeholder: "Email"  %>
+          <%= f.input :solicitante_id, collection: User.all, label_method: :nome, value_method: :id, prompt: "Selecione o Solicitante" %>
         </div>
         <div class="col-3">
-          <%= f.input :telefone, input_html: { class: "capitalize"}, placeholder: "Telefone"  %>
+          <%= f.input :g_veiculo_id, collection: GVeiculo.all, label_method: :placa, value_method: :id, prompt: "Selecione o Veículo" %>
         </div>
         <div class="col-3">
-          <%= f.input :cnh_numero, input_html: { class: "capitalize"}, placeholder: "Cnh numero"  %>
+          <%= f.input :g_centro_custo_id, collection: GCentroCusto.all, label_method: :nome, value_method: :id, prompt: "Selecione o Centro de Custo" %>
         </div>
         <div class="col-6">
-          <%= f.input :validade_cnh, input_html: { class: "capitalize"}, placeholder: "Validade cnh"  %>
+          <%= f.input :o_tipo_solicitacao_id, collection: OTipoSolicitacao.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Tipo de Solicitação" %>
         </div>
-        <div class="col-6">
-          <%= f.input :g_categoria_carteira_condutor_id, collection: GCategoriaCarteiraCondutor.all, label_method: :descricao, value_method: :id, prompt: "Selecione a Categoria da CNH" %>
+        <div class="col-3">
+          <%= f.input :o_categoria_servico_id, collection: OCategoriaServico.all, label_method: :descricao, value_method: :id, prompt: "Selecione a Categoria de Serviço" %>
         </div>
-        <div class="col-6">
-          <%= f.input :g_status_id, collection: GStatus.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Status" %>
+        <div class="col-3">
+          <%= f.input :descricao, input_html: { class: "capitalize"}, placeholder: "Descrição"  %>
         </div>
-        <div class="col-6">
-          <%= f.input :g_carteira_orgao_emissor_id, collection: GCarteiraOrgaoEmissor.all, label_method: :descricao, value_method: :id, prompt: "Selecione o órgão Emissor da Carteira" %>
+        <div class="col-3">
+          <%= f.input :km_reportado, input_html: { class: "capitalize"}, placeholder: "Km Reportado"  %>
+        </div>
+        <div class="col-3">
+          <%= f.input :o_urgencia_id, collection: OUrgencia.all, label_method: :descricao, value_method: :id, prompt: "Selecione a Urgência" %>
+        </div>
+        <div class="col-3">
+          <%= f.input :data_limite_publicacao, input_html: { class: "capitalize"}, placeholder: "Data Limite Publicação"  %>
+        </div>
+        <div class="col-3">
+          <%= f.input :o_status_id, collection: OStatus.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Status" %>
+        </div>
+        <div class="col-3">
+          <%= f.input :publicado_por_id, collection: User.all, label_method: :nome, value_method: :id, prompt: "Selecionar Publicador" %>
+        </div>
+        <div class="col-3">
+          <%= f.input :publicado_em, input_html: { class: "capitalize"}, placeholder: "Publicado Em"  %>
+        </div>
+        <div class="col-3">
+          <%= f.input :saldo_snapshot, input_html: { class: "capitalize"}, placeholder: "Saldo Snapshot"  %>
         </div>
       </div>
     </div>
     <div class="card-footer">
       <%= btn_submit(f) %>
-      <%= link_to "Voltar", g_condutores_path, class: "btn btn-light" %>
+      <%= link_to "Voltar", o_solicitacoes_path, class: "btn btn-light" %>
     </div>
   </div>
 <% end %>

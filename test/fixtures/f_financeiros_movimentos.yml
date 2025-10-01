@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  descricao: MyString
+  f_financeiro: one
+  g_tipo_movimento: one
+  valor: MyString
+  observacao: MyString
+
+two:
+  descricao: MyString
+  f_financeiro: two
+  g_tipo_movimento: two
+  valor: MyString
+  observacao: MyString

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_29_044023) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_01_030615) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -209,6 +209,21 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_29_044023) do
     t.datetime "updated_at", null: false
     t.index ["f_empresa_fornecedora_id"], name: "index_f_financeiros_on_f_empresa_fornecedora_id"
     t.index ["o_categoria_servico_id"], name: "index_f_financeiros_on_o_categoria_servico_id"
+  end
+
+  create_table "f_financeiros_movimentos", force: :cascade do |t|
+    t.string "descricao"
+    t.bigint "f_financeiro_id", null: false
+    t.bigint "g_tipo_movimento_id", null: false
+    t.decimal "valor", precision: 15, scale: 2, default: "0.0", null: false
+    t.string "observacao"
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["f_financeiro_id"], name: "index_f_financeiros_movimentos_on_f_financeiro_id"
+    t.index ["g_tipo_movimento_id"], name: "index_f_financeiros_movimentos_on_g_tipo_movimento_id"
   end
 
   create_table "g_bairros", force: :cascade do |t|
@@ -430,6 +445,66 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_29_044023) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "o_cotacoes", force: :cascade do |t|
+    t.bigint "o_solicitacao_id", null: false
+    t.bigint "o_visibilidade_id", null: false
+    t.bigint "o_status_id", null: false
+    t.datetime "data_expiracao"
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["o_solicitacao_id"], name: "index_o_cotacoes_on_o_solicitacao_id"
+    t.index ["o_status_id"], name: "index_o_cotacoes_on_o_status_id"
+    t.index ["o_visibilidade_id"], name: "index_o_cotacoes_on_o_visibilidade_id"
+  end
+
+  create_table "o_cotacoes_itens", force: :cascade do |t|
+    t.string "descricao"
+    t.bigint "o_cotacao_id", null: false
+    t.bigint "o_categoria_servico_id", null: false
+    t.integer "quantidade"
+    t.decimal "valor_unitario", precision: 10, scale: 2
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["o_categoria_servico_id"], name: "index_o_cotacoes_itens_on_o_categoria_servico_id"
+    t.index ["o_cotacao_id"], name: "index_o_cotacoes_itens_on_o_cotacao_id"
+  end
+
+  create_table "o_solicitacoes", force: :cascade do |t|
+    t.integer "numero", null: false
+    t.string "descricao"
+    t.integer "km_reportado"
+    t.datetime "data_limite_publicacao"
+    t.datetime "publicado_em"
+    t.decimal "saldo_snapshot", precision: 15, scale: 2
+    t.bigint "solicitante_id", null: false
+    t.bigint "publicado_por_id"
+    t.bigint "g_veiculo_id", null: false
+    t.bigint "g_centro_custo_id", null: false
+    t.bigint "o_tipo_solicitacao_id", null: false
+    t.bigint "o_categoria_servico_id", null: false
+    t.bigint "o_status_id", null: false
+    t.bigint "o_urgencia_id"
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["g_centro_custo_id"], name: "index_o_solicitacoes_on_g_centro_custo_id"
+    t.index ["g_veiculo_id"], name: "index_o_solicitacoes_on_g_veiculo_id"
+    t.index ["o_categoria_servico_id"], name: "index_o_solicitacoes_on_o_categoria_servico_id"
+    t.index ["o_status_id"], name: "index_o_solicitacoes_on_o_status_id"
+    t.index ["o_tipo_solicitacao_id"], name: "index_o_solicitacoes_on_o_tipo_solicitacao_id"
+    t.index ["o_urgencia_id"], name: "index_o_solicitacoes_on_o_urgencia_id"
+    t.index ["publicado_por_id"], name: "index_o_solicitacoes_on_publicado_por_id"
+    t.index ["solicitante_id"], name: "index_o_solicitacoes_on_solicitante_id"
+  end
+
   create_table "o_status", force: :cascade do |t|
     t.string "descricao"
     t.string "created_by"
@@ -535,6 +610,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_29_044023) do
   add_foreign_key "f_empresas_servicos", "o_categorias_servicos"
   add_foreign_key "f_financeiros", "f_empresas_fornecedoras"
   add_foreign_key "f_financeiros", "o_categorias_servicos"
+  add_foreign_key "f_financeiros_movimentos", "f_financeiros"
+  add_foreign_key "f_financeiros_movimentos", "g_tipos_movimentos"
   add_foreign_key "g_bairros", "g_municipios"
   add_foreign_key "g_centros_custos", "a_unidades"
   add_foreign_key "g_centros_custos", "g_tipos_centros_custos"
@@ -553,6 +630,19 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_29_044023) do
   add_foreign_key "g_veiculos", "a_unidades"
   add_foreign_key "g_veiculos", "g_centros_custos"
   add_foreign_key "g_veiculos", "g_tipos_veiculos"
+  add_foreign_key "o_cotacoes", "o_solicitacoes"
+  add_foreign_key "o_cotacoes", "o_status"
+  add_foreign_key "o_cotacoes", "o_visibilidades"
+  add_foreign_key "o_cotacoes_itens", "o_categorias_servicos"
+  add_foreign_key "o_cotacoes_itens", "o_cotacoes"
+  add_foreign_key "o_solicitacoes", "g_centros_custos"
+  add_foreign_key "o_solicitacoes", "g_veiculos"
+  add_foreign_key "o_solicitacoes", "o_categorias_servicos"
+  add_foreign_key "o_solicitacoes", "o_status"
+  add_foreign_key "o_solicitacoes", "o_tipos_solicitacoes"
+  add_foreign_key "o_solicitacoes", "o_urgencias"
+  add_foreign_key "o_solicitacoes", "users", column: "publicado_por_id"
+  add_foreign_key "o_solicitacoes", "users", column: "solicitante_id"
   add_foreign_key "t_taxas", "a_status"
   add_foreign_key "t_taxas_empresas_fornecedoras", "f_empresas_fornecedoras"
   add_foreign_key "t_taxas_empresas_fornecedoras", "t_taxas"

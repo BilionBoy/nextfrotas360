@@ -1,0 +1,35 @@
+<%= render "shared/context_nav", title: t("activerecord.models.#{OCotacao.model_name.i18n_key}.other") do  %>
+  <span class="breadcrumb-item"><%= link_to t("activerecord.models.#{OCotacao.model_name.i18n_key}.other"), o_cotacoes_path, class: "text-dark" %></span>
+  <span class="breadcrumb-item active"><%= t("helpers.submit.#{params[:action]}") %></span>
+<% end %>
+<%= simple_form_for(@o_cotacao) do |f| %>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="my-0">
+        <%= @o_cotacao.new_record? ? "Incluir " : "Editar " %><%= t("activerecord.models.#{OCotacao.model_name.i18n_key}.one") %>
+      </h5>
+    </div>
+    <div class="card-body">
+      <%= f.error_notification %>
+      <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+      <div class="row">
+        <div class="col-3">
+          <%= f.input :o_solicitacao_id, collection: OSolicitacao.all, label_method: :descricao, value_method: :id, prompt: "Selecione a Solicitação" %>
+        </div>
+        <div class="col-3">
+          <%= f.input :o_visibilidade_id, collection: OVisibilidade.all, label_method: :descricao, value_method: :id, prompt: "Selecione a Visibilidade" %>
+        </div>
+        <div class="col-3">
+          <%= f.input :o_status_id, collection: OStatus.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Status" %>
+        </div>
+        <div class="col-3">
+          <%= f.input :data_expiracao, input_html: { class: "capitalize"}, placeholder: "Data expiracao"  %>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <%= btn_submit(f) %>
+      <%= link_to "Voltar", o_cotacoes_path, class: "btn btn-light" %>
+    </div>
+  </div>
+<% end %>
