@@ -1,18 +1,12 @@
 Rails.application.routes.draw do
-  # Recursos principais
-  resources :o_propostas
-  resources :o_cotacoes_itens
+  devise_for :users
+  
   resources :o_cotacoes do
     collection do
       get :propostas_enviar, as: :enviar_proposta
     end
   end
-  resources :o_solicitacoes  
-
-  # Devise para autenticação
-  devise_for :users
-
-  # Recursos de usuários
+  
   resources :users, path: "usuarios" do
     collection do
       get  :novo_gestor,       to: 'users#new_gestor'
@@ -26,14 +20,8 @@ Rails.application.routes.draw do
       delete :remove_foto_rg
     end
   end
-
-  # Root e home
-  root 'home#index'
-  get 'home/index'
-
-  # Health check
-  get 'up' => 'rails/health#show', as: :rails_health_check
-
+  
+  
   # Rotas scaffold administrativas
   resources :a_tipos_unidades
   resources :a_tipo_usuarios
@@ -45,14 +33,10 @@ Rails.application.routes.draw do
   resources :a_papeis
   resources :a_cargos
   resources :a_unidades
-
-  # Financeiro
   resources :f_financeiros
   resources :f_empresas_servicos
   resources :f_empresas_fornecedoras
   resources :f_financeiros_movimentos
-
-  # Gestão
   resources :g_status
   resources :g_tipos_veiculos
   resources :g_tipos_centros_custos
@@ -70,15 +54,19 @@ Rails.application.routes.draw do
   resources :g_centros_custos_movimentos
   resources :g_tipos_movimentos
   resources :g_centros_custos
-
-  # Ordens e solicitações
+  resources :o_solicitacoes  
   resources :o_tipos_solicitacoes
   resources :o_status
   resources :o_categorias_servicos
   resources :o_visibilidades
   resources :o_urgencias
-
-  # Taxas
+  resources :o_propostas
+  resources :o_cotacoes_itens
   resources :t_taxas
   resources :t_taxas_empresas_fornecedoras
+  
+  # Root e home
+  root 'home#index'
+  get 'home/index'
+  get 'up' => 'rails/health#show', as: :rails_health_check
 end
