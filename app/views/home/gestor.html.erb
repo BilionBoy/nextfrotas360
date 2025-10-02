@@ -1,2 +1,643 @@
-<h1>Bem-vindo, Gestor!</h1>
-<p>Dashboard e informações do gestor.</p>
+<style>
+  :root {
+    --primary-blue: #2563eb;
+    --primary-blue-dark: #1e40af;
+    --success-green: #10b981;
+    --warning-orange: #f59e0b;
+    --danger-red: #ef4444;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-900: #111827;
+  }
+
+  .observatory-dashboard {
+    background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+    min-height: 100vh;
+    padding: 2rem;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  /* Dashboard Header */
+  .dashboard-header {
+    margin-bottom: 2rem;
+  }
+
+  .dashboard-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 0.5rem;
+  }
+
+  .dashboard-subtitle {
+    color: var(--gray-600);
+    font-size: 1rem;
+  }
+
+  /* Enhanced Metrics Grid */
+  .metrics-observatory {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .metric-card {
+    background: white;
+    border-radius: 20px;
+    padding: 1.75rem;
+    border: 1px solid var(--gray-200);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .metric-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-blue), var(--success-green));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .metric-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .metric-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Primary Metric Card (Solicitações) */
+  .primary-metric {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+    color: white;
+    grid-column: span 1;
+  }
+
+  .primary-metric::before {
+    background: rgba(255, 255, 255, 0.3);
+    opacity: 1;
+  }
+
+  .primary-metric:hover {
+    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.3);
+  }
+
+  /* Metric Header */
+  .metric-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+
+  .metric-info {
+    flex: 1;
+  }
+
+  .metric-icon-wrapper {
+    flex-shrink: 0;
+  }
+
+  .metric-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    background: rgba(37, 99, 235, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .metric-card:hover .metric-icon {
+    transform: scale(1.1) rotate(5deg);
+  }
+
+  .primary-metric .metric-icon {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .metric-icon.requests { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+  .metric-icon.proposals { background: linear-gradient(135deg, #10b981, #059669); }
+  .metric-icon.finance { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+  .metric-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--gray-900);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .primary-metric .metric-value {
+    color: white;
+  }
+
+  .metric-label {
+    color: var(--gray-600);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .primary-metric .metric-label {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* Requests Breakdown */
+  .requests-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .request-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.625rem 0.875rem;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    transition: all 0.2s ease;
+  }
+
+  .request-item:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateX(4px);
+  }
+
+  .request-status-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  .request-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+  }
+
+  .request-indicator.status-pending { background: #fbbf24; }
+  .request-indicator.status-progress { background: #60a5fa; }
+  .request-indicator.status-completed { background: #34d399; }
+
+  .request-status {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 500;
+  }
+
+  .request-count {
+    font-weight: 700;
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.375rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    min-width: 32px;
+    text-align: center;
+  }
+
+  /* Secondary Metrics */
+  .metric-footer {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--gray-200);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--gray-600);
+  }
+
+  .metric-trend {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-weight: 600;
+  }
+
+  .trend-up {
+    color: var(--success-green);
+  }
+
+  .trend-icon {
+    font-size: 1rem;
+  }
+
+  /* Analytics Section */
+  .analytics-observatory {
+    margin-bottom: 2rem;
+  }
+
+  .analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .chart-panel {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid var(--gray-200);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .chart-panel:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  .panel-header {
+    padding: 1.75rem 1.75rem 1.25rem;
+    border-bottom: 1px solid var(--gray-100);
+    background: linear-gradient(to bottom, white, var(--gray-50));
+  }
+
+  .panel-title {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+  }
+
+  .title-icon {
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+    border-radius: 10px;
+    color: white;
+  }
+
+  .panel-title h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin: 0;
+  }
+
+  .chart-container {
+    padding: 1.75rem;
+    min-height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .chart-container canvas {
+    max-height: 300px;
+  }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--gray-600);
+  }
+
+  .empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  .empty-state-text {
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .analytics-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .observatory-dashboard {
+      padding: 1rem;
+    }
+
+    .metrics-observatory {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .metric-value {
+      font-size: 2rem;
+    }
+
+    .dashboard-title {
+      font-size: 1.5rem;
+    }
+
+    .analytics-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Loading Animation */
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  .loading {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+</style>
+<div class="observatory-dashboard">
+  <!-- Métricas Principais -->
+  <div class="metrics-observatory">
+    <!-- Solicitações Totais (Primary Card) -->
+    <div class="metric-card primary-metric">
+      <div class="metric-header">
+        <div class="metric-info">
+          <h2 class="metric-value"><%= @solicitacoes_total %></h2>
+          <p class="metric-label">Solicitações Totais</p>
+        </div>
+        <div class="metric-icon-wrapper">
+          <div class="metric-icon">📋</div>
+        </div>
+      </div>
+      <div class="requests-breakdown">
+        <div class="request-item">
+          <div class="request-status-wrapper">
+            <span class="request-indicator status-pending"></span>
+            <span class="request-status">Pendentes</span>
+          </div>
+          <span class="request-count"><%= @solicitacoes_pendentes %></span>
+        </div>
+        <div class="request-item">
+          <div class="request-status-wrapper">
+            <span class="request-indicator status-progress"></span>
+            <span class="request-status">Em Andamento</span>
+          </div>
+          <span class="request-count"><%= @solicitacoes_andamento %></span>
+        </div>
+        <div class="request-item">
+          <div class="request-status-wrapper">
+            <span class="request-indicator status-completed"></span>
+            <span class="request-status">Concluídas</span>
+          </div>
+          <span class="request-count"><%= @solicitacoes_concluidas %></span>
+        </div>
+      </div>
+    </div>
+    <!-- Propostas Recebidas -->
+    <div class="metric-card">
+      <div class="metric-header">
+        <div class="metric-info">
+          <h2 class="metric-value"><%= @propostas_recebidas %></h2>
+          <p class="metric-label">Propostas Recebidas</p>
+        </div>
+        <div class="metric-icon-wrapper">
+          <div class="metric-icon proposals">📨</div>
+        </div>
+      </div>
+      <div class="metric-footer">
+        <span class="metric-trend trend-up">
+          <span class="trend-icon">↗</span>
+          <span>Aguardando análise</span>
+        </span>
+      </div>
+    </div>
+    <!-- Orçamento Disponível -->
+    <div class="metric-card">
+      <div class="metric-header">
+        <div class="metric-info">
+          <h2 class="metric-value">R$ <%= number_with_delimiter(@orcamento_total - @gastos_totais, delimiter: ".", separator: ",") %></h2>
+          <p class="metric-label">Orçamento Disponível</p>
+        </div>
+        <div class="metric-icon-wrapper">
+          <div class="metric-icon finance">💰</div>
+        </div>
+      </div>
+      <div class="metric-footer">
+        <span style="color: var(--gray-600);">
+          Total: R$ <%= number_with_delimiter(@orcamento_total, delimiter: ".", separator: ",") %>
+        </span>
+      </div>
+    </div>
+  </div>
+  <!-- Seção de Análises -->
+  <div class="analytics-observatory">
+    <div class="analytics-grid">
+      <!-- Solicitações por Categoria -->
+      <div class="chart-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <div class="title-icon">📊</div>
+            <h3>Solicitações por Categoria</h3>
+          </div>
+        </div>
+        <div class="chart-container">
+          <% if @solicitacoes_por_categoria.any? %>
+            <canvas id="solicitacoesChart"></canvas>
+          <% else %>
+            <div class="empty-state">
+              <div class="empty-state-icon">📊</div>
+              <p class="empty-state-text">Nenhuma solicitação registrada ainda</p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <!-- Gastos por Centro de Custo -->
+      <div class="chart-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <div class="title-icon">💵</div>
+            <h3>Gastos por Centro de Custo</h3>
+          </div>
+        </div>
+        <div class="chart-container">
+          <% if @gastos_por_centro.any? %>
+            <canvas id="gastosChart"></canvas>
+          <% else %>
+            <div class="empty-state">
+              <div class="empty-state-icon">💵</div>
+              <p class="empty-state-text">Nenhum gasto registrado ainda</p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Chart.js Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+  // Configuração global dos gráficos
+  Chart.defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+  Chart.defaults.color = '#6b7280';
+
+  <% if @solicitacoes_por_categoria.any? %>
+  // Solicitações por categoria
+  const solicitacoesCtx = document.getElementById('solicitacoesChart');
+  if (solicitacoesCtx) {
+    new Chart(solicitacoesCtx, {
+      type: 'bar',
+      data: {
+        labels: <%= raw @solicitacoes_por_categoria.map(&:descricao).to_json %>,
+        datasets: [{
+          label: 'Solicitações',
+          data: <%= raw @solicitacoes_por_categoria.map(&:count).to_json %>,
+          backgroundColor: 'rgba(37, 99, 235, 0.8)',
+          borderColor: 'rgba(37, 99, 235, 1)',
+          borderWidth: 2,
+          borderRadius: 8,
+          borderSkipped: false,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            backgroundColor: 'rgba(17, 24, 39, 0.95)',
+            padding: 12,
+            borderRadius: 8,
+            titleFont: {
+              size: 14,
+              weight: 'bold'
+            },
+            bodyFont: {
+              size: 13
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              precision: 0,
+              font: {
+                size: 12
+              }
+            },
+            grid: {
+              color: 'rgba(229, 231, 235, 0.5)',
+              drawBorder: false
+            }
+          },
+          x: {
+            grid: {
+              display: false
+            },
+            ticks: {
+              font: {
+                size: 12
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+  <% end %>
+
+  <% if @gastos_por_centro.any? %>
+  // Gastos por centro de custo
+  const gastosCtx = document.getElementById('gastosChart');
+  if (gastosCtx) {
+    new Chart(gastosCtx, {
+      type: 'doughnut',
+      data: {
+        labels: <%= raw @gastos_por_centro.map(&:nome).to_json %>,
+        datasets: [{
+          data: <%= raw @gastos_por_centro.map(&:valor).to_json %>,
+          backgroundColor: [
+            'rgba(37, 99, 235, 0.8)',
+            'rgba(16, 185, 129, 0.8)',
+            'rgba(245, 158, 11, 0.8)',
+            'rgba(239, 68, 68, 0.8)',
+            'rgba(139, 92, 246, 0.8)',
+            'rgba(236, 72, 153, 0.8)'
+          ],
+          borderColor: [
+            'rgba(37, 99, 235, 1)',
+            'rgba(16, 185, 129, 1)',
+            'rgba(245, 158, 11, 1)',
+            'rgba(239, 68, 68, 1)',
+            'rgba(139, 92, 246, 1)',
+            'rgba(236, 72, 153, 1)'
+          ],
+          borderWidth: 2,
+          hoverOffset: 8
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              padding: 15,
+              font: {
+                size: 12
+              },
+              usePointStyle: true,
+              pointStyle: 'circle'
+            }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(17, 24, 39, 0.95)',
+            padding: 12,
+            borderRadius: 8,
+            titleFont: {
+              size: 14,
+              weight: 'bold'
+            },
+            bodyFont: {
+              size: 13
+            },
+            callbacks: {
+              label: function(context) {
+                let label = context.label || '';
+                if (label) {
+                  label += ': ';
+                }
+                label += 'R$ ' + context.parsed.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+                return label;
+              }
+            }
+          }
+        },
+        cutout: '65%'
+      }
+    });
+  }
+  <% end %>
+</script>
