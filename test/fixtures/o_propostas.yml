@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  o_cotacao: one
+  empresa_fornecedora: one
+  usuario_envio: one
+  valor_total: 9.99
+  prazo_execucao_dias: 1
+  validade_proposta: 2025-10-01 18:48:56
+  o_status: one
+  versao: 1
+
+two:
+  o_cotacao: two
+  empresa_fornecedora: two
+  usuario_envio: two
+  valor_total: 9.99
+  prazo_execucao_dias: 1
+  validade_proposta: 2025-10-01 18:48:56
+  o_status: two
+  versao: 1

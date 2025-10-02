@@ -15,6 +15,8 @@ class OSolicitacao < ApplicationRecord
   before_validation :set_status_pendente, on: :create
   before_validation :set_numero, on: :create
 
+
+
   private
 
   def set_saldo_snapshot

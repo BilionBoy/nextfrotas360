@@ -128,6 +128,9 @@ pt-BR:
       o_cotacao_item:
         one: "Item da Cotação"
         other: "Itens da Cotação"
+      o_proposta:
+        one: "Proposta"
+        other: "Propostas"
       t_taxa:
         one: "Taxa"
         other: "Taxas"
@@ -281,6 +284,14 @@ pt-BR:
         descricao: "Descrição"
       o_visibilidade:
         descricao: "Descrição"
+      o_proposta:
+        o_cotacao_id: "Cotação"
+        o_status_id: "Status da Proposta"
+        f_empresa_fornecedora_id: "Empresa Fornecedora"
+        valor_total: "Valor Total"
+        prazo_execucao_dias: "Prazo de Excecução em Dias"
+        validade_proposta: "Validade da Proposta"
+        versao: "Versão"
       t_taxa:
         nome: "Nome"
         descricao: "Descrição"
