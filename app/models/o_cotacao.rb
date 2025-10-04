@@ -6,7 +6,7 @@ class OCotacao < ApplicationRecord
   has_many :o_propostas,      class_name: "OProposta",   foreign_key: "o_cotacao_id", dependent: :destroy  
   
   validates :data_expiracao, presence: true
-
+  before_validation :set_visibilidade_publica, on: :create
   before_validation :set_status_pendente
   after_create :marcar_solicitacao_em_cotacao
 
@@ -26,6 +26,11 @@ class OCotacao < ApplicationRecord
 
   private
 
+
+  def set_visibilidade_publica
+   self.o_visibilidade ||= OVisibilidade.find_by(descricao: "Pública")
+  end
+  
   def set_status_pendente
     self.o_status ||= OStatus.find_by(descricao: "Pendente")
   end

@@ -14,6 +14,7 @@ class OCotacoesController < ApplicationController
     @o_cotacao.o_solicitacao_id = params[:solicitacao_id] if params[:solicitacao_id].present?
   end
 
+
   def edit
   end
 

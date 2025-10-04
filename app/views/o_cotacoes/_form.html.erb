@@ -16,9 +16,6 @@
         <div class="col-3">
           <%= f.input :o_solicitacao_id, collection: OSolicitacao.all, label_method: :descricao, value_method: :id, prompt: "Selecione a Solicitação" %>
         </div>
-        <div class="col-3">
-          <%= f.input :o_visibilidade_id, collection: OVisibilidade.all, label_method: :descricao, value_method: :id, prompt: "Selecione a Visibilidade" %>
-        </div>
         <div class="col-6">
           <%= f.input :data_expiracao, input_html: { class: "capitalize"}, placeholder: "Data expiracao"  %>
         </div>

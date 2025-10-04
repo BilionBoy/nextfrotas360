@@ -256,7 +256,7 @@ pt-BR:
         g_veiculo_id: "Veículo"
         data_inicio: "Data Início"
       o_solicitacao:
-        descricao: "Descrição"
+        descricao: "Titulo"
         g_veiculo_id: "Veículo"
         o_categoria_servico_id: "Categoria de Serviço"
         o_tipo_solicitacao_id: "Tipo de Solicitação"

@@ -1,6 +1,10 @@
 <%= render "shared/context_nav", title: t("activerecord.models.#{OSolicitacao.model_name.i18n_key}.other") do  %>
-  <span class="breadcrumb-item"><%= link_to t("activerecord.models.#{OSolicitacao.model_name.i18n_key}.other"), o_solicitacoes_path, class: "text-dark" %></span>
-  <span class="breadcrumb-item active"><%= t("helpers.submit.#{params[:action]}") %></span>
+  <span class="breadcrumb-item">
+    <%= link_to t("activerecord.models.#{OSolicitacao.model_name.i18n_key}.other"), o_solicitacoes_path, class: "text-dark" %>
+  </span>
+  <span class="breadcrumb-item active">
+    <%= t("helpers.submit.#{params[:action]}") %>
+  </span>
 <% end %>
 <%= simple_form_for(@o_solicitacao) do |f| %>
   <div class="card">
@@ -13,21 +17,41 @@
     <div class="card-body">
       <%= f.error_notification %>
       <div class="row">
-        <div class="col-3"><%= f.input :descricao, placeholder: "Titulo" %></div>
-        <div class="col-3"><%= f.input :g_veiculo_id, collection: GVeiculo.all, label_method: :placa, value_method: :id, prompt: "Selecione o Veículo" %></div>
+        <div class="col-3"><%= f.input :descricao, placeholder: "Título" %></div>
         <div class="col-3">
-          <%= f.input :g_centro_custo_id,   collection: GCentroCusto.all,  label_method: :nome,    value_method: :id,  prompt: "Selecione o Centro de Custo",   input_html: { id: "centro-custo-select" } %>
+          <%= f.input :g_veiculo_id, collection: GVeiculo.all, label_method: :placa, value_method: :id, prompt: "Selecione o Veículo" %>
         </div>
-        <div class="col-3"><%= f.input :o_tipo_solicitacao_id, collection: OTipoSolicitacao.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Tipo de Solicitação" %></div>
-        <div class="col-3"><%= f.input :o_categoria_servico_id, collection: OCategoriaServico.all, label_method: :descricao, value_method: :id, prompt: "Selecione a Categoria de Serviço" %></div>
-        <div class="col-3"><%= f.input :km_reportado, placeholder: "Km reportado" %></div>
-        <div class="col-3"><%= f.input :o_urgencia_id, collection: OUrgencia.all, label_method: :descricao, value_method: :id, prompt: "Selecione a Urgência" %></div>
         <div class="col-3">
-          <%= f.input :saldo_snapshot, 
-                      input_html: { readonly: true, id: "saldo-snapshot-field", value: @o_solicitacao.saldo_snapshot || 0 }, 
+          <%= f.input :g_centro_custo_id, collection: GCentroCusto.all, label_method: :nome, value_method: :id,
+                        prompt: "Selecione o Centro de Custo", input_html: { id: "centro-custo-select" } %>
+        </div>
+        <div class="col-3">
+          <%= f.input :o_tipo_solicitacao_id, collection: OTipoSolicitacao.all, label_method: :descricao, value_method: :id,
+                        prompt: "Selecione o Tipo de Solicitação" %>
+        </div>
+        <div class="col-3">
+          <%= f.input :o_categoria_servico_id, collection: OCategoriaServico.all, label_method: :descricao, value_method: :id,
+                        prompt: "Selecione a Categoria de Serviço" %>
+        </div>
+        <div class="col-3"><%= f.input :km_reportado, placeholder: "Km reportado" %></div>
+        <div class="col-3">
+          <%= f.input :o_urgencia_id, collection: OUrgencia.all, label_method: :descricao, value_method: :id,
+                        prompt: "Selecione a Urgência" %>
+        </div>
+        <div class="col-3">
+          <%= f.input :saldo_snapshot,
+                      input_html: { readonly: true, id: "saldo-snapshot-field", value: @o_solicitacao.saldo_snapshot || 0 },
                       label: "Saldo atual do centro de custo" %>
         </div>
-        <div class="col-6"><%= f.input :data_limite_publicacao, placeholder: "Data limite publicação" %></div>
+        <div class="col-6">
+          <%= f.input :data_limite_publicacao, placeholder: "Data limite publicação" %>
+        </div>
+        <!-- 🔹 Novo campo de observação -->
+        <div class="col-12 mt-2">
+          <%= f.input :observacao, as: :text,
+                      input_html: { rows: 3, placeholder: "Observações adicionais sobre a solicitação..." },
+                      label: "Observação" %>
+        </div>
       </div>
     </div>
     <div class="card-footer">
@@ -40,6 +64,8 @@
   document.addEventListener("DOMContentLoaded", function() {
     const select = document.getElementById("centro-custo-select");
     const saldoField = document.getElementById("saldo-snapshot-field");
+
+    if (!select || !saldoField) return;
 
     // Atualiza saldo ao mudar o select
     select.addEventListener("change", () => {

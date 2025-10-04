@@ -70,3 +70,8 @@ class OSolicitacoesController < ApplicationController
     redirect_to o_solicitacoes_path, alert: t('messages.not_found')
   end
 end
+
+
+
+
+
