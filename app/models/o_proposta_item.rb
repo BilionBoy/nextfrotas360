@@ -3,18 +3,13 @@ class OPropostaItem < ApplicationRecord
   belongs_to :o_proposta
   belongs_to :o_cotacao_item
 
-  validates :quantidade, :valor_unitario, presence: true
-  validates :total_item, presence: true
+  validates :quantidade, :valor_unitario, :total_item, presence: true
 
-  after_save :atualizar_valor_total_proposta
+  before_validation :calcular_total_item
 
   private
 
-  def atualizar_valor_total_proposta
-    total = o_proposta.o_proposta_itens.sum("quantidade * valor_unitario")
-    o_proposta.update(
-      valor_total: total,
-      status_id: Status.find_by(descricao: "Enviada").id
-    )
+  def calcular_total_item
+    self.total_item = (quantidade || 0) * (valor_unitario || 0)
   end
 end

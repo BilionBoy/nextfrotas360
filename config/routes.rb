@@ -22,6 +22,11 @@ Rails.application.routes.draw do
     end
   end
   
+   resources :o_propostas do
+     collection do
+       get :fornecedor_enviadas, as: :fornecedor_enviadas
+     end
+   end
   
   # Rotas scaffold administrativas
   resources :a_tipos_unidades
@@ -70,7 +75,10 @@ Rails.application.routes.draw do
   resources :o_categorias_servicos
   resources :o_visibilidades
   resources :o_urgencias
-  resources :o_propostas
+
+
+
+
   resources :o_cotacoes_itens
   resources :t_taxas
   resources :t_taxas_empresas_fornecedoras
