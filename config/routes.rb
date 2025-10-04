@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :o_ordem_servicos, only: [:index, :show]
+  resources :o_ordem_servicos, only: [:index, :show] do
+    member do
+      patch :finalizar
+    end
+  end
 
   resources :o_propostas_itens
   devise_for :users

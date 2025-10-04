@@ -1,20 +1,55 @@
-<h1>Ordem de Serviço <%= @ordem_servico.numero_os %></h1>
-<p><strong>Proposta:</strong> <%= @ordem_servico.proposta&.numero %></p>
-<p><strong>Fornecedor:</strong> <%= @ordem_servico.empresa_fornecedora&.nome_fantasia %></p>
-<p><strong>Veículo:</strong> <%= @ordem_servico.veiculo&.placa %></p>
-<p><strong>Status:</strong> <%= @ordem_servico.status&.descricao %></p>
-<p><strong>Custo Real:</strong> <%= number_to_currency(@ordem_servico.custo_real) %></p>
+<h1>Ordem de Serviço <%= @o_ordem_servico.numero_os %></h1>
+<p><strong>Proposta:</strong>
+  <%= @o_ordem_servico.o_proposta&.o_cotacao&.o_solicitacao&.numero || '-' %>
+</p>
+<p><strong>Fornecedor:</strong>
+  <%= @o_ordem_servico.f_empresa_fornecedora&.nome_fantasia %>
+</p>
+<p><strong>Veículo:</strong>
+  <%= @o_ordem_servico.g_veiculo&.placa %>
+</p>
+<p><strong>Status:</strong>
+  <%= @o_ordem_servico.o_status&.descricao %>
+</p>
+<p><strong>Custo Real:</strong>
+  <%= number_to_currency(@o_ordem_servico.custo_real) %>
+</p>
 <h3>Itens Previstos</h3>
-<ul>
-  <% @ordem_servico.itens_previstos.each do |item| %>
-    <li><%= item['descricao'] %> - Qtd: <%= item['quantidade'] %> - Valor Unit.: <%= number_to_currency(item['valor_unitario']) %></li>
-  <% end %>
-</ul>
+<% if @o_ordem_servico.itens_previstos.present? %>
+  <ul>
+    <% @o_ordem_servico.itens_previstos.each do |item| %>
+      <li>
+        <%= item['descricao'] %> -
+        Qtd: <%= item['quantidade'] %> -
+        Valor Unit.: <%= number_to_currency(item['valor_unitario']) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Nenhum item previsto registrado.</p>
+<% end %>
 <h3>Itens Executados</h3>
-<ul>
-  <% @ordem_servico.itens_executados&.each do |item| %>
-    <li><%= item['descricao'] %> - Qtd: <%= item['quantidade'] %> - Valor Unit.: <%= number_to_currency(item['valor_unitario']) %></li>
+<% if @o_ordem_servico.itens_executados.present? %>
+  <ul>
+    <% @o_ordem_servico.itens_executados.each do |item| %>
+      <li>
+        <%= item['descricao'] %> -
+        Qtd: <%= item['quantidade'] %> -
+        Valor Unit.: <%= number_to_currency(item['valor_unitario']) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Nenhum item executado registrado.</p>
+<% end %>
+<p><strong>Observações:</strong>
+  <%= @o_ordem_servico.observacoes.presence || '-' %>
+</p>
+<p><strong>Datas Reais:</strong>
+  <% if @o_ordem_servico.data_inicio_real && @o_ordem_servico.data_termino_real %>
+    <%= l(@o_ordem_servico.data_inicio_real, format: :short) %> →
+    <%= l(@o_ordem_servico.data_termino_real, format: :short) %>
+  <% else %>
+    Não informadas
   <% end %>
-</ul>
-<p><strong>Observações:</strong> <%= @ordem_servico.observacoes %></p>
-<p><strong>Datas Reais:</strong> <%= l(@ordem_servico.data_inicio_real, format: :short) %> → <%= l(@ordem_servico.data_termino_real, format: :short) %></p>
+</p>
