@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :o_ordem_servicos, only: [:index, :show]
+
   resources :o_propostas_itens
   devise_for :users
   
@@ -22,15 +24,19 @@ Rails.application.routes.draw do
     end
   end
   
-   resources :o_propostas do
-     collection do
-       get :fornecedor_enviadas, as: :fornecedor_enviadas
-     end
+  resources :o_propostas do
+  collection do
+    get :fornecedor_enviadas, as: :fornecedor_enviadas
+  end
 
-     
-    # Nested para itens de proposta
-    resources :o_propostas_itens, only: [:new, :create]
-   end
+  # Nested para itens de proposta
+  resources :o_propostas_itens, only: [:new, :create]
+
+  # Rota para aprovação da proposta pelo gestor
+  member do
+    post :aprovar
+  end
+  end
   
   # Rotas scaffold administrativas
   resources :a_tipos_unidades

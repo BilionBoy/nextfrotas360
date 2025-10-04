@@ -1,0 +1,20 @@
+<h1>Ordem de Serviço <%= @ordem_servico.numero_os %></h1>
+<p><strong>Proposta:</strong> <%= @ordem_servico.proposta&.numero %></p>
+<p><strong>Fornecedor:</strong> <%= @ordem_servico.empresa_fornecedora&.nome_fantasia %></p>
+<p><strong>Veículo:</strong> <%= @ordem_servico.veiculo&.placa %></p>
+<p><strong>Status:</strong> <%= @ordem_servico.status&.descricao %></p>
+<p><strong>Custo Real:</strong> <%= number_to_currency(@ordem_servico.custo_real) %></p>
+<h3>Itens Previstos</h3>
+<ul>
+  <% @ordem_servico.itens_previstos.each do |item| %>
+    <li><%= item['descricao'] %> - Qtd: <%= item['quantidade'] %> - Valor Unit.: <%= number_to_currency(item['valor_unitario']) %></li>
+  <% end %>
+</ul>
+<h3>Itens Executados</h3>
+<ul>
+  <% @ordem_servico.itens_executados&.each do |item| %>
+    <li><%= item['descricao'] %> - Qtd: <%= item['quantidade'] %> - Valor Unit.: <%= number_to_currency(item['valor_unitario']) %></li>
+  <% end %>
+</ul>
+<p><strong>Observações:</strong> <%= @ordem_servico.observacoes %></p>
+<p><strong>Datas Reais:</strong> <%= l(@ordem_servico.data_inicio_real, format: :short) %> → <%= l(@ordem_servico.data_termino_real, format: :short) %></p>

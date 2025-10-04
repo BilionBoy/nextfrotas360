@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_04_172024) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_04_201901) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -475,6 +475,36 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_04_172024) do
     t.index ["o_cotacao_id"], name: "index_o_cotacoes_itens_on_o_cotacao_id"
   end
 
+  create_table "o_ordem_servicos", force: :cascade do |t|
+    t.string "numero_os", null: false
+    t.bigint "o_proposta_id", null: false
+    t.bigint "f_empresa_fornecedora_id", null: false
+    t.bigint "g_veiculo_id", null: false
+    t.bigint "o_status_id", null: false
+    t.bigint "validado_por_id"
+    t.json "itens_previstos", default: []
+    t.json "itens_executados", default: []
+    t.datetime "data_inicio_prevista"
+    t.datetime "data_termino_prevista"
+    t.datetime "data_inicio_real"
+    t.datetime "data_termino_real"
+    t.decimal "custo_real", precision: 15, scale: 2, default: "0.0"
+    t.text "observacoes"
+    t.datetime "validado_em"
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_o_ordem_servicos_on_deleted_at"
+    t.index ["f_empresa_fornecedora_id"], name: "index_o_ordem_servicos_on_f_empresa_fornecedora_id"
+    t.index ["g_veiculo_id"], name: "index_o_ordem_servicos_on_g_veiculo_id"
+    t.index ["numero_os"], name: "index_o_ordem_servicos_on_numero_os", unique: true
+    t.index ["o_proposta_id"], name: "index_o_ordem_servicos_on_o_proposta_id"
+    t.index ["o_status_id"], name: "index_o_ordem_servicos_on_o_status_id"
+    t.index ["validado_por_id"], name: "index_o_ordem_servicos_on_validado_por_id"
+  end
+
   create_table "o_propostas", force: :cascade do |t|
     t.bigint "o_cotacao_id", null: false
     t.bigint "f_empresa_fornecedora_id", null: false
@@ -670,6 +700,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_04_172024) do
   add_foreign_key "o_cotacoes", "o_visibilidades"
   add_foreign_key "o_cotacoes_itens", "o_categorias_servicos"
   add_foreign_key "o_cotacoes_itens", "o_cotacoes"
+  add_foreign_key "o_ordem_servicos", "f_empresas_fornecedoras"
+  add_foreign_key "o_ordem_servicos", "g_veiculos"
+  add_foreign_key "o_ordem_servicos", "o_propostas"
+  add_foreign_key "o_ordem_servicos", "o_status"
+  add_foreign_key "o_ordem_servicos", "users", column: "validado_por_id"
   add_foreign_key "o_propostas", "f_empresas_fornecedoras"
   add_foreign_key "o_propostas", "o_cotacoes"
   add_foreign_key "o_propostas", "o_status"

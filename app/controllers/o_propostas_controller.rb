@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class OPropostasController < ApplicationController
-  before_action :set_o_proposta, only: %i[show edit update destroy]
+  before_action :set_o_proposta, only: %i[show edit update destroy aprovar]
 
   rescue_from ActiveRecord::RecordNotFound, with: :handle_not_found
 
@@ -14,7 +14,6 @@ class OPropostasController < ApplicationController
   end
 
   def edit
-    # Garante que todos os itens da cotação existam
     @o_proposta.gerar_itens_padrao!
   end
 
@@ -30,11 +29,9 @@ class OPropostasController < ApplicationController
     @o_proposta.o_status = OStatus.find_by(descricao: "Pendente")
 
     if @o_proposta.save
-      # Gera itens padrão se ainda não existirem
       @o_proposta.gerar_itens_padrao!
       @o_proposta.save
-
-     redirect_to new_o_proposta_o_proposta_item_path(@o_proposta), notice: "Proposta criada! Agora preencha os itens."
+      redirect_to new_o_proposta_o_proposta_item_path(@o_proposta), notice: "Proposta criada! Agora preencha os itens."
     else
       render :new, status: :unprocessable_entity
     end
@@ -63,6 +60,18 @@ class OPropostasController < ApplicationController
                              .order(created_at: :desc)
   end
 
+  # NOVA ACTION: Aprovar proposta
+  def aprovar
+    authorize_gestor!
+
+    begin
+      @o_proposta.aprovar!(current_user)
+      redirect_to o_propostas_path, notice: "Proposta aprovada e OS criada com sucesso."
+    rescue => e
+      redirect_to o_propostas_path, alert: "Falha ao aprovar proposta: #{e.message}"
+    end
+  end
+
   private
 
   def set_o_proposta
@@ -81,5 +90,9 @@ class OPropostasController < ApplicationController
 
   def handle_not_found
     redirect_to o_propostas_path, alert: "Registro não encontrado"
+  end
+
+  def authorize_gestor!
+    redirect_to o_propostas_path, alert: "Acesso negado" unless current_user.gestor?
   end
 end

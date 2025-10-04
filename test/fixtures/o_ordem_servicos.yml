@@ -1,0 +1,35 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  numero_os: MyString
+  o_proposta: one
+  f_empresa_fornecedora: one
+  g_veiculo: one
+  o_status: one
+  itens_previstos: 
+  itens_executados: 
+  data_inicio_prevista: 2025-10-04 16:19:01
+  data_termino_prevista: 2025-10-04 16:19:01
+  data_inicio_real: 2025-10-04 16:19:01
+  data_termino_real: 2025-10-04 16:19:01
+  custo_real: 9.99
+  observacoes: MyText
+  validado_por: one
+  validado_em: 2025-10-04 16:19:01
+
+two:
+  numero_os: MyString
+  o_proposta: two
+  f_empresa_fornecedora: two
+  g_veiculo: two
+  o_status: two
+  itens_previstos: 
+  itens_executados: 
+  data_inicio_prevista: 2025-10-04 16:19:01
+  data_termino_prevista: 2025-10-04 16:19:01
+  data_inicio_real: 2025-10-04 16:19:01
+  data_termino_real: 2025-10-04 16:19:01
+  custo_real: 9.99
+  observacoes: MyText
+  validado_por: two
+  validado_em: 2025-10-04 16:19:01
