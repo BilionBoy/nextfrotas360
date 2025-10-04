@@ -14,6 +14,8 @@ class OPropostasController < ApplicationController
   end
 
   def edit
+    # Garante que todos os itens da cotação existam
+    @o_proposta.gerar_itens_padrao!
   end
 
   def create
@@ -28,24 +30,15 @@ class OPropostasController < ApplicationController
     @o_proposta.o_status = OStatus.find_by(descricao: "Pendente")
 
     if @o_proposta.save
-      # Gera itens padrao
+      # Gera itens padrão se ainda não existirem
       @o_proposta.gerar_itens_padrao!
-      @o_proposta.save # salva os itens gerados
+      @o_proposta.save
 
-      redirect_to edit_o_proposta_path(@o_proposta), notice: "Proposta criada! Agora preencha os itens."
+     redirect_to new_o_proposta_o_proposta_item_path(@o_proposta), notice: "Proposta criada! Agora preencha os itens."
     else
       render :new, status: :unprocessable_entity
     end
   end
-
-
-   def fornecedor_enviadas
-    # Apenas propostas do fornecedor logado
-    fornecedor = current_user.f_empresa_fornecedora
-    @o_propostas = OProposta.where(f_empresa_fornecedora: fornecedor)
-                          .where(o_status: OStatus.where(descricao: ['Pendente', 'Enviada', 'Aprovada']))
-                          .order(created_at: :desc)
-   end
 
   def update
     if @o_proposta.update(o_proposta_params)
@@ -61,6 +54,13 @@ class OPropostasController < ApplicationController
     else
       redirect_to o_propostas_url, alert: "Falha ao deletar proposta."
     end
+  end
+
+  def fornecedor_enviadas
+    fornecedor = current_user.f_empresa_fornecedora
+    @o_propostas = OProposta.where(f_empresa_fornecedora: fornecedor)
+                             .where(o_status: OStatus.where(descricao: ['Pendente', 'Enviada', 'Aprovada']))
+                             .order(created_at: :desc)
   end
 
   private

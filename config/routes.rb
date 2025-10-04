@@ -26,6 +26,10 @@ Rails.application.routes.draw do
      collection do
        get :fornecedor_enviadas, as: :fornecedor_enviadas
      end
+
+     
+    # Nested para itens de proposta
+    resources :o_propostas_itens, only: [:new, :create]
    end
   
   # Rotas scaffold administrativas

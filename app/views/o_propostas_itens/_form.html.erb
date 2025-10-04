@@ -4,11 +4,12 @@
   </span>
   <span class="breadcrumb-item active">Itens</span>
 <% end %>
-<%= simple_form_for @o_proposta, url: o_propostas_itens_path(o_proposta_id: @o_proposta.id), method: :post do |f| %>
+<%= simple_form_for @o_proposta do |f| %>
   <div class="card">
     <div class="card-header">
       <h5 class="my-0">
-        Preenchimento de Itens — <%= @o_proposta.o_cotacao.o_solicitacao.descricao if @o_proposta.o_cotacao&.o_solicitacao %>
+        Preenchimento de Itens — 
+        <%= @o_proposta.o_cotacao.o_solicitacao.descricao if @o_proposta.o_cotacao&.o_solicitacao %>
       </h5>
     </div>
     <div class="card-body">
@@ -47,7 +48,6 @@
               </div>
             </div>
             <%= item_form.hidden_field :id, value: item.id %>
-            <%= item_form.hidden_field :o_proposta_id, value: @o_proposta.id %>
           </div>
         <% end %>
       <% end %>
