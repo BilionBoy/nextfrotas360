@@ -8,7 +8,6 @@ class OCotacaoItem < ApplicationRecord
   # validações básicas
   validates :descricao,      presence: true
   validates :quantidade,     numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
-  validates :valor_unitario, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
 
 
 end
