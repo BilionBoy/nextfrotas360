@@ -1,0 +1,45 @@
+<div class="container">
+  <%= render "shared/notice" %>
+  <div class="card border-0 shadow shadow-sm">
+    <div class="card-header border-0 d-flex justify-content-between">
+      <span class="fs-4">Visualizar O Proposta Item</span>
+    </div>
+    <div class="card-body">
+      <div id="<%= dom_id @o_proposta_item %>">
+          <p>
+            <strong>O Cotacao:</strong>
+            <%= @o_proposta_item.o_cotacao %>
+          </p>
+          <p>
+            <strong>O Cotacao Item:</strong>
+            <%= @o_proposta_item.o_cotacao_item %>
+          </p>
+          <p>
+            <strong>Quantidade:</strong>
+            <%= @o_proposta_item.quantidade %>
+          </p>
+          <p>
+            <strong>Valor Unitario:</strong>
+            <%= @o_proposta_item.valor_unitario %>
+          </p>
+          <p>
+            <strong>Total Item:</strong>
+            <%= @o_proposta_item.total_item %>
+          </p>
+          <p>
+            <strong>Observacao:</strong>
+            <%= @o_proposta_item.observacao %>
+          </p>
+      </div>
+    </div>
+    <div class="card-footer border-0 d-flex justify-content-between">
+      <div>
+        <%= link_to edit_o_proposta_item_path(@o_proposta_item), class: "btn btn-primary" do %>
+        <i class="bi bi-pencil-square"></i> Editar
+        <% end %>
+        <%= link_to "Voltar", o_propostas_itens_path, class: "btn btn-secondary" %>
+      </div>
+      <%= button_to "Deletar", @o_proposta_item, method: :delete, class: "btn btn-outline-danger border-0" %>
+    </div>
+  </div>
+</div>

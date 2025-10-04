@@ -1,56 +1,449 @@
-<%= render "shared/context_nav", title: "Enviar Proposta" do %>
-  <span class="breadcrumb-item active">Enviar Proposta</span>
-<% end %>
-<div class="card">
-  <div class="card-header d-flex align-items-center gap-2">
-    <%= search_form_for @q, html: { class: "d-flex gap-2", autocomplete: "off" } do |f| %>
-      <%= f.search_field :numero_cont, class: "form-control", placeholder: "Pesquisar solicitação" %>
-      <%= f.button(type: 'submit', class: 'btn btn-info') do %>
-        <i class="ph-magnifying-glass"></i>
-      <% end %>
-      <% if params[:q].present? %>
-        <%= link_to enviar_proposta_o_cotacoes_path, class: "btn btn-light" do %>
-          <i class="ph-x-circle"></i>
-        <% end %>
+<style>
+  :root {
+    --primary-color: #2563eb;
+    --primary-dark: #1e40af;
+    --primary-light: #3b82f6;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+    --neutral-50: #f9fafb;
+    --neutral-100: #f3f4f6;
+    --neutral-200: #e5e7eb;
+    --neutral-300: #d1d5db;
+    --neutral-600: #4b5563;
+    --neutral-700: #374151;
+    --neutral-900: #111827;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 10px;
+  }
+
+  /* <CHANGE> Reduced search container padding and margins for compactness */
+  .search-container {
+    background: white;
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    margin-bottom: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--neutral-200);
+  }
+
+  .search-form {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+
+  /* <CHANGE> Reduced input padding for more compact search */
+  .search-input {
+    flex: 1;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--neutral-200);
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    min-width: 0;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  }
+
+  /* <CHANGE> Smaller button sizes while maintaining accessibility */
+  .btn-search,
+  .btn-clear {
+    padding: 0.625rem 1.125rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.875rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    white-space: nowrap;
+    min-height: 40px;
+  }
+
+  .btn-search {
+    background: var(--primary-color);
+    color: white;
+  }
+
+  .btn-search:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-clear {
+    background: var(--neutral-100);
+    color: var(--neutral-700);
+    border: 1px solid var(--neutral-300);
+  }
+
+  .btn-clear:hover {
+    background: var(--neutral-200);
+  }
+
+  /* <CHANGE> Optimized grid to show 2-3 cards per row with tighter gaps */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (min-width: 1400px) {
+    .cards-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 900px) and (max-width: 1399px) {
+    .cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .cards-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* <CHANGE> Much more compact card design */
+  .proposal-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--neutral-200);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .proposal-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+  }
+
+  /* <CHANGE> Reduced header padding and font size */
+  .proposal-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 0.875rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .proposal-number {
+    font-size: 1.375rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.025em;
+  }
+
+  /* <CHANGE> Smaller status badge */
+  .proposal-status {
+    padding: 0.375rem 0.75rem;
+    border-radius: 16px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    white-space: nowrap;
+  }
+
+  /* <CHANGE> Significantly reduced body padding and gaps */
+  .proposal-body {
+    padding: 0.875rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  /* <CHANGE> More compact info rows with less padding */
+  .info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+    background: var(--neutral-50);
+    transition: background 0.2s ease;
+  }
+
+  .info-row:hover {
+    background: var(--neutral-100);
+  }
+
+  /* <CHANGE> Smaller icon size for compactness */
+  .info-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .info-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  /* <CHANGE> Smaller label font size */
+  .info-label {
+    font-size: 0.625rem;
+    color: var(--neutral-600);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  /* <CHANGE> Reduced value font size for better density */
+  .info-value {
+    font-size: 0.8125rem;
+    color: var(--neutral-900);
+    font-weight: 500;
+    line-height: 1.3;
+    word-break: break-word;
+  }
+
+  .info-value-inline {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    flex-wrap: wrap;
+  }
+
+  .info-value-inline span {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .info-divider {
+    color: var(--neutral-300);
+    font-weight: 400;
+  }
+
+  /* <CHANGE> Compact footer with reduced padding */
+  .proposal-footer {
+    padding: 0.75rem 1rem;
+    background: var(--neutral-50);
+    border-top: 1px solid var(--neutral-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  /* <CHANGE> Smaller expiration badge */
+  .expiration-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    color: var(--danger-color);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.375rem 0.625rem;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: var(--radius-sm);
+  }
+
+  /* <CHANGE> More compact primary button */
+  .btn-send-proposal {
+    background: var(--success-color);
+    border: none;
+    color: white;
+    padding: 0.625rem 1.125rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    cursor: pointer;
+    min-height: 36px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-send-proposal:hover {
+    background: #059669;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+    color: white;
+  }
+
+  .btn-send-proposal:active {
+    transform: translateY(0);
+  }
+
+  /* <CHANGE> Reduced empty state padding */
+  .empty-state {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background: white;
+    border-radius: var(--radius-lg);
+    border: 2px dashed var(--neutral-300);
+  }
+
+  .empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 0.75rem;
+    opacity: 0.5;
+  }
+
+  .empty-state-text {
+    color: var(--neutral-600);
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .proposal-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      padding: 0.75rem;
+    }
+
+    .proposal-footer {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 0.625rem 0.75rem;
+    }
+
+    .btn-send-proposal {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .search-form {
+      flex-direction: column;
+    }
+
+    .btn-search,
+    .btn-clear {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+<div class="search-container">
+  <%= search_form_for @q, url: enviar_proposta_o_cotacoes_path, html: { class: "search-form", autocomplete: "off" } do |f|%>
+    <%= f.search_field :o_solicitacao_numero_cont, 
+        class: "form-control search-input", 
+        placeholder: "🔍 Pesquisar por número da solicitação",
+        'aria-label': "Pesquisar solicitação" %>
+    <%= f.button(type: 'submit', class: 'btn btn-search', 'aria-label': 'Buscar') do %>
+      <i class="ph-magnifying-glass"></i> Buscar
+    <% end %>
+    <% if params[:q].present? %>
+      <%= link_to propostas_enviar_o_cotacoes_path, class: "btn btn-clear", 'aria-label': 'Limpar pesquisa' do %>
+        <i class="ph-x-circle"></i> Limpar
       <% end %>
     <% end %>
+  <% end %>
+</div>
+<% if @o_cotacoes.empty? %>
+  <div class="empty-state">
+    <div class="empty-state-icon">📋</div>
+    <p class="empty-state-text">Nenhuma cotação disponível para envio de proposta.</p>
   </div>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-sm table-bordered table-striped">
-        <thead>
-          <tr>
-            <th class="text-center">Ações</th>
-            <th>Número</th>
-            <th>Solicitante</th>
-            <th>Veículo</th>
-            <th>Centro de Custo</th>
-            <th>Tipo</th>
-            <th>Categoria</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @o_solicitacoes.each do |solicitacao| %>
-            <tr>
-              <td class="text-center">
-                <%= link_to "Enviar Proposta", new_o_proposta_path(o_cotacao_id: solicitacao.id),
-                            class: "btn btn-sm btn-success" %>
-              </td>
-              <td><%= solicitacao.numero %></td>
-              <td><%= solicitacao.solicitante&.nome %></td>
-              <td><%= solicitacao.g_veiculo&.modelo %></td>
-              <td><%= solicitacao.g_centro_custo&.nome %></td>
-              <td><%= solicitacao.o_tipo_solicitacao&.descricao %></td>
-              <td><%= solicitacao.o_categoria_servico&.descricao %></td>
-              <td><%= solicitacao.o_status&.descricao %></td>
-            </tr>
+<% else %>
+  <div class="cards-grid" data-count="<%= @o_cotacoes.count %>">
+    <% @o_cotacoes.each do |cotacao| %>
+      <article class="proposal-card">
+        <header class="proposal-header">
+          <div>
+            <h2 class="proposal-number">#<%= cotacao.o_solicitacao.numero %></h2>
+          </div>
+          <div class="proposal-status" role="status">
+            <%= cotacao.o_status&.descricao %>
+          </div>
+        </header>
+        <div class="proposal-body">
+          <div class="info-row">
+            <div class="info-icon" style="background: #dbeafe; color: #1e40af;">
+              <i class="ph-user" aria-hidden="true"></i>
+            </div>
+            <div class="info-content">
+              <div class="info-label">Solicitante</div>
+              <div class="info-value"><%= cotacao.o_solicitacao.solicitante&.nome || 'N/A' %></div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon" style="background: #e0e7ff; color: #4338ca;">
+              <i class="ph-car" aria-hidden="true"></i>
+            </div>
+            <div class="info-content">
+              <div class="info-label">Veículo</div>
+              <div class="info-value"><%= cotacao.o_solicitacao.g_veiculo&.modelo || 'N/A' %></div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon" style="background: #fef3c7; color: #d97706;">
+              <i class="ph-buildings" aria-hidden="true"></i>
+            </div>
+            <div class="info-content">
+              <div class="info-label">Centro de Custo</div>
+              <div class="info-value"><%= cotacao.o_solicitacao.g_centro_custo&.nome || 'N/A' %></div>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-icon" style="background: #d1fae5; color: #059669;">
+              <i class="ph-wrench" aria-hidden="true"></i>
+            </div>
+            <div class="info-content">
+              <div class="info-label">Tipo / Categoria</div>
+              <div class="info-value info-value-inline">
+                <span><%= cotacao.o_solicitacao.o_tipo_solicitacao&.descricao || 'N/A' %></span>
+                <span class="info-divider">•</span>
+                <span><%= cotacao.o_solicitacao.o_categoria_servico&.descricao || 'N/A' %></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="proposal-footer">
+          <div class="expiration-badge" role="alert">
+            <i class="ph-clock" aria-hidden="true"></i>
+            <span>Expira: <%= l(cotacao.data_expiracao, format: :short) %></span>
+          </div>
+          <%= link_to new_o_proposta_path(o_cotacao_id: cotacao.id),
+                      class: "btn-send-proposal",
+                      'aria-label': "Enviar proposta para cotação #{cotacao.o_solicitacao.numero}" do %>
+            <i class="ph-paper-plane-tilt" aria-hidden="true"></i>
+            Enviar Proposta
           <% end %>
-        </tbody>
-      </table>
-    </div>
+        </footer>
+      </article>
+    <% end %>
   </div>
-  <div class="card-footer">
-    <%= pagy_bootstrap_nav(@pagy, link_extra: 'class="btn btn-outline-secondary btn-sm mx-1"').html_safe %>
-  </div>
+<% end %>
+<div class="d-flex justify-content-center mt-4">
+  <%= pagy_bootstrap_nav(@pagy, link_extra: 'class="btn btn-outline-secondary btn-sm mx-1"').html_safe %>
 </div>

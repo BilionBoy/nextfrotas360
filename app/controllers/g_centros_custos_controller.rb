@@ -42,6 +42,11 @@ class GCentrosCustosController < ApplicationController
     end   
   end
 
+  def saldo
+    centro = GCentroCusto.find(params[:id])
+    render json: { saldo: centro.saldo_atual || 0.0 }
+  end
+
   private
 
   def set_g_centro_custo

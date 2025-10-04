@@ -131,6 +131,9 @@ pt-BR:
       o_proposta:
         one: "Proposta"
         other: "Propostas"
+      o_proposta_item:
+        one: "Item da Proposta"
+        other: "Itens da Proposta"
       t_taxa:
         one: "Taxa"
         other: "Taxas"
@@ -292,6 +295,14 @@ pt-BR:
         prazo_execucao_dias: "Prazo de Excecução em Dias"
         validade_proposta: "Validade da Proposta"
         versao: "Versão"
+      o_proposta_item:
+        o_cotacao_item_id: "Item da Cotação"
+        o_proposta_id: "Proposta"
+        quantidade: "Quantidade"
+        valor_unitario: "Valor Unitário"
+        total_item: "Quantidade Total de Itens"
+        observacao: "Observação"
+
       t_taxa:
         nome: "Nome"
         descricao: "Descrição"

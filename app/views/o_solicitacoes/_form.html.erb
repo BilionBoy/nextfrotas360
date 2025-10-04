@@ -12,35 +12,27 @@
     </div>
     <div class="card-body">
       <%= f.error_notification %>
-      <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
       <div class="row">
+        <div class="col-3"><%= f.input :descricao, placeholder: "Descrição" %></div>
+        <div class="col-3"><%= f.input :g_veiculo_id, collection: GVeiculo.all, label_method: :placa, value_method: :id, prompt: "Selecione o Veículo" %></div>
         <div class="col-3">
-          <%= f.input :descricao, input_html: { class: "capitalize"}, placeholder: "Descricao" %>
+          <%= f.input :g_centro_custo_id, 
+                      collection: GCentroCusto.all, 
+                      label_method: :nome, 
+                      value_method: :id, 
+                      prompt: "Selecione o Centro de Custo", 
+                      input_html: { id: "centro-custo-select" } %>
         </div>
+        <div class="col-3"><%= f.input :o_tipo_solicitacao_id, collection: OTipoSolicitacao.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Tipo de Solicitação" %></div>
+        <div class="col-3"><%= f.input :o_categoria_servico_id, collection: OCategoriaServico.all, label_method: :descricao, value_method: :id, prompt: "Selecione a Categoria de Serviço" %></div>
+        <div class="col-3"><%= f.input :km_reportado, placeholder: "Km reportado" %></div>
+        <div class="col-3"><%= f.input :o_urgencia_id, collection: OUrgencia.all, label_method: :descricao, value_method: :id, prompt: "Selecione a Urgência" %></div>
         <div class="col-3">
-          <%= f.input :g_veiculo_id, collection: GVeiculo.all, label_method: :placa, value_method: :id, prompt: "Selecione o Veículo" %>
+          <%= f.input :saldo_snapshot, 
+                      input_html: { readonly: true, id: "saldo-snapshot-field", value: @o_solicitacao.saldo_snapshot || 0 }, 
+                      label: "Saldo atual do centro de custo" %>
         </div>
-        <div class="col-3">
-          <%= f.input :g_centro_custo_id, collection: GCentroCusto.all, label_method: :nome, value_method: :id, prompt: "Selecione o Centro de Custo" %>
-        </div>
-        <div class="col-3">
-          <%= f.input :o_tipo_solicitacao_id, collection: OTipoSolicitacao.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Tipo de Solicitação" %>
-        </div>
-        <div class="col-3">
-          <%= f.input :o_categoria_servico_id, collection: OCategoriaServico.all, label_method: :descricao, value_method: :id, prompt: "Selecione a Categoria de Serviço" %>
-        </div>
-        <div class="col-3">
-          <%= f.input :km_reportado, input_html: { class: "capitalize"}, placeholder: "Km reportado" %>
-        </div>
-        <div class="col-3">
-          <%= f.input :o_urgencia_id, collection: OUrgencia.all, label_method: :descricao, value_method: :id, prompt: "Selecione a Urgência" %>
-        </div>
-        <div class="col-3">
-          <%= f.input :saldo_snapshot, input_html: { class: "capitalize"}, placeholder: "Saldo snapshot" %>
-        </div>
-        <div class="col-6">
-          <%= f.input :data_limite_publicacao, input_html: { class: "capitalize"}, placeholder: "Data limite publicacao" %>
-        </div>
+        <div class="col-6"><%= f.input :data_limite_publicacao, placeholder: "Data limite publicação" %></div>
       </div>
     </div>
     <div class="card-footer">
@@ -49,3 +41,31 @@
     </div>
   </div>
 <% end %>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const select = document.getElementById("centro-custo-select");
+    const saldoField = document.getElementById("saldo-snapshot-field");
+
+    // Atualiza saldo ao mudar o select
+    select.addEventListener("change", () => {
+      const centroId = select.value;
+      if (!centroId) {
+        saldoField.value = 0;
+        return;
+      }
+
+      fetch(`/g_centros_custos/${centroId}/saldo.json`)
+        .then(res => res.json())
+        .then(data => saldoField.value = data.saldo || 0)
+        .catch(() => saldoField.value = 0);
+    });
+
+    // Atualiza saldo ao carregar a página caso haja valor pré-selecionado
+    if (select.value) {
+      fetch(`/g_centros_custos/${select.value}/saldo.json`)
+        .then(res => res.json())
+        .then(data => saldoField.value = data.saldo || 0)
+        .catch(() => saldoField.value = 0);
+    }
+  });
+</script>

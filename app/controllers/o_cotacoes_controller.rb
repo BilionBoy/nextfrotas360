@@ -44,26 +44,18 @@ class OCotacoesController < ApplicationController
   end
 
   # app/controllers/o_cotacoes_controller.rb
-  def propostas_enviar
-  # Buscar o status "PENDENTE"
-  status_pendente = OStatus.find_by(descricao: 'Pendente')
+ def propostas_enviar
+   fornecedor = current_user.f_empresa_fornecedora
+   @o_cotacoes = OCotacao.abertas_para_fornecedor(fornecedor)
+   @q = @o_cotacoes.ransack(params[:q])
+   @o_cotacoes = @q.result(distinct: true)
+   @pagy, @o_cotacoes = pagy(@o_cotacoes)
+ end
 
-  # Selecionar só solicitações com status pendente
-  @o_solicitacoes = OSolicitacao.includes(
-    :solicitante, 
-    :g_veiculo, 
-    :g_centro_custo, 
-    :o_tipo_solicitacao, 
-    :o_categoria_servico, 
-    :o_status
-  ).where(o_status: status_pendente)
 
-     # Pesquisa com Ransack
-     @q = @o_solicitacoes.ransack(params[:q])
-     @o_solicitacoes = @q.result(distinct: true)
-   
-     # Paginação
-     @pagy, @o_solicitacoes = pagy(@o_solicitacoes)
+  def publicar!
+    em_cotacao = OStatus.find_by(descricao: "Em Cotação")
+    update(o_status: em_cotacao)
   end
 
 

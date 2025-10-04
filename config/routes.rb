@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :o_propostas_itens
   devise_for :users
   
   resources :o_cotacoes do
@@ -53,8 +54,17 @@ Rails.application.routes.draw do
   resources :g_estados
   resources :g_centros_custos_movimentos
   resources :g_tipos_movimentos
-  resources :g_centros_custos
-  resources :o_solicitacoes  
+  resources :g_centros_custos do
+     member do
+       get :saldo
+     end
+   end
+  resources :o_solicitacoes do
+    member do
+      get :saldo_centro
+    end
+  end
+
   resources :o_tipos_solicitacoes
   resources :o_status
   resources :o_categorias_servicos

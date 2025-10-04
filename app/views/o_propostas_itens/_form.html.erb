@@ -1,0 +1,49 @@
+<%= render "shared/context_nav", title: t("activerecord.models.#{OPropostaItem.model_name.i18n_key}.other") do  %>
+  <span class="breadcrumb-item"><%= link_to t("activerecord.models.#{OPropostaItem.model_name.i18n_key}.other"), o_propostas_itens_path, class: "text-dark" %></span>
+  <span class="breadcrumb-item active"><%= t("helpers.submit.#{params[:action]}") %></span>
+<% end %>
+<%= simple_form_for(@o_proposta_item) do |f| %>
+  <div class="card">
+    <div class="card-header">
+      <h5 class="my-0">
+        <%= @o_proposta_item.new_record? ? "Incluir " : "Editar " %><%= t("activerecord.models.#{OPropostaItem.model_name.i18n_key}.one") %>
+      </h5>
+    </div>
+    <div class="card-body">
+      <%= f.error_notification %>
+      <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+      <%= f.hidden_field :o_proposta_id %>
+      <%= f.hidden_field :o_cotacao_item_id %>
+      <div class="row mb-2">
+        <div class="col-12">
+          <strong>Descrição:</strong> <%= @o_proposta_item.o_cotacao_item&.descricao %>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-4">
+          <strong>Quantidade:</strong> <%= @o_proposta_item.o_cotacao_item&.quantidade %>
+        </div>
+        <div class="col-4">
+          <strong>Tipo:</strong> <%= @o_proposta_item.o_cotacao_item&.tipo_item&.nome %>
+        </div>
+        <div class="col-4">
+          <%= f.input :valor_unitario, input_html: { class: "form-control", placeholder: "Valor unitário" } %>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-12">
+          <%= f.input :observacao, input_html: { class: "form-control", placeholder: "Observações (opcional)" } %>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-12">
+          <strong>Total:</strong> <%= number_to_currency(@o_proposta_item.total_item || 0) %>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer d-flex justify-content-between">
+      <%= btn_submit(f) %>
+      <%= link_to "Voltar", o_propostas_itens_path, class: "btn btn-light" %>
+    </div>
+  </div>
+<% end %>

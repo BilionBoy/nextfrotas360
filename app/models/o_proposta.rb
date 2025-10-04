@@ -3,8 +3,9 @@ class OProposta < ApplicationRecord
   belongs_to :f_empresa_fornecedora
   belongs_to :usuario_envio, class_name: "User"
   belongs_to :o_status
-  has_many :o_proposta_items, dependent: :destroy
-
+  has_many :o_proposta_itens, dependent: :destroy
+  accepts_nested_attributes_for :o_proposta_itens, allow_destroy: true
+  
   validates :valor_total, presence: true
   validates :prazo_execucao_dias, numericality: { greater_than: 0 }, allow_nil: true
 

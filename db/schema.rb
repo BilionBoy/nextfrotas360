@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_01_224856) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_04_063608) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -493,6 +493,22 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_01_224856) do
     t.index ["usuario_envio_id"], name: "index_o_propostas_on_usuario_envio_id"
   end
 
+  create_table "o_propostas_itens", force: :cascade do |t|
+    t.bigint "o_proposta_id", null: false
+    t.bigint "o_cotacao_item_id", null: false
+    t.decimal "quantidade", precision: 10, scale: 2, null: false
+    t.decimal "valor_unitario", precision: 15, scale: 2, null: false
+    t.decimal "total_item", precision: 15, scale: 2, null: false
+    t.string "observacao"
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["o_cotacao_item_id"], name: "index_o_propostas_itens_on_o_cotacao_item_id"
+    t.index ["o_proposta_id"], name: "index_o_propostas_itens_on_o_proposta_id"
+  end
+
   create_table "o_solicitacoes", force: :cascade do |t|
     t.integer "numero", null: false
     t.string "descricao"
@@ -657,6 +673,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_01_224856) do
   add_foreign_key "o_propostas", "o_cotacoes"
   add_foreign_key "o_propostas", "o_status"
   add_foreign_key "o_propostas", "users", column: "usuario_envio_id"
+  add_foreign_key "o_propostas_itens", "o_cotacoes_itens"
+  add_foreign_key "o_propostas_itens", "o_propostas"
   add_foreign_key "o_solicitacoes", "g_centros_custos"
   add_foreign_key "o_solicitacoes", "g_veiculos"
   add_foreign_key "o_solicitacoes", "o_categorias_servicos"
