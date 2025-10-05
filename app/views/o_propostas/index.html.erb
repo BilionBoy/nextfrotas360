@@ -1,9 +1,9 @@
-<%= render "shared/context_nav", title: t("activerecord.models.#{OProposta.model_name.i18n_key}.other"), new_path: new_o_proposta_path do  %>
+<%= render "shared/context_nav", title: t("activerecord.models.#{OProposta.model_name.i18n_key}.other"), new_path: new_o_proposta_path do %>
   <span class="breadcrumb-item active"><%= t("activerecord.models.#{OProposta.model_name.i18n_key}.other") %></span>
 <% end %>
 <div class="card">
   <div class="card-header d-flex">
-    <%= search_form_for @q, html: { class: "d-flex gap-2", autocomplete: "off"} do |f| %>
+    <%= search_form_for @q, html: { class: "d-flex gap-2", autocomplete: "off" } do |f| %>
       <%= f.search_field :o_cotacao_o_solicitacao_descricao_cont, class: "form-control", placeholder: "Pesquisar" %>
       <%= f.button(type: 'submit', class: 'btn btn-info') { tag.i(class: 'ph-magnifying-glass') } %>
       <%= link_to tag.i(class: 'ph-x-circle'), o_propostas_path, class: "btn btn-light" if params[:q] %>
@@ -29,17 +29,29 @@
             <tr>
               <td class="text-center">
                 <div class="btn-group">
+                  <!-- Editar -->
                   <%= link_to edit_o_proposta_path(o_proposta), class: "btn btn-sm btn-outline-primary" do %>
                     <i class="ph-pen"></i>
                   <% end %>
+                  <!-- Excluir -->
                   <%= form_for o_proposta, method: :delete, class: "d-inline" do |f| %>
                     <button type="submit" class="btn btn-sm btn-outline-danger" data-confirm="Tem certeza?">
                       <i class="ph-trash-simple"></i>
                     </button>
                   <% end %>
-                  <% if current_user.gestor? && o_proposta.o_status.descricao != "Aprovada" %>
-                    <%= button_to aprovar_o_proposta_path(o_proposta), method: :post, class: "btn btn-sm btn-success", data: { confirm: "Aprovar esta proposta e gerar OS?" } do %>
+                  <!-- Ações do gestor -->
+                  <% if current_user.gestor? && !["Aprovada", "Recusada"].include?(o_proposta.o_status.descricao) %>
+                    <!-- Aprovar -->
+                    <%= button_to aprovar_o_proposta_path(o_proposta), method: :post,
+                          class: "btn btn-sm btn-success",
+                          data: { confirm: "Aprovar esta proposta e gerar OS?" } do %>
                       <i class="ph-check-circle"></i>
+                    <% end %>
+                    <!-- Recusar -->
+                    <%= button_to recusar_o_proposta_path(o_proposta), method: :post,
+                          class: "btn btn-sm btn-warning",
+                          data: { confirm: "Recusar esta proposta?" } do %>
+                      <i class="ph-x-circle"></i>
                     <% end %>
                   <% end %>
                 </div>
@@ -50,7 +62,17 @@
               <td><%= number_to_currency(o_proposta.valor_total) %></td>
               <td><%= o_proposta.prazo_execucao_dias %></td>
               <td><%= l(o_proposta.validade_proposta, format: :short) if o_proposta.validade_proposta %></td>
-              <td><%= o_proposta.o_status&.descricao %></td>
+              <td>
+                <% status = o_proposta.o_status&.descricao %>
+                <% badge_class =
+                  case status
+                  when "Aprovada" then "bg-success"
+                  when "Recusada" then "bg-danger"
+                  when "Pendente" then "bg-warning text-dark"
+                  else "bg-secondary"
+                  end %>
+                <span class="badge <%= badge_class %>"><%= status %></span>
+              </td>
             </tr>
           <% end %>
         </tbody>

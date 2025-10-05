@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class OPropostasController < ApplicationController
-  before_action :set_o_proposta, only: %i[show edit update destroy aprovar]
+  before_action :set_o_proposta, only: %i[show edit update destroy aprovar recusar]
 
   rescue_from ActiveRecord::RecordNotFound, with: :handle_not_found
 
@@ -71,6 +71,18 @@ class OPropostasController < ApplicationController
       redirect_to o_propostas_path, alert: "Falha ao aprovar proposta: #{e.message}"
     end
   end
+
+  def recusar
+    authorize_gestor!
+
+    begin
+      @o_proposta.recusar!(current_user)
+      redirect_to o_propostas_path, notice: "Proposta recusada com sucesso."
+    rescue => e
+      redirect_to o_propostas_path, alert: "Falha ao recusar proposta: #{e.message}"
+    end
+  end
+
 
   private
 
