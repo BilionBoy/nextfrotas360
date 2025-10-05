@@ -18,7 +18,7 @@ class FEmpresasServicosController < ApplicationController
 
   def create
     @f_empresa_servico = FEmpresaServico.new(f_empresa_servico_params)
-
+    @f_empresa_servico.f_empresa_fornecedora = current_user.f_empresa_fornecedora
     if @f_empresa_servico.save
       redirect_to f_empresas_servicos_path, notice: t('messages.created_successfully')
     else

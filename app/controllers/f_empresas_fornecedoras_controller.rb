@@ -18,7 +18,6 @@ class FEmpresasFornecedorasController < ApplicationController
 
   def create
     @f_empresa_fornecedora = FEmpresaFornecedora.new(f_empresa_fornecedora_params)
-
     if @f_empresa_fornecedora.save
       redirect_to f_empresas_fornecedoras_path, notice: t('messages.created_successfully')
     else

@@ -14,9 +14,6 @@
       <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
       <div class="row">
         <div class="col-6">
-          <%= f.input :f_empresa_fornecedora_id, collection: FEmpresaFornecedora.all, label_method: :nome_fantasia, value_method: :id, prompt: "Selecione a Empresa Fornecedora" %>
-        </div>
-        <div class="col-6">
           <%= f.input :o_categoria_servico_id, collection: OCategoriaServico.all, label_method: :descricao, value_method: :id, prompt: "Selecione a Categoria do Serviço" %>
         </div>
       </div>
