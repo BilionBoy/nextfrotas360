@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 class OOrdemServicosController < ApplicationController
-  before_action :set_o_ordem_servico, only: [:show, :finalizar]
+  before_action :set_o_ordem_servico, only: [:show, :finalizar, :aceitar_proposta, :rejeitar_proposta]
   before_action :authorize_user!
 
   # GET /o_ordem_servicos
@@ -27,7 +27,6 @@ class OOrdemServicosController < ApplicationController
   # PATCH /o_ordem_servicos/:id/finalizar
   def finalizar
     unless current_user.fornecedor? && @o_ordem_servico.f_empresa_fornecedora_id == current_user.f_empresa_fornecedora_id
-
       redirect_to o_ordem_servicos_path, alert: "Acesso negado"
       return
     end
@@ -37,6 +36,36 @@ class OOrdemServicosController < ApplicationController
       redirect_to o_ordem_servicos_path, notice: "Ordem de Serviço finalizada com sucesso"
     else
       redirect_to o_ordem_servico_path(@o_ordem_servico), alert: "Falha ao finalizar a OS"
+    end
+  end
+
+  # PATCH /o_ordem_servicos/:id/aceitar_proposta
+  def aceitar_proposta
+    unless current_user.fornecedor? && @o_ordem_servico.f_empresa_fornecedora_id == current_user.f_empresa_fornecedora_id
+      redirect_to o_ordem_servicos_path, alert: "Acesso negado"
+      return
+    end
+
+    status_aceita = OStatus.find_by!(descricao: "Aprovada")
+    if @o_ordem_servico.update(o_status: status_aceita)
+      redirect_to o_ordem_servicos_path, notice: "Proposta aceita com sucesso"
+    else
+      redirect_to o_ordem_servico_path(@o_ordem_servico), alert: "Falha ao aceitar proposta"
+    end
+  end
+
+  # PATCH /o_ordem_servicos/:id/rejeitar_proposta
+  def rejeitar_proposta
+    unless current_user.fornecedor? && @o_ordem_servico.f_empresa_fornecedora_id == current_user.f_empresa_fornecedora_id
+      redirect_to o_ordem_servicos_path, alert: "Acesso negado"
+      return
+    end
+
+    status_rejeitada = OStatus.find_by!(descricao: "Rejeitada")
+    if @o_ordem_servico.update(o_status: status_rejeitada)
+      redirect_to o_ordem_servicos_path, notice: "Proposta rejeitada com sucesso"
+    else
+      redirect_to o_ordem_servico_path(@o_ordem_servico), alert: "Falha ao rejeitar proposta"
     end
   end
 

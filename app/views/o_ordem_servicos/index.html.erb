@@ -696,19 +696,19 @@
   <div class="orders-grid">
     <% @o_ordem_servicos.each_with_index do |os, index| %>
       <% 
-        status_descricao = os.o_status&.descricao || "Sem Status"
-        status_class = case status_descricao.downcase
-          when /aberta/ then "status-open"
-          when /andamento/ then "status-progress"
-          when /conclu/ then "status-completed"
-          when /cancelada/ then "status-cancelled"
-          else "status-default"
-        end
+      status_descricao = os.o_status&.descricao || "Sem Status"
+      status_class = case status_descricao.downcase
+        when /aberta/ then "status-open"
+        when /andamento/ then "status-progress"
+        when /conclu/ then "status-completed"
+        when /cancelada/ then "status-cancelled"
+        else "status-default"
+      end
 
-        total_days = (os.data_termino_prevista - os.data_inicio_prevista).to_i rescue 0
-        elapsed_days = (Date.today - os.data_inicio_prevista).to_i rescue 0
-        progress = total_days > 0 ? [[elapsed_days.to_f / total_days * 100, 0].max, 100].min.round : 0
-      %>
+      total_days = (os.data_termino_prevista - os.data_inicio_prevista).to_i rescue 0
+      elapsed_days = (Date.today - os.data_inicio_prevista).to_i rescue 0
+      progress = total_days > 0 ? [[elapsed_days.to_f / total_days * 100, 0].max, 100].min.round : 0
+    %>
       <div class="order-card">
         <div class="card-header">
           <div class="card-number">#<%= index + 1 %></div>
@@ -756,10 +756,22 @@
           <%= link_to o_ordem_servico_path(os), class: "btn-detail" do %>
             Ver Detalhes
           <% end %>
-          <% if current_user.fornecedor? && os.o_status&.descricao == "Aberta" %>
-            <%= button_to "Finalizar", finalizar_o_ordem_servico_path(os),
-                        method: :patch, data: { confirm: "Confirmar finalização da OS?" },
-                        class: "btn btn-sm btn-success" %>
+          <% if current_user.fornecedor? %>
+            <% case os.o_status&.descricao %>
+            <% when "Aberta" %>
+              <%= button_to "Aceitar Proposta", aceitar_proposta_o_ordem_servico_path(os),
+                          method: :patch, data: { confirm: "Deseja aceitar esta proposta?" },
+                          class: "btn btn-sm btn-success" %>
+              <%= button_to "Rejeitar Proposta", rejeitar_proposta_o_ordem_servico_path(os),
+                          method: :patch, data: { confirm: "Deseja rejeitar esta proposta?" },
+                          class: "btn btn-sm btn-danger" %>
+            <% when "Aprovada" %>
+              <%= button_to "Finalizar OS", finalizar_o_ordem_servico_path(os),
+                          method: :patch, data: { confirm: "Confirmar finalização da OS?" },
+                          class: "btn btn-sm btn-primary" %>
+            <% when "Rejeitada" %>
+              <span class="text-red-600 font-semibold">Proposta Rejeitada</span>
+            <% end %>
           <% end %>
         </div>
       </div>

@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   resources :o_ordem_servicos, only: [:index, :show] do
     member do
       patch :finalizar
+      patch :aceitar_proposta    # nova rota para aceitar a proposta
+      patch :rejeitar_proposta   # nova rota para rejeitar a proposta
     end
   end
 
