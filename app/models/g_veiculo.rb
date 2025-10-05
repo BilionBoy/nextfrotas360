@@ -12,8 +12,6 @@ class GVeiculo < ApplicationRecord
   validates :km_atual, presence: true, unless: :tipo_maquina?
   validates :horimetro, presence: true, if: :tipo_maquina?
 
-  private
-
   def tipo_maquina?
     g_tipo_veiculo&.descricao == "Máquina"
   end
