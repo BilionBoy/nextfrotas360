@@ -23,9 +23,6 @@
           <%= f.input :g_tipo_centro_custo_id, collection: GTipoCentroCusto.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Tipo de Centro de Custo" %>
         </div>
         <div class="col-3">
-          <%= f.input :a_unidade_id, collection: AUnidade.all, label_method: :nome_fantasia, value_method: :id, prompt: "Selecione o Município" %>
-        </div>
-        <div class="col-3">
           <%= f.input :valor_inicial, input_html: { class: "capitalize"}, placeholder: "Valor inicial"  %>
         </div>
         <div class="col-3">

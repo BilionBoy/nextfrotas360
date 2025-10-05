@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_04_201901) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_04_234759) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -430,6 +430,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_04_201901) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "horimetro", precision: 15, scale: 2, default: "0.0", null: false
     t.index ["a_status_id"], name: "index_g_veiculos_on_a_status_id"
     t.index ["a_unidade_id"], name: "index_g_veiculos_on_a_unidade_id"
     t.index ["g_centro_custo_id"], name: "index_g_veiculos_on_g_centro_custo_id"

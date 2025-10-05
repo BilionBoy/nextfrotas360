@@ -18,7 +18,8 @@ class GCentrosCustosController < ApplicationController
 
   def create
     @g_centro_custo = GCentroCusto.new(g_centro_custo_params)
-
+    @g_centro_custo.a_unidade = current_user.a_unidade
+    
     if @g_centro_custo.save
       redirect_to g_centros_custos_path, notice: t('messages.created_successfully')
     else

@@ -1,16 +1,20 @@
-<%= render "shared/context_nav", title: t("activerecord.models.#{GCentroCusto.model_name.i18n_key}.other"), new_path: new_g_centro_custo_path do  %>
-  <span class="breadcrumb-item active"><%= t("activerecord.models.#{GCentroCusto.model_name.i18n_key}.other") %></span>
+<%= render "shared/context_nav", 
+           title: t("activerecord.models.#{GCentroCusto.model_name.i18n_key}.other"), 
+           new_path: new_g_centro_custo_path do %>
+  <span class="breadcrumb-item active">
+    <%= t("activerecord.models.#{GCentroCusto.model_name.i18n_key}.other") %>
+  </span>
 <% end %>
 <div class="card">
   <div class="card-header d-flex">
-    <%= search_form_for @q, html: { class: "d-flex gap-2" , autocomplete: "off"} do |f| %>
+    <%= search_form_for @q, html: { class: "d-flex gap-2", autocomplete: "off" } do |f| %>
       <%= f.search_field :nome_cont, class: "form-control", placeholder: "Pesquisar" %>
       <%= f.button(type: 'submit', class: 'btn btn-info') { tag.i(class: 'ph-magnifying-glass') } %>
-      <%= link_to  tag.i(class: 'ph-x-circle'), g_centros_custos_path, class: "btn btn-light" if params[:q] %>
+      <%= link_to tag.i(class: 'ph-x-circle'), g_centros_custos_path, class: "btn btn-light" if params[:q] %>
     <% end %>
   </div>
   <div class="card-body">
-    <div class= "table-responsive">
+    <div class="table-responsive">
       <table class="table table-sm table-bordered table-striped">
         <thead>
           <tr>
@@ -27,29 +31,40 @@
           <% @g_centros_custos.each do |g_centro_custo| %>
             <tr>
               <td class="text-center">
-                <div class="dropdown-toggle">
-                  <a href="#" class="text-body dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="dropdown">
+                  <a href="#" class="text-body" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="ph-gear"></i>
                   </a>
-                  <div class="dropdown-menu" style="">
-                    <div class="dropdown-header">Opções</div>
-                    <%= link_to edit_g_centro_custo_path(g_centro_custo), class: "dropdown-item" do %>
-                      <i class="ph-pen me-2"></i> Editar
-                    <% end %>
-                    <%= form_for g_centro_custo, method: :delete do |f| %>
-                      <a class="dropdown-item hand-pointer " data-confirm-delete="<%= g_centro_custo_path(g_centro_custo) %>" data-csrf-token="<%= form_authenticity_token %>">
-                        <i class="ph-trash-simple me-2"></i>Excluir
-                      </a>
-                    <% end %>
-                    <td><%= g_centro_custo.nome %></td>
-                    <td><%= g_centro_custo.codigo_dotacao %></td>
-                    <td><%= g_centro_custo.g_tipo_centro_custo&.descricao %></td>
-                    <td><%= g_centro_custo.a_unidade&.nome_fantasia %></td>
-                    <td><%= g_centro_custo.valor_inicial %></td>
-                    <td><%= g_centro_custo.saldo_atual %></td>
-                  </div>
+                  <ul class="dropdown-menu">
+                    <li class="dropdown-header">Opções</li>
+                    <li>
+                      <%= link_to edit_g_centro_custo_path(g_centro_custo), class: "dropdown-item" do %>
+                        <i class="ph-pen me-2"></i> Editar
+                      <% end %>
+                    </li>
+                    <li>
+                      <%= link_to g_centro_custo_path(g_centro_custo), 
+                    method: :delete, 
+                    data: { confirm: "Deseja realmente excluir?" }, 
+                    class: "dropdown-item" do %>
+                        <i class="ph-trash-simple me-2"></i> Excluir
+                      <% end %>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                      <%= link_to new_g_tipo_centro_custo_path, class: "dropdown-item" do %>
+                        <i class="ph-plus-circle me-2"></i> Novo tipo de centro de custo
+                      <% end %>
+                    </li>
+                  </ul>
                 </div>
               </td>
+              <td><%= g_centro_custo.nome %></td>
+              <td><%= g_centro_custo.codigo_dotacao %></td>
+              <td><%= g_centro_custo.g_tipo_centro_custo&.descricao %></td>
+              <td><%= g_centro_custo.a_unidade&.nome_fantasia %></td>
+              <td><%= number_to_currency(g_centro_custo.valor_inicial) %></td>
+              <td><%= number_to_currency(g_centro_custo.saldo_atual) %></td>
             </tr>
           <% end %>
         </tbody>

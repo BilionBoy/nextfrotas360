@@ -1,7 +1,7 @@
 # frozen_string_literal: true
+
 class GVeiculosController < ApplicationController
   before_action :set_g_veiculo, only: %i[show edit update destroy]
-
   rescue_from ActiveRecord::RecordNotFound, with: :handle_not_found
 
   def index
@@ -13,11 +13,11 @@ class GVeiculosController < ApplicationController
     @g_veiculo = GVeiculo.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @g_veiculo = GVeiculo.new(g_veiculo_params)
+    @g_veiculo.a_unidade = current_user.a_unidade
 
     if @g_veiculo.save
       redirect_to g_veiculos_path, notice: t('messages.created_successfully')
@@ -39,18 +39,18 @@ class GVeiculosController < ApplicationController
       redirect_to g_veiculos_url, notice: t('messages.deleted_successfully')
     else
       redirect_to g_veiculos_url, alert: t('messages.delete_failed_due_to_dependencies')
-    end   
+    end
   end
 
   private
 
   def set_g_veiculo
     @g_veiculo = GVeiculo.find_by(id: params[:id])
-    return redirect_to g_veiculos_path, alert: t('messages.not_found') unless @g_veiculo
+    redirect_to g_veiculos_path, alert: t('messages.not_found') unless @g_veiculo
   end
 
   def g_veiculo_params
-    permitted_attributes = GVeiculo.column_names.reject { |col| ['deleted_at', 'created_by', 'updated_by'].include?(col) }
+    permitted_attributes = GVeiculo.column_names - ['deleted_at', 'created_by', 'updated_by']
     params.require(:g_veiculo).permit(permitted_attributes.map(&:to_sym))
   end
 

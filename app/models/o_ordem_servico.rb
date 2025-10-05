@@ -32,4 +32,15 @@ class OOrdemServico < ApplicationRecord
     self.itens_executados << item
     save!
   end
+
+  def custo_real
+    itens = itens_executados.presence || itens_previstos.presence
+    return 0 unless itens
+
+    itens.sum do |item|
+     quantidade = item['quantidade'].to_f
+     valor_unitario = item['valor_unitario'].to_f
+     quantidade * valor_unitario
+   end
+  end
 end

@@ -83,7 +83,6 @@ Rails.application.routes.draw do
       get :saldo_centro
     end
   end
-
   resources :o_tipos_solicitacoes
   resources :o_status
   resources :o_categorias_servicos
