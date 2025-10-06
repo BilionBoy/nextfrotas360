@@ -14,41 +14,43 @@
     </div>
     <div class="card-body">
       <%= f.error_notification %>
-      <% @o_proposta.o_proposta_itens.each do |item| %>
-        <%= f.simple_fields_for :o_proposta_itens, item do |item_form| %>
-          <div class="border rounded p-3 mb-3">
-            <div class="row mb-2">
-              <div class="col-6">
-                <strong>Descrição:</strong>
-                <%= item.o_cotacao_item&.descricao || "Não definido" %>
+      <% if @o_proposta.o_proposta_itens.empty? %>
+        <p>Não há itens a preencher para esta proposta.</p>
+      <% else %>
+        <% @o_proposta.o_proposta_itens.each do |item| %>
+          <%= f.simple_fields_for :o_proposta_itens, item do |item_form| %>
+            <div class="border rounded p-3 mb-3">
+              <div class="row mb-2">
+                <div class="col-6">
+                  <strong>Descrição:</strong>
+                  <%= item.o_cotacao_item&.descricao || "Não definido" %>
+                </div>
+                <div class="col-3">
+                  <strong>Quantidade:</strong>
+                  <%= item.o_cotacao_item&.quantidade || 0 %>
+                </div>
+                <div class="col-3">
+                  <strong>Tipo:</strong>
+                  <%= item.o_cotacao_item&.o_categoria_servico&.descricao || "Não definido" %>
+                </div>
               </div>
-              <div class="col-3">
-                <strong>Quantidade:</strong>
-                <%= item.o_cotacao_item&.quantidade || 0 %>
+              <div class="row mb-2">
+                <div class="col-4">
+                  <%= item_form.input :valor_unitario, label: "Valor Unitário", input_html: { class: "form-control money", placeholder: "0,00" } %>
+                </div>
+                <div class="col-8">
+                  <%= item_form.input :observacao, label: "Observações", input_html: { class: "form-control", placeholder: "Opcional" } %>
+                </div>
               </div>
-              <div class="col-3">
-                <strong>Tipo:</strong>
-                <%= item.o_cotacao_item&.o_categoria_servico&.descricao || "Não definido" %>
+              <div class="row mb-2">
+                <div class="col-12">
+                  <strong>Total:</strong>
+                  <%= number_to_currency(item.total_item || 0) %>
+                </div>
               </div>
+              <%# Removido hidden_field :id e :o_proposta_id %>
             </div>
-            <div class="row mb-2">
-              <div class="col-4">
-                <%= item_form.input :valor_unitario, label: "Valor Unitário",
-                      input_html: { class: "form-control money", placeholder: "0,00" } %>
-              </div>
-              <div class="col-8">
-                <%= item_form.input :observacao, label: "Observações",
-                      input_html: { class: "form-control", placeholder: "Informações adicionais (opcional)" } %>
-              </div>
-            </div>
-            <div class="row mb-2">
-              <div class="col-12">
-                <strong>Total:</strong>
-                <%= number_to_currency(item.total_item || 0) %>
-              </div>
-            </div>
-            <%= item_form.hidden_field :id, value: item.id %>
-          </div>
+          <% end %>
         <% end %>
       <% end %>
     </div>

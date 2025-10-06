@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_04_234759) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_05_183807) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -526,10 +526,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_04_234759) do
 
   create_table "o_propostas_itens", force: :cascade do |t|
     t.bigint "o_proposta_id", null: false
-    t.bigint "o_cotacao_item_id", null: false
-    t.decimal "quantidade", precision: 10, scale: 2, null: false
-    t.decimal "valor_unitario", precision: 15, scale: 2, null: false
-    t.decimal "total_item", precision: 15, scale: 2, null: false
+    t.bigint "o_cotacao_item_id"
+    t.decimal "quantidade", precision: 10, scale: 2, default: "0.0"
+    t.decimal "valor_unitario", precision: 15, scale: 2, default: "0.0"
+    t.decimal "total_item", precision: 15, scale: 2, default: "0.0"
     t.string "observacao"
     t.string "created_by"
     t.string "updated_by"

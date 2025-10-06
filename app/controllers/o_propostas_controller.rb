@@ -11,10 +11,12 @@ class OPropostasController < ApplicationController
 
   def new
     @o_proposta = OProposta.new
+    @o_proposta.o_proposta_itens.build  # garante que fields_for existam
   end
 
   def edit
     @o_proposta.gerar_itens_padrao!
+    @o_proposta.o_proposta_itens.build if @o_proposta.o_proposta_itens.empty?
   end
 
   def create
@@ -29,15 +31,17 @@ class OPropostasController < ApplicationController
     @o_proposta.o_status = OStatus.find_by(descricao: "Pendente")
 
     if @o_proposta.save
-      @o_proposta.gerar_itens_padrao!
-      @o_proposta.save
-      redirect_to new_o_proposta_o_proposta_item_path(@o_proposta), notice: "Proposta criada! Agora preencha os itens."
+      @o_proposta.gerar_itens_padrao!  # se houver itens na cotação, serão gerados
+      redirect_to new_o_proposta_o_proposta_item_path(@o_proposta), notice: "Proposta criada! Agora você pode adicionar itens."
     else
+      @o_proposta.o_proposta_itens.build if @o_proposta.o_proposta_itens.empty?
       render :new, status: :unprocessable_entity
     end
   end
 
   def update
+    @o_proposta.o_proposta_itens.build if @o_proposta.o_proposta_itens.empty?
+
     if @o_proposta.update(o_proposta_params)
       redirect_to o_propostas_path, notice: "Proposta atualizada com sucesso."
     else
@@ -60,29 +64,21 @@ class OPropostasController < ApplicationController
                              .order(created_at: :desc)
   end
 
-  # NOVA ACTION: Aprovar proposta
   def aprovar
     authorize_gestor!
-
-    begin
-      @o_proposta.aprovar!(current_user)
-      redirect_to o_propostas_path, notice: "Proposta aprovada e OS criada com sucesso."
-    rescue => e
-      redirect_to o_propostas_path, alert: "Falha ao aprovar proposta: #{e.message}"
-    end
+    @o_proposta.aprovar!(current_user)
+    redirect_to o_propostas_path, notice: "Proposta aprovada e OS criada com sucesso."
+  rescue => e
+    redirect_to o_propostas_path, alert: "Falha ao aprovar proposta: #{e.message}"
   end
 
   def recusar
     authorize_gestor!
-
-    begin
-      @o_proposta.recusar!(current_user)
-      redirect_to o_propostas_path, notice: "Proposta recusada com sucesso."
-    rescue => e
-      redirect_to o_propostas_path, alert: "Falha ao recusar proposta: #{e.message}"
-    end
+    @o_proposta.recusar!(current_user)
+    redirect_to o_propostas_path, notice: "Proposta recusada com sucesso."
+  rescue => e
+    redirect_to o_propostas_path, alert: "Falha ao recusar proposta: #{e.message}"
   end
-
 
   private
 
@@ -91,7 +87,7 @@ class OPropostasController < ApplicationController
   end
 
   def o_proposta_params
-    params.require(:o_proposta).permit(
+    params.fetch(:o_proposta, {}).permit(
       :o_cotacao_id,
       :valor_total,
       :prazo_execucao_dias,

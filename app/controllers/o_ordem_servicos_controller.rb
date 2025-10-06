@@ -24,20 +24,27 @@ class OOrdemServicosController < ApplicationController
     @itens_previstos = @o_ordem_servico.itens_previstos
   end
 
-  # PATCH /o_ordem_servicos/:id/finalizar
   def finalizar
     unless current_user.fornecedor? && @o_ordem_servico.f_empresa_fornecedora_id == current_user.f_empresa_fornecedora_id
       redirect_to o_ordem_servicos_path, alert: "Acesso negado"
       return
     end
-
+  
     concluida_status = OStatus.find_by!(descricao: "Concluída")
-    if @o_ordem_servico.update(o_status: concluida_status)
-      redirect_to o_ordem_servicos_path, notice: "Ordem de Serviço finalizada com sucesso"
-    else
-      redirect_to o_ordem_servico_path(@o_ordem_servico), alert: "Falha ao finalizar a OS"
+  
+    ActiveRecord::Base.transaction do
+      # Atualiza a OS
+      @o_ordem_servico.update!(o_status: concluida_status)
+      # Atualiza a solicitação vinculada (via proposta → cotação → solicitação)
+      solicitacao = @o_ordem_servico.o_proposta&.o_cotacao&.o_solicitacao
+      solicitacao&.update!(o_status: concluida_status)
     end
+  
+    redirect_to o_solicitacoes_path, notice: "Ordem de Serviço finalizada com sucesso — solicitação marcada como concluída."
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to o_ordem_servico_path(@o_ordem_servico), alert: "Falha ao finalizar a OS: #{e.message}"
   end
+
 
   # PATCH /o_ordem_servicos/:id/aceitar_proposta
   def aceitar_proposta

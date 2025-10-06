@@ -44,11 +44,12 @@ class OProposta < ApplicationRecord
         data_termino_prevista: Date.today + (prazo_execucao_dias || 1).days,
         itens_previstos: o_proposta_itens.map do |i|
           {
-            descricao: i.o_cotacao_item.descricao,
-            quantidade: i.quantidade,
-            valor_unitario: i.valor_unitario,
-            total_item: i.total_item
+           descricao: i.o_cotacao_item&.descricao || "—",
+           quantidade: i.quantidade || 0,
+           valor_unitario: i.valor_unitario || 0,
+           total_item: i.total_item || 0
           }
+          
         end
       )
     end

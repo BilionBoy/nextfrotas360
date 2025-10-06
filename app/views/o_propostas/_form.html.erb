@@ -10,13 +10,11 @@
   <div class="card">
     <div class="card-header">
       <h5 class="my-0">
-        <%= @o_proposta.new_record? ? "Incluir " : "Editar " %>
-        Proposta
+        <%= @o_proposta.new_record? ? "Incluir " : "Editar " %>Proposta
       </h5>
     </div>
     <div class="card-body">
       <%= f.error_notification %>
-
       <div class="row mb-3">
         <div class="col-4">
           <%= f.input :o_cotacao_id, collection: OCotacao.all, label_method: :descricao_completa, value_method: :id, prompt: "Selecione a Cotação" %>
@@ -28,15 +26,16 @@
           <%= f.input :prazo_execucao_dias, input_html: { class: "capitalize" }, placeholder: "Prazo execução dias" %>
         </div>
       </div>
-
       <h6>Itens da Proposta</h6>
-      <% @o_proposta.o_proposta_itens.each do |item| %>
-        <%= f.simple_fields_for :o_proposta_itens, item do |item_form| %>
+      <% if @o_proposta.o_proposta_itens.empty? %>
+        <p>Não há itens a preencher para esta proposta.</p>
+      <% else %>
+        <%= f.simple_fields_for :o_proposta_itens do |item_form| %>
           <div class="border rounded p-3 mb-3">
             <div class="row mb-2">
               <div class="col-6">
                 <strong>Descrição:</strong>
-                <%= item.o_cotacao_item&.descricao || "Não definido" %>
+                <%= item_form.object.o_cotacao_item&.descricao || "Não definido" %>
               </div>
               <div class="col-3">
                 <strong>Quantidade:</strong>
@@ -44,7 +43,7 @@
               </div>
               <div class="col-3">
                 <strong>Tipo:</strong>
-                <%= item.o_cotacao_item&.o_categoria_servico&.descricao || "Não definido" %>
+                <%= item_form.object.o_cotacao_item&.o_categoria_servico&.descricao || "Não definido" %>
               </div>
             </div>
             <div class="row mb-2">
@@ -58,11 +57,10 @@
             <div class="row">
               <div class="col-12">
                 <strong>Total:</strong>
-                <%= number_to_currency(item.total_item || 0) %>
+                <%= number_to_currency(item_form.object.total_item || 0) %>
               </div>
             </div>
-            <%= item_form.hidden_field :id %>
-            <%= item_form.hidden_field :o_proposta_id %>
+            <%# Não precisa mais desses hidden_fields %>
           </div>
         <% end %>
       <% end %>
