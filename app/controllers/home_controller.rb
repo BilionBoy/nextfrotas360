@@ -74,8 +74,8 @@ class HomeController < ApplicationController
    @solicitacoes_total      = OSolicitacao.count
    @solicitacoes_pendentes  = OSolicitacao.joins(:o_status).where(o_status: { descricao: "Pendente" }).count
    @solicitacoes_andamento  = OSolicitacao.joins(:o_status).where(o_status: { descricao: "Em Cotação" }).count
-   @solicitacoes_concluidas = OSolicitacao.joins(:o_status).where(o_status: { descricao: "Concluída" }).count
- 
+   status_concluida_id = OStatus.find_by(descricao: "Concluída")&.id
+   @solicitacoes_concluidas = OOrdemServico.where(o_status_id: status_concluida_id).count 
    # Cotações em andamento
    @cotacoes_em_andamento = OCotacao.includes(:o_solicitacao)
                                     .where(o_status_id: OStatus.find_by(descricao: "Em Cotação")&.id)
