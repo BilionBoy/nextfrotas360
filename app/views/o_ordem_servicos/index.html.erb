@@ -760,10 +760,12 @@
             <% case os.o_proposta.o_status&.descricao %>
             <% when "Aprovada" %>
               <% if current_user.fornecedor? %>
-                <%= button_to "Finalizar OS", finalizar_o_ordem_servico_path(os),
-                              method: :patch,
-                              data: { confirm: "Confirmar finalização da OS?" },
-                              class: "btn btn-sm btn-primary" %>
+                <%= button_to "Finalizar OS",
+              finalizar_o_ordem_servico_path(os),
+                    method: :patch,
+                    form: { data: { turbo: false } },
+                    data: { confirm: "Confirmar finalização da OS?" },
+                    class: "btn btn-sm btn-primary" %>
               <% end %>
             <% when "Rejeitada" %>
               <span class="text-red-600 font-semibold">Proposta Rejeitada</span>
