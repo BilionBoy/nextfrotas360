@@ -28,6 +28,8 @@ class OOrdemServicosController < ApplicationController
         )
         .order(created_at: :desc)
     )
+    @o_ordem_servicos.each(&:reload)
+
   end
 
   # GET /o_ordem_servicos/:id
