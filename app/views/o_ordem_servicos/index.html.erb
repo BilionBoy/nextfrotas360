@@ -696,7 +696,7 @@
   <div class="orders-grid">
     <% @o_ordem_servicos.each_with_index do |os, index| %>
       <% 
-        status_descricao = os.o_status&.descricao || "Sem Status"
+        status_descricao = os.o_proposta&.o_status&.descricao || os.o_status&.descricao || "Sem Status"
         status_class = case status_descricao.downcase
           when /aberta/ then "status-open"
           when /andamento/ then "status-progress"
