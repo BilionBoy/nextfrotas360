@@ -495,7 +495,7 @@
             <!-- Saldo Disponível -->
             <div class="metric-content">
               <h2 class="metric-value">R$ <%= number_to_currency(@fornecedor_financeiro&.saldo_disponivel || 0, unit: "", separator: ",") %></h2>
-          <% else %>
+            <% else %>
               <h2 class="metric-value">R$ 0,00</h2>
             <% end %>
             <p class="metric-label">Saldo Disponível</p>

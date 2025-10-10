@@ -1,9 +1,3 @@
-<%= render "shared/context_nav", title: t("activerecord.models.#{User.model_name.i18n_key}.other") do  %>
-  <span class="breadcrumb-item">
-    <%= link_to t("activerecord.models.#{User.model_name.i18n_key}.other"), users_path, class: "text-dark" %>
-  </span>
-  <span class="breadcrumb-item active"><%= t("helpers.submit.#{params[:action]}") %></span>
-<% end %>
 <%= simple_form_for(@user, html: { multipart: true }) do |f| %>
   <div class="card">
     <div class="card-header">
@@ -17,77 +11,47 @@
       <%= render "shared/notice" %>
       <div class="row g-3">
         <!-- CPF, Nome, Email -->
-        <div class="col-md-4">
-          <%= f.input :cpf, input_html: { placeholder: "Digite seu CPF", class: "keyup cpf" } %>
-        </div>
-        <div class="col-md-4">
-          <%= f.input :nome, input_html: { placeholder: "Digite o nome" } %>
-        </div>
-        <div class="col-md-4">
-          <%= f.input :email, input_html: { placeholder: "Digite o e-mail" } %>
-        </div>
-        <!-- Tipo de Usuário -->
-        <div class="col-md-4">
-          <%= f.input :a_tipo_usuario_id, collection: ATipoUsuario.all, label_method: :descricao,
-              value_method: :id, prompt: "Selecione o Tipo de Usuário",
-              input_html: { id: "tipo-usuario-select" } %>
-        </div>
-        <!-- Campo Unidade (admin e gestor) -->
-        <div class="col-md-4" id="campo-unidade">
-          <%= f.input :a_unidade_id, collection: AUnidade.all, label_method: :nome_fantasia,
-              value_method: :id, prompt: "Selecione a Unidade" %>
-        </div>
-        <!-- Campo Empresa (fornecedor) -->
-        <div class="col-md-4" id="campo-empresa">
-          <%= f.input :f_empresa_fornecedora_id, collection: FEmpresaFornecedora.all, label_method: :nome_fantasia,
-              value_method: :id, prompt: "Selecione a Empresa do Usuário" %>
-        </div>
+        <div class="col-md-4"><%= f.input :cpf, input_html: { placeholder: "Digite seu CPF", class: "keyup cpf" } %></div>
+        <div class="col-md-4"><%= f.input :nome, input_html: { placeholder: "Digite o nome" } %></div>
+        <div class="col-md-4"><%= f.input :email, input_html: { placeholder: "Digite o e-mail" } %></div>
+        <!-- Tipo de Usuário, Unidade, Empresa -->
+        <div class="col-md-4"><%= f.input :a_tipo_usuario_id, collection: ATipoUsuario.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Tipo de Usuário", input_html: { id: "tipo-usuario-select" } %></div>
+        <div class="col-md-4" id="campo-unidade"><%= f.input :a_unidade_id, collection: AUnidade.all, label_method: :nome_fantasia, value_method: :id, prompt: "Selecione a Unidade" %></div>
+        <div class="col-md-4" id="campo-empresa"><%= f.input :f_empresa_fornecedora_id, collection: FEmpresaFornecedora.all, label_method: :nome_fantasia, value_method: :id, prompt: "Selecione a Empresa do Usuário" %></div>
         <!-- Cargo e Status -->
-        <div class="col-md-4">
-          <%= f.input :a_cargo_id, collection: ACargo.all, label_method: :descricao,
-              value_method: :id, prompt: "Selecione o Cargo" %>
-        </div>
-        <div class="col-md-4">
-          <%= f.input :a_status_id, collection: AStatus.all, label_method: :descricao,
-              value_method: :id, prompt: "Selecione o Status do Usuário" %>
-        </div>
-        <!-- Foto de Perfil -->
+        <div class="col-md-4"><%= f.input :a_cargo_id, collection: ACargo.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Cargo" %></div>
+        <div class="col-md-4"><%= f.input :a_status_id, collection: AStatus.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Status do Usuário" %></div>
+        <!-- Fotos -->
         <div class="col-md-6">
           <%= f.input :foto_perfil, as: :file, label: "Foto de Perfil" %>
           <% if @user.persisted? && @user.foto_perfil.attached? %>
             <div class="mt-2">
               <%= image_tag @user.foto_perfil.variant(resize_to_limit: [150, 150]).processed, class: "img-thumbnail" %>
               <div class="mt-1">
-                <%= link_to "Remover", remove_foto_perfil_user_path(@user), method: :delete,
-                      data: { confirm: "Tem certeza que deseja remover a foto de perfil?" },
-                      class: "btn btn-sm btn-danger" %>
+                <%= link_to "Remover", remove_foto_perfil_user_path(@user), method: :delete, data: { confirm: "Tem certeza que deseja remover a foto de perfil?" }, class: "btn btn-sm btn-danger" %>
               </div>
             </div>
           <% end %>
         </div>
-        <!-- Foto do RG -->
         <div class="col-md-6">
           <%= f.input :foto_rg, as: :file, label: "Foto do RG" %>
           <% if @user.persisted? && @user.foto_rg.attached? %>
             <div class="mt-2">
               <%= image_tag @user.foto_rg.variant(resize_to_limit: [150, 150]).processed, class: "img-thumbnail" %>
               <div class="mt-1">
-                <%= link_to "Remover", remove_foto_rg_user_path(@user), method: :delete,
-                      data: { confirm: "Tem certeza que deseja remover a foto do RG?" },
-                      class: "btn btn-sm btn-danger" %>
+                <%= link_to "Remover", remove_foto_rg_user_path(@user), method: :delete, data: { confirm: "Tem certeza que deseja remover a foto do RG?" }, class: "btn btn-sm btn-danger" %>
               </div>
             </div>
           <% end %>
         </div>
+        <!-- Campos Bancários (Fornecedor) -->
+        <div class="col-md-3 fornecedor-campo" style="display:none;"><%= f.input :banco, label: "Banco", input_html: { placeholder: "Digite o banco" } %></div>
+        <div class="col-md-3 fornecedor-campo" style="display:none;"><%= f.input :agencia, label: "Agência", input_html: { placeholder: "Digite a agência" } %></div>
+        <div class="col-md-3 fornecedor-campo" style="display:none;"><%= f.input :conta, label: "Conta", input_html: { placeholder: "Digite a conta" } %></div>
+        <div class="col-md-3 fornecedor-campo" style="display:none;"><%= f.input :chave_pix, label: "Chave Pix", input_html: { placeholder: "Digite a chave Pix" } %></div>
         <!-- Senha -->
-        <div class="col-md-12">
-          <%= f.input :password, label: "Senha",
-              input_html: { autocomplete: "new-password", placeholder: "••••••••", class: "form-control" } %>
-        </div>
-        <div class="col-md-12">
-          <%= f.input :password_confirmation, label: "Confirme a senha",
-              input_html: { autocomplete: "new-password", placeholder: "••••••••", class: "form-control" } %>
-        </div>
+        <div class="col-md-6"><%= f.input :password, label: "Senha", input_html: { autocomplete: "new-password", placeholder: "••••••••", class: "form-control" } %></div>
+        <div class="col-md-6"><%= f.input :password_confirmation, label: "Confirme a senha", input_html: { autocomplete: "new-password", placeholder: "••••••••", class: "form-control" } %></div>
       </div>
     </div>
     <div class="card-footer d-flex justify-content-between">
@@ -96,25 +60,22 @@
     </div>
   </div>
 <% end %>
-<!-- JS puro para campos condicionais -->
-<script type="text/javascript">
+<script>
   document.addEventListener("DOMContentLoaded", function() {
     const select = document.getElementById("tipo-usuario-select");
     const campoUnidade = document.getElementById("campo-unidade");
     const campoEmpresa = document.getElementById("campo-empresa");
+    const camposFornecedor = document.querySelectorAll(".fornecedor-campo");
 
     function toggleFields() {
       if (!select) return;
-
       const selectedText = select.options[select.selectedIndex].text.toLowerCase();
-
-      // Mostrar unidade apenas para admin e gestor
       campoUnidade.style.display = (selectedText === "admin" || selectedText === "gestor") ? "block" : "none";
-      // Mostrar empresa apenas para fornecedor
       campoEmpresa.style.display = (selectedText === "fornecedor") ? "block" : "none";
+      camposFornecedor.forEach(el => el.style.display = (selectedText === "fornecedor") ? "block" : "none");
     }
 
     select.addEventListener("change", toggleFields);
-    toggleFields(); // Garante exibir corretamente ao carregar a página
+    toggleFields();
   });
 </script>
