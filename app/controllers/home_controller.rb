@@ -7,9 +7,9 @@ class HomeController < ApplicationController
   def index
     case current_user.a_tipo_usuario&.descricao&.downcase
     when 'gestor'
-      redirect_to gestor_path
+      render :gestor
     when 'fornecedor'
-      redirect_to fornecedor_path
+      render :fornecedor
     else
       render :index
     end
@@ -178,11 +178,46 @@ class HomeController < ApplicationController
   # --------------------------------------------------
   # 🔹 DASHBOARD FORNECEDOR
   # --------------------------------------------------
-  def load_fornecedor_data
-    fornecedor_id = current_user.fornecedor_id
+ ## ==========================
+ def load_fornecedor_data
+    @fornecedor = current_user.f_empresa_fornecedora
 
-    @cotacoes_disponiveis = OCotacao.where(fornecedor_id:, status: 'aberta').count
-    @propostas_enviadas   = OProposta.where(fornecedor_id:).count
-    @servicos_em_andamento = OOrdemServico.where(fornecedor_id:, status: 'em_andamento').count
+    # Relacionamentos
+    @fornecedor_financeiros = @fornecedor.f_financeiros.includes(:f_financeiros_movimentos)
+    @fornecedor_servicos    = @fornecedor.f_empresas_servicos.includes(:o_categoria_servico)
+
+    @categorias_servicos = OCategoriaServico.all
+    @tipos_movimentos    = GTipoMovimento.all
+
+    load_movimentos_financeiros
+    load_servicos_por_categoria
+    load_solicitacoes_fornecedor
   end
+
+  def load_movimentos_financeiros
+    @fornecedor_movimentos = @fornecedor_financeiros.flat_map(&:f_financeiros_movimentos)
+
+    @movimentos_por_tipo = @tipos_movimentos.map do |tipo|
+      OpenStruct.new(
+        descricao: tipo.descricao,
+        valor: @fornecedor_movimentos.select { |m| m.g_tipo_movimento_id == tipo.id }.sum(&:valor)
+      )
+    end
+  end
+
+  def load_servicos_por_categoria
+    @servicos_por_categoria = @categorias_servicos.map do |cat|
+      OpenStruct.new(
+        descricao: cat.descricao,
+        count: @fornecedor_servicos.count { |s| s.o_categoria_servico_id == cat.id },
+        saldo: @fornecedor_financeiros.where(o_categoria_servico_id: cat.id).sum(:saldo_disponivel) || 0
+      )
+    end
+  end
+
+  def load_solicitacoes_fornecedor
+    @solicitacoes = [] # TODO: substituir depois quando ligarmos fornecedor → solicitações
+  end
+
+
 end
