@@ -15,7 +15,7 @@
         <thead>
           <tr>
             <th class="text-center">Ações</th>
-            <th><%= sort_link(@q, :numero, t("activerecord.attributes.o_solicitacao.numero")) %></th>
+            <th><%= sort_link(@q, :descricao, t("activerecord.attributes.o_solicitacao.descricao")) %></th>
             <th><%= sort_link(@q, :solicitante, t("activerecord.attributes.o_solicitacao.solicitante")) %></th>
             <th><%= sort_link(@q, :g_veiculo, t("activerecord.attributes.o_solicitacao.veiculo")) %></th>
             <th><%= sort_link(@q, :g_centro_custo, t("activerecord.attributes.o_solicitacao.centro_custo")) %></th>
@@ -50,7 +50,7 @@
                   </div>
                 </div>
               </td>
-              <td><%= o_solicitacao.numero %></td>
+              <td><%= o_solicitacao.descricao %></td>
               <td><%= o_solicitacao.solicitante.nome %></td>
               <td><%= o_solicitacao.g_veiculo&.modelo %></td>
               <td><%= o_solicitacao.g_centro_custo&.nome %></td>

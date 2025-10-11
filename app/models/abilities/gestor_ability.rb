@@ -11,6 +11,15 @@ module Abilities
 
       # Gestores podem gerenciar usuários da própria unidade
       main_ability.can :manage, User, a_unidade_id: user.a_unidade_id
+
+      # -----------------------------
+      # Permissões para OPropostas
+      # -----------------------------
+      main_ability.can :manage, OProposta
+      main_ability.can :aprovar, OProposta
+      main_ability.can :recusar, OProposta
+      main_ability.can :index, OProposta
+      main_ability.can :show, OProposta
     end
   end
 end

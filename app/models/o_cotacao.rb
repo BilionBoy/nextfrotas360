@@ -11,13 +11,19 @@ class OCotacao < ApplicationRecord
   after_create :marcar_solicitacao_em_cotacao
 
 
- scope :abertas_para_fornecedor, ->(fornecedor) {
-  status_pendente = OStatus.find_by(descricao: "Pendente")
-  where(o_status: status_pendente)
-  .where.not(
-    id: OProposta.where(f_empresa_fornecedora_id: fornecedor.id).select(:o_cotacao_id)
-  )
-}
+   scope :abertas_para_fornecedor, ->(fornecedor) {
+    status_pendente = OStatus.find_by(descricao: "Pendente")
+    where(o_status: status_pendente)
+    .where.not(
+      id: OProposta.where(f_empresa_fornecedora_id: fornecedor.id).select(:o_cotacao_id)
+    )
+  }
+
+  scope :fechadas_para_fornecedor, ->(fornecedor) {
+     rejeitada = OStatus.find_by(descricao: "Rejeitada")
+     joins(:o_propostas)
+       .where(o_propostas: { f_empresa_fornecedora_id: fornecedor.id, o_status_id: rejeitada.id })
+   }
 
   def descricao_completa
     "#{id} - #{o_solicitacao.descricao}"

@@ -1,4 +1,7 @@
 pt-BR:
+
+  cancan:
+    access_denied: "Acesso negado: você não tem permissão para acessar esta página."
   pagy:
     items:
       one: "item"

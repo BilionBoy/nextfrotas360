@@ -45,9 +45,11 @@
         <%= link_to edit_o_proposta_path(@o_proposta), class: "btn btn-primary" do %>
           <i class="bi bi-pencil-square"></i> Editar
         <% end %>
-        <%= link_to "Voltar", o_propostas_path, class: "btn btn-secondary" %>
+        <%= link_to fornecedor_enviadas_o_propostas_path, class: "btn btn-secondary", 'aria-label': 'Limpar pesquisa' do %>
+          <i class="bi bi-x-circle"></i> Voltar
+        <% end %>
       </div>
-      <%= button_to "Deletar", @o_proposta, method: :delete, class: "btn btn-outline-danger border-0", data: { confirm: "Tem certeza que deseja deletar esta proposta?" } %>
+      <%= button_to "Deletar", @o_proposta, method: :delete, class: "btn btn-danger border-0", data: { confirm: "Tem certeza que deseja deletar esta proposta?" } %>
     </div>
   </div>
 </div>

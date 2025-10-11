@@ -3,13 +3,24 @@ module Abilities
     include CanCan::Ability
 
     def initialize(main_ability, user)
-      # Fornecedores só podem ler solicitações
+      # Só ler solicitações
       main_ability.can :read, OSolicitacao
 
-      # Permitir acessar a ação customizada propostas_enviar
+      # Ação customizada para acessar cotações
       main_ability.can :propostas_enviar, OSolicitacao
 
-      # Fornecedores só podem ler usuários da própria empresa fornecedora
+      # Pode criar novas propostas
+      main_ability.can :create, OProposta
+      main_ability.can :new, OProposta
+      main_ability.can :show, OProposta, f_empresa_fornecedora_id: user.f_empresa_fornecedora_id
+      main_ability.can :fornecedor_enviadas, OProposta, f_empresa_fornecedora_id: user.f_empresa_fornecedora_id
+
+      # Não permite acessar index, aprovar ou recusar
+      main_ability.cannot :index, OProposta
+      main_ability.cannot :aprovar, OProposta
+      main_ability.cannot :recusar, OProposta
+
+      # Usuários só podem ler usuários da própria empresa fornecedora
       main_ability.can :read, User, f_empresa_fornecedora_id: user.f_empresa_fornecedora_id
     end
   end

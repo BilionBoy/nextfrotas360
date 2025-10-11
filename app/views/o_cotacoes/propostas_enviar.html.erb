@@ -354,16 +354,16 @@
   }
 </style>
 <div class="search-container">
-  <%= search_form_for @q, url: enviar_proposta_o_cotacoes_path, html: { class: "search-form", autocomplete: "off" } do |f|%>
-    <%= f.search_field :o_solicitacao_numero_cont, 
-        class: "form-control search-input", 
+  <%= search_form_for @q, url: enviar_proposta_o_cotacoes_path, html: { class: "search-form", autocomplete: "off" } do |f| %>
+    <%= f.search_field :o_solicitacao_numero_cont,
+        class: "form-control search-input",
         placeholder: "🔍 Pesquisar por número da solicitação",
         'aria-label': "Pesquisar solicitação" %>
     <%= f.button(type: 'submit', class: 'btn btn-search', 'aria-label': 'Buscar') do %>
       <i class="ph-magnifying-glass"></i> Buscar
     <% end %>
     <% if params[:q].present? %>
-      <%= link_to propostas_enviar_o_cotacoes_path, class: "btn btn-clear", 'aria-label': 'Limpar pesquisa' do %>
+      <%= link_to enviar_proposta_o_cotacoes_path, class: "btn btn-clear", 'aria-label': 'Limpar pesquisa' do %>
         <i class="ph-x-circle"></i> Limpar
       <% end %>
     <% end %>
@@ -377,13 +377,26 @@
 <% else %>
   <div class="cards-grid" data-count="<%= @o_cotacoes.count %>">
     <% @o_cotacoes.each do |cotacao| %>
+      <% # Pega última proposta do fornecedor para esta cotação %>
+      <% proposta_fornecedor = cotacao.o_propostas.find_by(f_empresa_fornecedora_id: current_user.f_empresa_fornecedora.id) %>
+      <% status = proposta_fornecedor&.o_status&.descricao || cotacao.o_status.descricao %>
       <article class="proposal-card">
         <header class="proposal-header">
           <div>
             <h2 class="proposal-number">#<%= cotacao.o_solicitacao.numero %></h2>
           </div>
-          <div class="proposal-status" role="status">
-            <%= cotacao.o_status&.descricao %>
+          <div class="proposal-status" role="status"
+               style="background-color: <%= case status
+                                            when 'Pendente' then '#fef3c7'
+                                            when 'Enviada' then '#dbeafe'
+                                            when 'Aprovada' then '#d1fae5'
+                                            when 'Rejeitada' then '#fee2e2'
+                                            else '#e5e7eb'
+                                            end %>;
+                      color: <%= status == 'Rejeitada' ? '#b91c1c' : '#111827' %>;
+                      padding: 0.2rem 0.5rem;
+                      border-radius: 0.25rem;">
+            <%= status %>
           </div>
         </header>
         <div class="proposal-body">
@@ -433,11 +446,14 @@
             <i class="ph-clock" aria-hidden="true"></i>
             <span>Expira: <%= l(cotacao.data_expiracao, format: :short) %></span>
           </div>
-          <%= link_to new_o_proposta_path(o_cotacao_id: cotacao.id),
-                      class: "btn-send-proposal",
-                      'aria-label': "Enviar proposta para cotação #{cotacao.o_solicitacao.numero}" do %>
-            <i class="ph-paper-plane-tilt" aria-hidden="true"></i>
-            Enviar Proposta
+          <% # Botão só aparece se não houver proposta ou se estiver pendente/enviada (não rejeitada ou aprovada) %>
+          <% if status.present? && !['Rejeitada', 'Aprovada'].include?(status) %>
+            <%= link_to new_o_proposta_path(o_cotacao_id: cotacao.id),
+                class: "btn-send-proposal",
+                'aria-label': "Enviar proposta para cotação #{cotacao.o_solicitacao.numero}" do %>
+              <i class="ph-paper-plane-tilt" aria-hidden="true"></i>
+              Enviar proposta
+            <% end %>
           <% end %>
         </footer>
       </article>

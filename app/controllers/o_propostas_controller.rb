@@ -1,67 +1,21 @@
 # frozen_string_literal: true
 class OPropostasController < ApplicationController
+  # Carrega e autoriza todos os recursos via CanCan
+  load_and_authorize_resource
+
   before_action :set_o_proposta, only: %i[show edit update destroy aprovar recusar]
 
   rescue_from ActiveRecord::RecordNotFound, with: :handle_not_found
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_path, alert: I18n.t('cancan.access_denied')
+  end
 
+  # -----------------------------
+  # Ações abertas para gestores
+  # -----------------------------
   def index
     @q = OProposta.ransack(params[:q])
     @pagy, @o_propostas = pagy(@q.result)
-  end
-
-  def new
-    @o_proposta = OProposta.new
-    @o_proposta.o_proposta_itens.build  # garante que fields_for existam
-  end
-
-  def edit
-    @o_proposta.gerar_itens_padrao!
-    @o_proposta.o_proposta_itens.build if @o_proposta.o_proposta_itens.empty?
-  end
-
-  def create
-    unless current_user.f_empresa_fornecedora
-      redirect_to o_propostas_path, alert: "Apenas usuários fornecedores podem enviar propostas."
-      return
-    end
-
-    @o_proposta = OProposta.new(o_proposta_params)
-    @o_proposta.f_empresa_fornecedora = current_user.f_empresa_fornecedora
-    @o_proposta.usuario_envio = current_user
-    @o_proposta.o_status = OStatus.find_by(descricao: "Pendente")
-
-    if @o_proposta.save
-      @o_proposta.gerar_itens_padrao!  # se houver itens na cotação, serão gerados
-      redirect_to new_o_proposta_o_proposta_item_path(@o_proposta), notice: "Proposta criada! Agora você pode adicionar itens."
-    else
-      @o_proposta.o_proposta_itens.build if @o_proposta.o_proposta_itens.empty?
-      render :new, status: :unprocessable_entity
-    end
-  end
-
-  def update
-    @o_proposta.o_proposta_itens.build if @o_proposta.o_proposta_itens.empty?
-
-    if @o_proposta.update(o_proposta_params)
-      redirect_to o_propostas_path, notice: "Proposta atualizada com sucesso."
-    else
-      render :edit, status: :unprocessable_entity
-    end
-  end
-
-  def destroy
-    if @o_proposta.destroy
-      redirect_to o_propostas_url, notice: "Proposta deletada com sucesso."
-    else
-      redirect_to o_propostas_url, alert: "Falha ao deletar proposta."
-    end
-  end
-
-  def fornecedor_enviadas
-    fornecedor = current_user.f_empresa_fornecedora
-    @o_propostas = OProposta.where(f_empresa_fornecedora: fornecedor)
-                             .where(o_status: OStatus.where(descricao: ['Pendente', 'Enviada', 'Aprovada']))
-                             .order(created_at: :desc)
   end
 
   def aprovar
@@ -78,6 +32,70 @@ class OPropostasController < ApplicationController
     redirect_to o_propostas_path, notice: "Proposta recusada com sucesso."
   rescue => e
     redirect_to o_propostas_path, alert: "Falha ao recusar proposta: #{e.message}"
+  end
+
+  # -----------------------------
+  # Ações para fornecedores
+  # -----------------------------
+  def new
+    @o_proposta = OProposta.new
+    @o_proposta.o_proposta_itens.build
+  end
+
+  def create
+    unless current_user.f_empresa_fornecedora
+      redirect_to root_path, alert: "Apenas usuários fornecedores podem enviar propostas."
+      return
+    end
+
+    @o_proposta = OProposta.new(o_proposta_params)
+    @o_proposta.f_empresa_fornecedora = current_user.f_empresa_fornecedora
+    @o_proposta.usuario_envio = current_user
+    @o_proposta.o_status = OStatus.find_by(descricao: "Pendente")
+
+    if @o_proposta.save
+      @o_proposta.gerar_itens_padrao!
+      redirect_to fornecedor_enviadas_o_propostas_path, notice: "Proposta criada com sucesso!"
+    else
+      @o_proposta.o_proposta_itens.build if @o_proposta.o_proposta_itens.empty?
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def fornecedor_enviadas
+    authorize! :fornecedor_enviadas, OProposta
+
+    fornecedor = current_user.f_empresa_fornecedora
+    @o_propostas = OProposta.where(f_empresa_fornecedora: fornecedor)
+                             .where(o_status: OStatus.where(descricao: ['Pendente', 'Enviada', 'Aprovada', 'Rejeitada']))
+                             .order(created_at: :desc)
+  end
+
+  def show
+    # CanCan já faz a checagem via load_and_authorize_resource
+  end
+
+  def edit
+    @o_proposta.gerar_itens_padrao!
+    @o_proposta.o_proposta_itens.build if @o_proposta.o_proposta_itens.empty?
+  end
+
+  def update
+    @o_proposta.o_proposta_itens.build if @o_proposta.o_proposta_itens.empty?
+
+    if @o_proposta.update(o_proposta_params)
+      redirect_to fornecedor_enviadas_o_propostas_path, notice: "Proposta atualizada com sucesso."
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @o_proposta.destroy
+      redirect_to fornecedor_enviadas_o_propostas_path, notice: "Proposta deletada com sucesso."
+    else
+      redirect_to fornecedor_enviadas_o_propostas_path, alert: "Falha ao deletar proposta."
+    end
   end
 
   private
@@ -97,10 +115,10 @@ class OPropostasController < ApplicationController
   end
 
   def handle_not_found
-    redirect_to o_propostas_path, alert: "Registro não encontrado"
+    redirect_to root_path, alert: "Registro não encontrado"
   end
 
   def authorize_gestor!
-    redirect_to o_propostas_path, alert: "Acesso negado" unless current_user.gestor?
+    redirect_to root_path, alert: "Acesso negado" unless current_user.gestor?
   end
 end
