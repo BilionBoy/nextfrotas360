@@ -53,6 +53,24 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* buttons */
+
+.btn-primary {
+  --btn-color: #fff;
+  --btn-bg: #03317b;
+  --btn-border-color: #03317b;
+  --btn-hover-color: #fff;
+  --btn-hover-bg: #03317b;
+  --btn-hover-border-color: #03317b;
+  --btn-focus-shadow-rgb: 48, 150, 255;
+  --btn-active-color: #fff;
+  --btn-active-bg: #0a6fd9;
+  --btn-active-border-color: #0a6fd9;
+  --btn-active-shadow: inset 0 0 0 0 transparent;
+  --btn-disabled-color: #fff;
+  --btn-disabled-bg: #03317b;
+  --btn-disabled-border-color: #03317b;
+}
 a.nav-link {
   color: white;
 }
