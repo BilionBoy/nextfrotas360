@@ -1,5 +1,4 @@
 pt-BR:
-
   cancan:
     access_denied: "Acesso negado: você não tem permissão para acessar esta página."
   pagy:
@@ -137,6 +136,9 @@ pt-BR:
       o_proposta_item:
         one: "Item da Proposta"
         other: "Itens da Proposta"
+      o_status_nf:
+        one: "Status da Nota Fiscal"
+        other: "Status das Notas Fiscais"
       t_taxa:
         one: "Taxa"
         other: "Taxas"
@@ -307,6 +309,8 @@ pt-BR:
         observacao: "Observação"
       o_ordem_servico:
         t_taxa_id: "Taxa"
+      o_status_nf:
+        descricao: "Descrição"
       t_taxa:
         nome: "Nome"
         descricao: "Descrição"

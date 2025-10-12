@@ -99,6 +99,7 @@ Rails.application.routes.draw do
   resources :o_visibilidades
   resources :o_urgencias
   resources :o_cotacoes_itens
+  resources :o_status_nf
   resources :t_taxas
   resources :t_taxas_empresas_fornecedoras
 

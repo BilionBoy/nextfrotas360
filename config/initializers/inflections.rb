@@ -42,7 +42,8 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'o_cotacao_item',                    'o_cotacoes_itens'   
   inflect.irregular 'o_proposta',                        'o_propostas'
   inflect.irregular 'o_proposta_item',                   'o_propostas_itens'
-  inflect.irregular 'o_ordem_servico',                     'o_ordem_servicos'
+  inflect.irregular 'o_ordem_servico',                    'o_ordem_servicos'
+  inflect.irregular 'o_status_nf',                       'o_status_nf'
   inflect.irregular 't_taxa',                            't_taxas'
   inflect.irregular 't_taxa_empresa_fornecedora',        't_taxas_empresas_fornecedoras'
 end
