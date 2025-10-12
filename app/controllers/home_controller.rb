@@ -62,10 +62,10 @@ class HomeController < ApplicationController
 
     @solicitacoes_total      = OSolicitacao.count
     @solicitacoes_pendentes  = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Pendente' }).count
-    @solicitacoes_andamento  = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Em Andamento' }).count
+   @solicitacoes_andamento = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Em Cotação' }).count
     @solicitacoes_concluidas = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Concluída' }).count
 
-    @cotacoes_em_andamento = OCotacao.joins(:o_status).where(o_status: { descricao: 'Em Andamento' }).count
+    @cotacoes_em_andamento = OCotacao.joins(:o_status).where(o_status: { descricao: 'Em Cotação' }).count
     @propostas_recebidas   = OProposta.count
     @servicos_ativos = OOrdemServico.joins(:o_status).where(o_status: { descricao: 'Ativo' }).count
 
@@ -139,10 +139,10 @@ class HomeController < ApplicationController
 
     @solicitacoes_total      = OSolicitacao.count
     @solicitacoes_pendentes  = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Pendente' }).count
-    @solicitacoes_andamento  = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Em Andamento' }).count
+    @solicitacoes_andamento  = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Em Cotação' }).count
     @solicitacoes_concluidas = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Concluída' }).count
 
-    @cotacoes_em_andamento = OCotacao.joins(:o_status).where(o_status: { descricao: 'Em Andamento' }).count
+    @cotacoes_em_andamento = OCotacao.joins(:o_status).where(o_status: { descricao: 'Em Cotação' }).count
     @propostas_recebidas   = OProposta.count
     @servicos_ativos       = OOrdemServico.joins(:o_status).where(o_status: { descricao: 'Ativo' }).count
 

@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 class OCotacoesController < ApplicationController
-  before_action :set_o_cotacao, only: %i[show edit update destroy publicar!]
+  before_action :set_o_cotacao, only: %i[show edit update destroy]
 
   rescue_from ActiveRecord::RecordNotFound, with: :handle_not_found
 
   def index
-    # Apenas para gestores
     @q = OCotacao.ransack(params[:q])
     @pagy, @o_cotacoes = pagy(@q.result.includes(:o_solicitacao, :o_status))
   end
@@ -48,23 +47,17 @@ class OCotacoesController < ApplicationController
   def propostas_enviar
     fornecedor = current_user.f_empresa_fornecedora
 
-    # Pega cotações abertas e fechadas para este fornecedor
-    abertas = OCotacao.abertas_para_fornecedor(fornecedor)
-    rejeitadas = OCotacao.fechadas_para_fornecedor(fornecedor)
+    # Trazer todas as cotações visíveis
+    @o_cotacoes = OCotacao
+                  .includes(:o_solicitacao, o_propostas: :o_status)
+                  .order(created_at: :desc)
 
-    cotacao_ids = (abertas.pluck(:id) + rejeitadas.pluck(:id)).uniq
-    @o_cotacoes = OCotacao.includes(:o_solicitacao, :o_status, :o_propostas).where(id: cotacao_ids)
-
-    # Ransack para pesquisa
-    @q = @o_cotacoes.ransack(params[:q])
+    # Ransack para filtro de pesquisa
+    @q = OCotacao.ransack(params[:q])
     @o_cotacoes = @q.result(distinct: true)
 
+    # Paginação
     @pagy, @o_cotacoes = pagy(@o_cotacoes)
-  end
-
-  def publicar!
-    em_cotacao = OStatus.find_by(descricao: "Em Cotação")
-    update(o_status: em_cotacao)
   end
 
   private
