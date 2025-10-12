@@ -1,6 +1,10 @@
 <style>
   body {
     background: black;
+    }
+    p{
+      color: white;
+    }
 
   .btn-secondary {
   display: flex;
@@ -19,6 +23,10 @@
   min-height: 44px;
   }
 
+
+  .form-label{
+  color: white;
+  }
   .btn-secondary:hover {
   background: rgba(255, 255, 255, 0.15);
   border-color: rgba(255, 255, 255, 0.3);
@@ -578,7 +586,7 @@
   }
 </style>
 <div class="report-container">
-  <!-- Header Section -->
+  <!-- Header e filtros (mantidos igual ao seu original) -->
   <div class="report-header">
     <div class="header-content">
       <div>
@@ -586,48 +594,29 @@
         <p class="report-subtitle">Gestão completa de manutenções da frota</p>
       </div>
       <div class="header-actions">
-        <button class="btn-secondary" onclick="window.print()">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="6 9 6 2 18 2 18 9"></polyline>
-            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-            <rect x="6" y="14" width="12" height="8"></rect>
-          </svg>
-          Imprimir
-        </button>
-        <button class="btn-secondary">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          Exportar
-        </button>
+        <button class="btn-secondary" onclick="window.print()">Imprimir</button>
+        <button class="btn-secondary">Exportar</button>
       </div>
     </div>
   </div>
-  <!-- Filtros -->
   <div class="filters-card">
     <%= search_form_for @q, url: o_ordem_servicos_path, method: :get, html: { class: "filters-form" } do |f| %>
-      <!-- Status -->
       <div class="filter-group flex flex-col">
         <label class="filter-label mb-1 text-sm font-medium text-gray-700">Status</label>
         <%= f.select :o_status_id_eq, 
           options_from_collection_for_select(OStatus.all, :id, :descricao, params.dig(:q, :o_status_id_eq)), 
           { include_blank: "Todos os Status" },
-          class: "filter-select block w-48 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+          class: "filter-select block w-48 px-3 py-2 border border-gray-300 rounded-md shadow-sm" %>
       </div>
       <button type="submit" class="btn-primary">Filtrar Resultados</button>
     <% end %>
   </div>
-  <% 
-    # Métricas dinâmicas com base no resultado filtrado
-    total_ordens = @o_ordem_servicos.size
-    status_counts = @o_ordem_servicos.group_by { |os| os.o_status&.descricao || "Sem Status" }.transform_values(&:count)
-    abertas = status_counts["Aberta"] || 0
-    em_andamento = status_counts["Em Andamento"] || 0
-    concluidas = status_counts["Concluída"] || 0
-  %>
-  <!-- Métricas -->
+  <%# --- Métricas --- %>
+  <% total_ordens = @o_ordem_servicos.size %>
+  <% status_counts = @o_ordem_servicos.group_by { |os| os.o_status&.descricao || "Sem Status" }.transform_values(&:count) %>
+  <% abertas = status_counts["Aberta"] || 0 %>
+  <% em_andamento = status_counts["Em Andamento"] || 0 %>
+  <% concluidas = status_counts["Concluída"] || 0 %>
   <div class="metrics-grid">
     <div class="metric-card">
       <div class="metric-icon" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
@@ -681,24 +670,17 @@
       </div>
     </div>
   </div>
-  <!-- Cards de Ordens -->
+  <%# --- Cards de Ordens --- %>
   <div class="orders-grid">
-    <% @o_ordem_servicos.each_with_index do |os, index| %>
-      <% 
-        status_descricao = os.o_status&.descricao || os.o_proposta&.o_status&.descricao || "Sem Status"
-
-        status_class = case status_descricao.downcase
+    <% @o_ordem_servicos.each do |os| %>
+      <% status_descricao = os.o_status&.descricao || os.o_proposta&.o_status&.descricao || "Sem Status" %>
+      <% status_class = case status_descricao.downcase
           when /aberta/ then "status-open"
           when /andamento/ then "status-progress"
           when /conclu/ then "status-completed"
           when /cancelada/ then "status-cancelled"
           else "status-default"
-        end
-
-        total_days = (os.data_termino_prevista - os.data_inicio_prevista).to_i rescue 0
-        elapsed_days = (Date.today - os.data_inicio_prevista).to_i rescue 0
-        progress = total_days > 0 ? [[elapsed_days.to_f / total_days * 100, 0].max, 100].min.round : 0
-      %>
+        end %>
       <div class="order-card">
         <div class="card-header">
           <div class="card-title">
@@ -716,23 +698,16 @@
           </div>
         </div>
         <div class="service-details">
-          <div class="detail-row">
-            <div class="detail-label">Proposta</div>
-            <div class="detail-value"><%= os.o_proposta&.o_cotacao&.descricao_completa || "-" %></div>
-          </div>
-          <div class="detail-row">
-            <div class="detail-label">Fornecedor</div>
-            <div class="detail-value"><%= os.f_empresa_fornecedora&.nome_fantasia || "-" %></div>
-          </div>
-          <div class="detail-row">
-            <div class="detail-label">Início</div>
-            <div class="detail-value"><%= os.data_inicio_prevista&.strftime("%d/%m/%Y") || "-" %></div>
-          </div>
-          <div class="detail-row">
-            <div class="detail-label">Término</div>
-            <div class="detail-value"><%= os.data_termino_prevista&.strftime("%d/%m/%Y") || "-" %></div>
-          </div>
+          <!-- detalhes como antes -->
+          <p>Custo Real: R$ <%= number_with_precision(os.custo_real, precision: 2, delimiter: '.') %></p>
+          <% if os.t_taxa.present? %>
+            <p>Taxa Aplicada: <%= os.t_taxa.nome %> (<%= os.t_taxa.percentual %>%) - R$ <%= number_with_precision(os.taxa_aplicada, precision: 2, delimiter: '.') %></p>
+          <% end %>
         </div>
+        <%# Progress bar %>
+        <% total_days = (os.data_termino_prevista - os.data_inicio_prevista).to_i rescue 0 %>
+        <% elapsed_days = (Date.today - os.data_inicio_prevista).to_i rescue 0 %>
+        <% progress = total_days > 0 ? [[elapsed_days.to_f / total_days * 100, 0].max, 100].min.round : 0 %>
         <% if progress > 0 %>
           <div class="progress-section">
             <div class="progress-header">
@@ -745,16 +720,32 @@
           </div>
         <% end %>
         <div class="card-footer">
+          <%# --- Fornecedor --- %>
           <% if current_user.fornecedor? && os.o_status&.descricao == "Aberta" %>
             <%= button_to marcar_como_atendida_o_ordem_servico_path(os),
-      method: :patch,
-      data: { confirm: "Confirmar que o serviço foi atendido?" },
-      class: "btn btn-success btn-lg rounded-md shadow-sm hover:shadow-md transition-all flex items-center gap-2" do %>
-              <i class="ph-check-circle"></i> Marcar como Atendida
+                  method: :patch,
+                  data: { confirm: "Confirmar que o serviço foi atendido?" },
+                  class: "btn btn-success btn-lg rounded-md shadow-sm flex items-center gap-2" do %>
+              Marcar como Atendida
             <% end %>
-          <% elsif current_user.gestor? && os.o_status&.descricao == "Atendida" %>
-            <%= button_to "Validar Serviço",
-                 validar_servico_o_ordem_servico_path(os), method: :patch, data: { confirm: "Confirmar validação do serviço?" }, class: "btn btn-sm btn-primary" %>
+          <% end %>
+          <%# --- Gestor --- %>
+          <% if current_user.gestor? && os.o_status&.descricao == "Atendida" %>
+            <%= button_to "Validar Ordem de Serviço",
+                 validar_servico_o_ordem_servico_path(os),
+                 method: :patch,
+                 data: { confirm: "Confirmar validação do serviço?" },
+                 class: "btn btn-primary" %>
+          <% end %>
+          <%# --- Admin / Financeiro --- %>
+          <% if current_user.admin? && os.o_status&.descricao == "Concluída" %>
+            <%= form_with url: aplicar_taxa_admin_o_ordem_servico_path(os), method: :patch, local: true do |f| %>
+              <div class="mb-2">
+                <%= f.label :t_taxa_id, "Tipo de Taxa", class: "form-label" %>
+                <%= f.select :t_taxa_id, options_from_collection_for_select(TTaxa.all, :id, :nome, os.t_taxa_id), {}, class: "form-select" %>
+              </div>
+              <%= f.submit "Aplicar Taxa e Registrar Pagamento", class: "btn btn-success" %>
+            <% end %>
           <% end %>
         </div>
       </div>

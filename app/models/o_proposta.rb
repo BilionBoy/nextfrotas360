@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 class OProposta < ApplicationRecord
   belongs_to :o_cotacao
   belongs_to :f_empresa_fornecedora
@@ -15,7 +14,9 @@ class OProposta < ApplicationRecord
 
   before_create :set_versao
 
+  # -----------------------------
   # Gera itens padrão da cotação
+  # -----------------------------
   def gerar_itens_padrao!
     o_cotacao.o_cotacoes_itens.each do |cot_item|
       o_proposta_itens.find_or_initialize_by(o_cotacao_item: cot_item).tap do |item|
@@ -26,15 +27,15 @@ class OProposta < ApplicationRecord
     end
   end
 
-  # Aprova a proposta e cria a Ordem de Serviço
+  # -----------------------------
+  # Aprova a proposta e cria a OS
+  # -----------------------------
   def aprovar!(gestor)
     raise "Apenas gestores podem aprovar propostas" unless gestor&.gestor?
 
     transaction do
-      # Atualiza status da proposta para Aprovada
       update!(o_status: OStatus.find_by!(descricao: "Aprovada"))
 
-      # Cria a Ordem de Serviço
       OOrdemServico.create!(
         o_proposta: self,
         f_empresa_fornecedora: f_empresa_fornecedora,
@@ -44,22 +45,29 @@ class OProposta < ApplicationRecord
         data_termino_prevista: Date.today + (prazo_execucao_dias || 1).days,
         itens_previstos: o_proposta_itens.map do |i|
           {
-           descricao: i.o_cotacao_item&.descricao || "—",
-           quantidade: i.quantidade || 0,
-           valor_unitario: i.valor_unitario || 0,
-           total_item: i.total_item || 0
+            descricao: i.o_cotacao_item&.descricao || "—",
+            quantidade: i.quantidade || 0,
+            valor_unitario: i.valor_unitario || 0,
+            total_item: i.total_item || 0
           }
-          
         end
       )
     end
   end
 
+  # -----------------------------
   # Recusa a proposta
+  # -----------------------------
   def recusar!(gestor)
     raise "Apenas gestores podem recusar propostas" unless gestor&.gestor?
-
     update!(o_status: OStatus.find_by!(descricao: "Rejeitada"))
+  end
+
+  # -----------------------------
+  # Marca a proposta como concluída
+  # -----------------------------
+  def marcar_concluida!
+    update!(o_status: OStatus.find_by!(descricao: "Concluída"))
   end
 
   private

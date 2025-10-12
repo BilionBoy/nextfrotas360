@@ -563,7 +563,7 @@
             </div>
             <!-- Ações primárias: aceitar / recusar / detalhes -->
             <div class="proposta-actions-primary" style="display: flex; gap: 0.25rem;">
-              <% if current_user.gestor? && !["Aprovada", "Rejeitada"].include?(o_proposta.o_status.descricao) %>
+              <% if current_user.gestor? && !["Aprovada", "Rejeitada", "Concluída"].include?(o_proposta.o_status.descricao) %>
                 <%= button_to aprovar_o_proposta_path(o_proposta), method: :post,
             class: "btn btn-success btn-lg rounded-md shadow-sm hover:shadow-md transition-all",
               data: { confirm: "Aprovar esta proposta e gerar OS?" } do %>

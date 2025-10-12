@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_10_043509) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_12_202819) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -497,12 +497,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_10_043509) do
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "taxa_aplicada", precision: 10, scale: 2, default: "0.0", null: false
+    t.string "tipo_taxa"
+    t.bigint "t_taxa_id"
     t.index ["deleted_at"], name: "index_o_ordem_servicos_on_deleted_at"
     t.index ["f_empresa_fornecedora_id"], name: "index_o_ordem_servicos_on_f_empresa_fornecedora_id"
     t.index ["g_veiculo_id"], name: "index_o_ordem_servicos_on_g_veiculo_id"
     t.index ["numero_os"], name: "index_o_ordem_servicos_on_numero_os", unique: true
     t.index ["o_proposta_id"], name: "index_o_ordem_servicos_on_o_proposta_id"
     t.index ["o_status_id"], name: "index_o_ordem_servicos_on_o_status_id"
+    t.index ["t_taxa_id"], name: "index_o_ordem_servicos_on_t_taxa_id"
     t.index ["validado_por_id"], name: "index_o_ordem_servicos_on_validado_por_id"
   end
 
@@ -709,6 +713,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_10_043509) do
   add_foreign_key "o_ordem_servicos", "g_veiculos"
   add_foreign_key "o_ordem_servicos", "o_propostas"
   add_foreign_key "o_ordem_servicos", "o_status"
+  add_foreign_key "o_ordem_servicos", "t_taxas"
   add_foreign_key "o_ordem_servicos", "users", column: "validado_por_id"
   add_foreign_key "o_propostas", "f_empresas_fornecedoras"
   add_foreign_key "o_propostas", "o_cotacoes"

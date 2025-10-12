@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       patch :rejeitar_proposta   # nova rota para rejeitar a proposta
       patch :marcar_como_atendida
       patch :validar_servico
+      patch :aplicar_taxa_admin
     end
   end
 

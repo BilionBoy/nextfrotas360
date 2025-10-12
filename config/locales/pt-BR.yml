@@ -305,7 +305,8 @@ pt-BR:
         valor_unitario: "Valor Unitário"
         total_item: "Quantidade Total de Itens"
         observacao: "Observação"
-
+      o_ordem_servico:
+        t_taxa_id: "Taxa"
       t_taxa:
         nome: "Nome"
         descricao: "Descrição"

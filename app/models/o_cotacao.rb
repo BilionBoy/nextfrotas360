@@ -4,7 +4,7 @@ class OCotacao < ApplicationRecord
   belongs_to :o_visibilidade
   belongs_to :o_status
   has_many :o_cotacoes_itens, class_name: "OCotacaoItem", foreign_key: "o_cotacao_id", dependent: :destroy
-  has_many :o_propostas,      class_name: "OProposta",   foreign_key: "o_cotacao_id", dependent: :destroy  
+  has_many :o_propostas, class_name: "OProposta", foreign_key: "o_cotacao_id", dependent: :destroy
 
   validates :data_expiracao, presence: true
   before_validation :set_visibilidade_publica, on: :create
@@ -23,6 +23,13 @@ class OCotacao < ApplicationRecord
     "#{id} - #{o_solicitacao.descricao}"
   end
 
+  # -----------------------------
+  # Marca a cotação como concluída
+  # -----------------------------
+  def marcar_concluida!
+    update!(o_status: OStatus.find_by!(descricao: "Concluída"))
+  end
+
   private
 
   def set_visibilidade_publica
@@ -35,6 +42,6 @@ class OCotacao < ApplicationRecord
 
   def marcar_solicitacao_em_cotacao
     em_cotacao = OStatus.find_by(descricao: "Em Cotação")
-    o_solicitacao.update(o_status: em_cotacao) if em_cotacao
+    o_solicitacao.update!(o_status: em_cotacao) if em_cotacao
   end
 end

@@ -22,6 +22,14 @@ module Abilities
 
       # Usuários só podem ler usuários da própria empresa fornecedora
       main_ability.can :read, User, f_empresa_fornecedora_id: user.f_empresa_fornecedora_id
+
+      # --- Permissões para Ordens de Serviço ---
+      main_ability.can :read, OOrdemServico, f_empresa_fornecedora_id: user.f_empresa_fornecedora_id
+
+      # Só pode marcar como atendida se estiver aberta e for da empresa dele
+      main_ability.can :marcar_como_atendida, OOrdemServico do |os|
+        os.o_status&.descricao == "Aberta" && os.f_empresa_fornecedora_id == user.f_empresa_fornecedora_id
+      end
     end
   end
 end
