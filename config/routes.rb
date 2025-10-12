@@ -4,6 +4,8 @@ Rails.application.routes.draw do
       patch :finalizar
       patch :aceitar_proposta    # nova rota para aceitar a proposta
       patch :rejeitar_proposta   # nova rota para rejeitar a proposta
+      patch :marcar_como_atendida
+      patch :validar_servico
     end
   end
 

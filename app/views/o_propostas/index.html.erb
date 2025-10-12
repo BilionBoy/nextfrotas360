@@ -548,35 +548,34 @@
           </div>
         </div>
         <%# Reorganized footer with better visual hierarchy and button grouping %>
-        <div class="proposta-footer">
-          <div class="proposta-price">
+        <div class="proposta-footer" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+          <!-- Valor da proposta -->
+          <div class="proposta-price" style="font-weight: bold; font-size: 1.5rem;">
             <%= number_to_currency(o_proposta.valor_total) %>
           </div>
-          <div class="proposta-actions">
-            <div class="proposta-actions-secondary">
-              <%= link_to edit_o_proposta_path(o_proposta), class: "btn-editar", title: "Editar" do %>
-                <i class="ph-pen"></i>
-              <% end %>
-              <%= form_for o_proposta, method: :delete, class: "d-inline" do |f| %>
-                <button type="submit" class="btn-excluir" data-confirm="Tem certeza?" title="Excluir">
-                  <i class="ph-trash-simple"></i>
-                </button>
+          <!-- Ações -->
+          <div class="proposta-actions" style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+            <!-- Ações secundárias: editar -->
+            <div class="proposta-actions d-none" style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-top: 0.5rem;">
+              <%= link_to edit_o_proposta_path(o_proposta), class: "btn btn-outline-secondary btn-lg rounded-md shadow-sm hover:shadow-md transition-all", title: "Editar" do %>
+                <i class="ph-pen"></i> Editar
               <% end %>
             </div>
-            <div class="proposta-actions-primary">
-              <% if current_user.gestor? && !["Aprovada", "Recusada"].include?(o_proposta.o_status.descricao) %>
+            <!-- Ações primárias: aceitar / recusar / detalhes -->
+            <div class="proposta-actions-primary" style="display: flex; gap: 0.25rem;">
+              <% if current_user.gestor? && !["Aprovada", "Rejeitada"].include?(o_proposta.o_status.descricao) %>
                 <%= button_to aprovar_o_proposta_path(o_proposta), method: :post,
-                      class: "btn-aceitar",
-                      data: { confirm: "Aprovar esta proposta e gerar OS?" } do %>
+            class: "btn btn-success btn-lg rounded-md shadow-sm hover:shadow-md transition-all",
+              data: { confirm: "Aprovar esta proposta e gerar OS?" } do %>
                   Aceitar
                 <% end %>
                 <%= button_to recusar_o_proposta_path(o_proposta), method: :post,
-                      class: "btn-recusar",
-                      data: { confirm: "Recusar esta proposta?" } do %>
+            class: "btn btn-danger btn-lg rounded-md shadow-sm hover:shadow-md transition-all",
+              data: { confirm: "Recusar esta proposta?" } do %>
                   Recusar
                 <% end %>
               <% end %>
-              <%= link_to o_proposta_path(o_proposta), class: "btn-detalhes" do %>
+              <%= link_to o_proposta_path(o_proposta), class: "btn btn-primary btn-lg rounded-md shadow-sm hover:shadow-md transition-all" do %>
                 Detalhes
               <% end %>
             </div>

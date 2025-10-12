@@ -404,14 +404,6 @@
               </div>
             </div>
           <% end %>
-          <!-- Botão enviar proposta (aparece se nenhuma proposta foi aprovada/rejeitada) -->
-          <% unless propostas_fornecedor.any? %>
-            <div style="margin-top: 0.5rem;">
-              <%= link_to new_o_proposta_path(o_cotacao_id: cotacao.id), class: "btn btn-primary" do %>
-                <i class="ph-paper-plane-tilt"></i> Enviar proposta
-              <% end %>
-            </div>
-          <% end %>
         </div>
         <footer class="proposal-footer" style="display: flex; justify-content: space-between; align-items: center;">
           <div class="expiration-badge" role="alert">
@@ -422,17 +414,21 @@
             <% ultima_proposta = propostas_fornecedor.last %>
             <% status = ultima_proposta.o_status.descricao %>
             <div style="background-color: <%= case status
-                                      when 'Pendente' then '#fef3c7'
-                                      when 'Enviada' then '#dbeafe'
-                                      when 'Aprovada' then '#d1fae5'
-                                      when 'Rejeitada' then '#fee2e2'
-                                      else '#e5e7eb'
-                                      end %>;
-                color: <%= status == 'Rejeitada' ? '#b91c1c' : '#111827' %>;
-                padding: 0.2rem 0.5rem;
-                border-radius: 0.25rem;">
+                              when 'Pendente' then '#fef3c7'
+                              when 'Enviada' then '#dbeafe'
+                              when 'Aprovada' then '#d1fae5'
+                              when 'Rejeitada' then '#fee2e2'
+                              else '#e5e7eb'
+                              end %>;
+        color: <%= status == 'Rejeitada' ? '#b91c1c' : '#111827' %>;
+        padding: 0.2rem 0.5rem;
+        border-radius: 0.25rem;">
               <%= status %>
             </div>
+          <% else %>
+            <%= link_to new_o_proposta_path(o_cotacao_id: cotacao.id), class: "btn btn-primary btn-sm" do %>
+              <i class="ph-paper-plane-tilt"></i> Enviar proposta
+            <% end %>
           <% end %>
         </footer>
       </article>

@@ -1,23 +1,19 @@
 # frozen_string_literal: true
 class OOrdemServicosController < ApplicationController
-  before_action :set_o_ordem_servico, only: [:show, :finalizar, :aceitar_proposta, :rejeitar_proposta]
+  before_action :set_o_ordem_servico, only: [:show, :marcar_como_atendida, :validar_servico]
   before_action :authorize_user!
 
   # GET /o_ordem_servicos
   def index
-    if current_user.gestor?
-      base_scope = OOrdemServico.all
-    elsif current_user.fornecedor?
-      base_scope = OOrdemServico.where(f_empresa_fornecedora_id: current_user.f_empresa_fornecedora_id)
-    else
-      redirect_to root_path, alert: "Acesso negado"
-      return
-    end
+    base_scope = if current_user.gestor?
+                   OOrdemServico.all
+                 elsif current_user.fornecedor?
+                   OOrdemServico.where(f_empresa_fornecedora_id: current_user.f_empresa_fornecedora_id)
+                 else
+                   redirect_to root_path, alert: "Acesso negado" and return
+                 end
 
-    # Ransack para filtros avançados
     @q = base_scope.ransack(params[:q])
-
-    # Paginação com Pagy + eager loading para evitar N+1
     @pagy, @o_ordem_servicos = pagy(
       @q.result
         .includes(
@@ -29,7 +25,6 @@ class OOrdemServicosController < ApplicationController
         .order(created_at: :desc)
     )
     @o_ordem_servicos.each(&:reload)
-
   end
 
   # GET /o_ordem_servicos/:id
@@ -37,56 +32,36 @@ class OOrdemServicosController < ApplicationController
     @itens_previstos = @o_ordem_servico.itens_previstos
   end
 
-  # PATCH /o_ordem_servicos/:id/finalizar
-  def finalizar
+  # PATCH /o_ordem_servicos/:id/marcar_como_atendida
+  def marcar_como_atendida
     unless current_user.fornecedor? && @o_ordem_servico.f_empresa_fornecedora_id == current_user.f_empresa_fornecedora_id
-      redirect_to o_ordem_servicos_path, alert: "Acesso negado"
-      return
+      redirect_to o_ordem_servicos_path, alert: "Acesso negado" and return
     end
-
-    concluida_status = OStatus.find_by!(descricao: "Concluída")
 
     ActiveRecord::Base.transaction do
-      # Atualiza a OS
-      @o_ordem_servico.update!(o_status: concluida_status)
-      # Atualiza a solicitação vinculada (via proposta → cotação → solicitação)
-      solicitacao = @o_ordem_servico.o_proposta&.o_cotacao&.o_solicitacao
-      solicitacao&.update!(o_status: concluida_status)
+      @o_ordem_servico.marcar_como_atendida!
+      @o_ordem_servico.o_proposta&.o_cotacao&.o_solicitacao&.update!(o_status: OStatus.find_by!(descricao: "Atendida"))
     end
 
-    redirect_to o_solicitacoes_path, notice: "Ordem de Serviço finalizada com sucesso — solicitação marcada como concluída."
+    redirect_to o_ordem_servicos_path, notice: "Ordem marcada como atendida — aguardando validação do gestor."
   rescue ActiveRecord::RecordInvalid => e
-    redirect_to o_ordem_servico_path(@o_ordem_servico), alert: "Falha ao finalizar a OS: #{e.message}"
+    redirect_to o_ordem_servico_path(@o_ordem_servico), alert: "Falha ao atualizar: #{e.message}"
   end
 
-  # PATCH /o_ordem_servicos/:id/aceitar_proposta
-  def aceitar_proposta
-    unless current_user.fornecedor? && @o_ordem_servico.f_empresa_fornecedora_id == current_user.f_empresa_fornecedora_id
-      redirect_to o_ordem_servicos_path, alert: "Acesso negado"
-      return
+  # PATCH /o_ordem_servicos/:id/validar_servico
+  def validar_servico
+    unless current_user.gestor?
+      redirect_to o_ordem_servicos_path, alert: "Apenas gestores podem validar o serviço." and return
     end
 
-    status_aceita = OStatus.find_by!(descricao: "Aprovada")
-    if @o_ordem_servico.update(o_status: status_aceita)
-      redirect_to o_ordem_servicos_path, notice: "Proposta aceita com sucesso"
-    else
-      redirect_to o_ordem_servico_path(@o_ordem_servico), alert: "Falha ao aceitar proposta"
-    end
-  end
-
-  # PATCH /o_ordem_servicos/:id/rejeitar_proposta
-  def rejeitar_proposta
-    unless current_user.fornecedor? && @o_ordem_servico.f_empresa_fornecedora_id == current_user.f_empresa_fornecedora_id
-      redirect_to o_ordem_servicos_path, alert: "Acesso negado"
-      return
+    ActiveRecord::Base.transaction do
+      @o_ordem_servico.finalizar!(current_user)
+      @o_ordem_servico.o_proposta&.o_cotacao&.o_solicitacao&.update!(o_status: OStatus.find_by!(descricao: "Concluída"))
     end
 
-    status_rejeitada = OStatus.find_by!(descricao: "Rejeitada")
-    if @o_ordem_servico.update(o_status: status_rejeitada)
-      redirect_to o_ordem_servicos_path, notice: "Proposta rejeitada com sucesso"
-    else
-      redirect_to o_ordem_servico_path(@o_ordem_servico), alert: "Falha ao rejeitar proposta"
-    end
+    redirect_to o_ordem_servicos_path, notice: "Serviço validado com sucesso — OS concluída."
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_to o_ordem_servico_path(@o_ordem_servico), alert: "Falha ao validar: #{e.message}"
   end
 
   private

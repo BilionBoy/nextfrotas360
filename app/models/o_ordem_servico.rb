@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 class OOrdemServico < ApplicationRecord
   # Associações
   belongs_to :o_proposta
@@ -7,6 +6,7 @@ class OOrdemServico < ApplicationRecord
   belongs_to :g_veiculo
   belongs_to :o_status
   belongs_to :validado_por, class_name: 'User', optional: true
+
   # Validações
   validates :numero_os, presence: true, uniqueness: true
   validates :o_proposta, :f_empresa_fornecedora, :g_veiculo, :o_status, presence: true
@@ -14,16 +14,33 @@ class OOrdemServico < ApplicationRecord
   # Callbacks
   before_validation :gerar_numero_os, on: :create
 
-  # Métodos
+  # Callbacks
   def gerar_numero_os
     self.numero_os ||= "OS#{Time.current.strftime('%Y%m%d')}#{SecureRandom.hex(3).upcase}"
   end
 
+  # ----------------------------
+  # Métodos de negócio
+  # ----------------------------
+
+  def marcar_como_atendida!
+    update!(o_status: OStatus.find_by!(descricao: 'Atendida'))
+  end
+
+  def finalizar!(usuario)
+    update!(
+      o_status: OStatus.find_by!(descricao: 'Concluída'),
+      validado_por: usuario,
+      validado_em: Time.current
+    )
+  end
+
   def aprovar!(usuario)
-    self.validado_por = usuario
-    self.validado_em = Time.current
-    self.o_status = OStatus.find_by(descricao: 'Aprovada')
-    save!
+    update!(
+      o_status: OStatus.find_by!(descricao: 'Aprovada'),
+      validado_por: usuario,
+      validado_em: Time.current
+    )
   end
 
   def adicionar_item_executado(item)
@@ -37,9 +54,9 @@ class OOrdemServico < ApplicationRecord
     return 0 unless itens
 
     itens.sum do |item|
-     quantidade = item['quantidade'].to_f
-     valor_unitario = item['valor_unitario'].to_f
-     quantidade * valor_unitario
-   end
+      quantidade = item['quantidade'].to_f
+      valor_unitario = item['valor_unitario'].to_f
+      quantidade * valor_unitario
+    end
   end
 end

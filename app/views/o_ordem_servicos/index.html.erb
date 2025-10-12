@@ -745,22 +745,16 @@
           </div>
         <% end %>
         <div class="card-footer">
-          <%= link_to o_ordem_servico_path(os), class: "btn-detail" do %>
-            Ver Detalhes
-          <% end %>
-          <% if os.o_proposta %>
-            <% case os.o_proposta.o_status&.descricao %>
-            <% when "Aprovada" %>
-              <% if current_user.fornecedor? %>
-                <%= button_to "Finalizar OS",
-                  finalizar_o_ordem_servico_path(os),
-                  method: :patch,
-                  data: { turbo: false, confirm: "Confirmar finalização da OS?" },
-                  class: "btn btn-sm btn-primary" %>
-              <% end %>
-            <% when "Rejeitada" %>
-              <span class="text-red-600 font-semibold">Proposta Rejeitada</span>
+          <% if current_user.fornecedor? && os.o_status&.descricao == "Aberta" %>
+            <%= button_to marcar_como_atendida_o_ordem_servico_path(os),
+      method: :patch,
+      data: { confirm: "Confirmar que o serviço foi atendido?" },
+      class: "btn btn-success btn-lg rounded-md shadow-sm hover:shadow-md transition-all flex items-center gap-2" do %>
+              <i class="ph-check-circle"></i> Marcar como Atendida
             <% end %>
+          <% elsif current_user.gestor? && os.o_status&.descricao == "Atendida" %>
+            <%= button_to "Validar Serviço",
+                 validar_servico_o_ordem_servico_path(os), method: :patch, data: { confirm: "Confirmar validação do serviço?" }, class: "btn btn-sm btn-primary" %>
           <% end %>
         </div>
       </div>
