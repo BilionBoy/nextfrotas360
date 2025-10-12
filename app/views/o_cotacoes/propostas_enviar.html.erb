@@ -383,7 +383,9 @@
       <article class="proposal-card">
         <header class="proposal-header">
           <div>
-            <h2 class="proposal-number">#<%= cotacao.o_solicitacao.numero %></h2>
+            <h2 class="proposal-number">
+              <%= cotacao.o_solicitacao.descricao || "Solicitação ##{cotacao.o_solicitacao.numero}" %>
+            </h2>
           </div>
           <div class="proposal-status" role="status"
                style="background-color: <%= case status

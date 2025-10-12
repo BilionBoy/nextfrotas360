@@ -7,7 +7,6 @@ class OOrdemServico < ApplicationRecord
   belongs_to :g_veiculo
   belongs_to :o_status
   belongs_to :validado_por, class_name: 'User', optional: true
-
   # Validações
   validates :numero_os, presence: true, uniqueness: true
   validates :o_proposta, :f_empresa_fornecedora, :g_veiculo, :o_status, presence: true
