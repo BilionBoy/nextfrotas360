@@ -30,7 +30,6 @@ class OOrdemServicosController < ApplicationController
   # PATCH /o_ordem_servicos/:id/validar_servico
   def validar_servico
     redirect_unless_gestor!
-
     @o_ordem_servico.finalizar!(current_user)
     redirect_to o_ordem_servicos_path, notice: "Serviço validado com sucesso — OS concluída."
   rescue ActiveRecord::RecordInvalid => e
@@ -40,13 +39,12 @@ class OOrdemServicosController < ApplicationController
   # PATCH /o_ordem_servicos/:id/aplicar_taxa_admin
   def aplicar_taxa_admin
     redirect_unless_admin!
-
-    t_taxa = TTaxa.find(params[:t_taxa_id])
-    @o_ordem_servico.update!(t_taxa: t_taxa, taxa_aplicada: (@o_ordem_servico.custo_real * t_taxa.percentual / 100).round(2),
-                             o_status: OStatus.find_by!(descricao: "Pago"))
+    
+    taxa_id = params[:t_taxa_id]
+    @o_ordem_servico.aplicar_taxa_admin!(current_user, taxa_id)
 
     redirect_to o_ordem_servicos_path, notice: "Taxa aplicada e pagamento registrado com sucesso."
-  rescue ActiveRecord::RecordInvalid => e
+  rescue ActiveRecord::RecordInvalid, StandardError => e
     redirect_to o_ordem_servicos_path, alert: "Erro ao aplicar taxa: #{e.message}"
   end
 

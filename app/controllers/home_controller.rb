@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 class HomeController < ApplicationController
   before_action :authenticate_user!
   before_action :load_dashboard
@@ -62,12 +61,21 @@ class HomeController < ApplicationController
 
     @solicitacoes_total      = OSolicitacao.count
     @solicitacoes_pendentes  = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Pendente' }).count
-   @solicitacoes_andamento = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Em Cotação' }).count
+    @solicitacoes_andamento  = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Em Cotação' }).count
     @solicitacoes_concluidas = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Concluída' }).count
 
     @cotacoes_em_andamento = OCotacao.joins(:o_status).where(o_status: { descricao: 'Em Cotação' }).count
     @propostas_recebidas   = OProposta.count
-    @servicos_ativos = OOrdemServico.joins(:o_status).where(o_status: { descricao: 'Ativo' }).count
+    @servicos_ativos       = OOrdemServico.joins(:o_status).where(o_status: { descricao: 'Ativo' }).count
+
+    # 🔹 Receita de Taxas (somente OS pagas)
+    @receita_taxas = OOrdemServico
+                       .joins(:o_status)
+                       .where(o_status: { descricao: 'Pago' })
+                       .sum(:taxa_aplicada)
+                       .to_f
+
+    @variacao_receita = 0 # placeholder, depois pode calcular variação mensal
 
     load_admin_chart_data
     load_admin_recent_activities
@@ -146,6 +154,15 @@ class HomeController < ApplicationController
     @propostas_recebidas   = OProposta.count
     @servicos_ativos       = OOrdemServico.joins(:o_status).where(o_status: { descricao: 'Ativo' }).count
 
+    # 🔹 Receita de Taxas (somente OS pagas)
+    @receita_taxas = OOrdemServico
+                       .joins(:o_status)
+                       .where(o_status: { descricao: 'Pago' })
+                       .sum(:taxa_aplicada)
+                       .to_f
+
+    @variacao_receita = 0 # placeholder
+
     # Gráficos
     solicitacoes_status = OSolicitacao
                             .joins(:o_status)
@@ -178,8 +195,7 @@ class HomeController < ApplicationController
   # --------------------------------------------------
   # 🔹 DASHBOARD FORNECEDOR
   # --------------------------------------------------
- ## ==========================
- def load_fornecedor_data
+  def load_fornecedor_data
     @fornecedor = current_user.f_empresa_fornecedora
 
     # Relacionamentos
@@ -218,6 +234,4 @@ class HomeController < ApplicationController
   def load_solicitacoes_fornecedor
     @solicitacoes = [] # TODO: substituir depois quando ligarmos fornecedor → solicitações
   end
-
-
 end
