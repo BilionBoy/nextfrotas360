@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 class OCotacoesController < ApplicationController
-  before_action :set_o_cotacao, only: %i[show edit update destroy]
+  before_action :set_o_cotacao, only: %i[show edit update destroy publicar!]
 
   rescue_from ActiveRecord::RecordNotFound, with: :handle_not_found
 
   def index
+    # Apenas para gestores
     @q = OCotacao.ransack(params[:q])
     @pagy, @o_cotacoes = pagy(@q.result.includes(:o_solicitacao, :o_status))
   end
@@ -46,21 +47,21 @@ class OCotacoesController < ApplicationController
   # Ação para fornecedor enviar proposta
   def propostas_enviar
     fornecedor = current_user.f_empresa_fornecedora
-  
+
+    # Pega cotações abertas e fechadas para este fornecedor
     abertas = OCotacao.abertas_para_fornecedor(fornecedor)
     rejeitadas = OCotacao.fechadas_para_fornecedor(fornecedor)
-  
-    # União usando IDs
+
     cotacao_ids = (abertas.pluck(:id) + rejeitadas.pluck(:id)).uniq
-    @o_cotacoes = OCotacao.includes(:o_solicitacao, :o_status).where(id: cotacao_ids)
-  
-    # Ransack agora funciona
+    @o_cotacoes = OCotacao.includes(:o_solicitacao, :o_status, :o_propostas).where(id: cotacao_ids)
+
+    # Ransack para pesquisa
     @q = @o_cotacoes.ransack(params[:q])
     @o_cotacoes = @q.result(distinct: true)
-  
+
     @pagy, @o_cotacoes = pagy(@o_cotacoes)
   end
-  
+
   def publicar!
     em_cotacao = OStatus.find_by(descricao: "Em Cotação")
     update(o_status: em_cotacao)
@@ -70,7 +71,7 @@ class OCotacoesController < ApplicationController
 
   def set_o_cotacao
     @o_cotacao = OCotacao.find_by(id: params[:id])
-    return redirect_to o_cotacoes_path, alert: t('messages.not_found') unless @o_cotacao
+    redirect_to o_cotacoes_path, alert: t('messages.not_found') unless @o_cotacao
   end
 
   def o_cotacao_params

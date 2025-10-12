@@ -377,9 +377,14 @@
 <% else %>
   <div class="cards-grid" data-count="<%= @o_cotacoes.count %>">
     <% @o_cotacoes.each do |cotacao| %>
-      <% # Pega última proposta do fornecedor para esta cotação %>
-      <% proposta_fornecedor = cotacao.o_propostas.find_by(f_empresa_fornecedora_id: current_user.f_empresa_fornecedora.id) %>
-      <% status = proposta_fornecedor&.o_status&.descricao || cotacao.o_status.descricao %>
+      <%# Pegamos a última proposta do fornecedor logado %>
+      <% ultima_proposta = cotacao.o_propostas
+                                .where(f_empresa_fornecedora_id: current_user.f_empresa_fornecedora.id)
+                                .order(created_at: :desc)
+                                .first %>
+      <%# Se não houver proposta, não mostramos nada (ou poderia exibir "Sem proposta") %>
+      <% next unless ultima_proposta.present? %>
+      <% status = ultima_proposta.o_status.descricao %>
       <article class="proposal-card">
         <header class="proposal-header">
           <div>
@@ -448,11 +453,11 @@
             <i class="ph-clock" aria-hidden="true"></i>
             <span>Expira: <%= l(cotacao.data_expiracao, format: :short) %></span>
           </div>
-          <% # Botão só aparece se não houver proposta ou se estiver pendente/enviada (não rejeitada ou aprovada) %>
-          <% if status.present? && !['Rejeitada', 'Aprovada'].include?(status) %>
+          <%# Só mostramos botão se a proposta NÃO estiver aprovada %>
+          <% if status != 'Aprovada' %>
             <%= link_to new_o_proposta_path(o_cotacao_id: cotacao.id),
-                class: "btn-send-proposal",
-                'aria-label': "Enviar proposta para cotação #{cotacao.o_solicitacao.numero}" do %>
+                  class: "btn-send-proposal",
+                  'aria-label': "Enviar proposta para cotação #{cotacao.o_solicitacao.numero}" do %>
               <i class="ph-paper-plane-tilt" aria-hidden="true"></i>
               Enviar proposta
             <% end %>

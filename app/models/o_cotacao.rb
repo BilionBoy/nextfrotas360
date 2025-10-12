@@ -12,12 +12,13 @@ class OCotacao < ApplicationRecord
 
 
    scope :abertas_para_fornecedor, ->(fornecedor) {
-    status_pendente = OStatus.find_by(descricao: "Pendente")
-    where(o_status: status_pendente)
-    .where.not(
-      id: OProposta.where(f_empresa_fornecedora_id: fornecedor.id).select(:o_cotacao_id)
-    )
-  }
+     status_pendente = OStatus.find_by(descricao: "Pendente")&.id
+     return none unless status_pendente
+   
+     where(o_status_id: status_pendente)
+       .where.not(id: OProposta.where(f_empresa_fornecedora_id: fornecedor.id).select(:o_cotacao_id))
+   }
+
 
   scope :fechadas_para_fornecedor, ->(fornecedor) {
      rejeitada = OStatus.find_by(descricao: "Rejeitada")
