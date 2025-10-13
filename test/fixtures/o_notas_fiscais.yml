@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  o_ordem_servico: one
+  numero: MyString
+  data_emissao: 2025-10-12
+  valor_total: MyString
+  o_status_nf: one
+
+two:
+  o_ordem_servico: two
+  numero: MyString
+  data_emissao: 2025-10-12
+  valor_total: MyString
+  o_status_nf: two

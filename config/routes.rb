@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :o_notas_fiscais
   resources :o_ordem_servicos, only: [:index, :show] do
     member do
       patch :finalizar

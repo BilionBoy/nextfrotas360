@@ -139,6 +139,9 @@ pt-BR:
       o_status_nf:
         one: "Status da Nota Fiscal"
         other: "Status das Notas Fiscais"
+      o_nota_fiscal:
+        one: "Nota Fiscal"
+        other: "Notas Fiscais"
       t_taxa:
         one: "Taxa"
         other: "Taxas"
@@ -311,6 +314,12 @@ pt-BR:
         t_taxa_id: "Taxa"
       o_status_nf:
         descricao: "Descrição"
+      o_nota_fiscal:
+        numero: "Número da Nota"
+        data_emissao: "Data de Emissão"
+        valor_total: "Valor total"
+        o_status_nf_id: "Status da Nota"
+        o_ordem_servico_id: "Ordem de Serviço"
       t_taxa:
         nome: "Nome"
         descricao: "Descrição"

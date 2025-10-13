@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_12_234412) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_12_235224) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -476,6 +476,21 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_12_234412) do
     t.index ["o_cotacao_id"], name: "index_o_cotacoes_itens_on_o_cotacao_id"
   end
 
+  create_table "o_notas_fiscais", force: :cascade do |t|
+    t.bigint "o_ordem_servico_id"
+    t.string "numero"
+    t.date "data_emissao"
+    t.string "valor_total"
+    t.bigint "o_status_nf_id"
+    t.string "created_by"
+    t.string "updated_by"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["o_ordem_servico_id"], name: "index_o_notas_fiscais_on_o_ordem_servico_id"
+    t.index ["o_status_nf_id"], name: "index_o_notas_fiscais_on_o_status_nf_id"
+  end
+
   create_table "o_ordem_servicos", force: :cascade do |t|
     t.string "numero_os", null: false
     t.bigint "o_proposta_id", null: false
@@ -718,6 +733,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_12_234412) do
   add_foreign_key "o_cotacoes", "o_visibilidades"
   add_foreign_key "o_cotacoes_itens", "o_categorias_servicos"
   add_foreign_key "o_cotacoes_itens", "o_cotacoes"
+  add_foreign_key "o_notas_fiscais", "o_ordem_servicos"
+  add_foreign_key "o_notas_fiscais", "o_status_nf"
   add_foreign_key "o_ordem_servicos", "f_empresas_fornecedoras"
   add_foreign_key "o_ordem_servicos", "g_veiculos"
   add_foreign_key "o_ordem_servicos", "o_propostas"

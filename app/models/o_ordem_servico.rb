@@ -6,11 +6,13 @@ class OOrdemServico < ApplicationRecord
   belongs_to :o_status
   belongs_to :validado_por, class_name: 'User', optional: true
   belongs_to :t_taxa, optional: true
-
   validates :numero_os, presence: true, uniqueness: true
   validates :o_proposta, :f_empresa_fornecedora, :g_veiculo, :o_status, presence: true
 
   before_validation :gerar_numero_os, on: :create
+
+
+
 
   # -----------------------------
   # Aplica taxa admin e debita do centro de custo
