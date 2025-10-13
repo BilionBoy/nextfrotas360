@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class HomeController < ApplicationController
   before_action :authenticate_user!
   before_action :load_dashboard
@@ -49,19 +50,18 @@ class HomeController < ApplicationController
   def load_admin_data
     resumo = GCentroCusto
                .unscope(:select)
-               .select(
-                 'COALESCE(SUM(valor_inicial), 0) AS total_orcamento'
-               )
+               .select('COALESCE(SUM(valor_inicial), 0) AS total_orcamento')
                .take
 
     @orcamento_total = resumo.total_orcamento.to_f
 
-    # 🔹 Total pago líquido baseado nas OS
+    # 🔹 Total pago líquido (corrigido para evitar negativos)
     @gastos_totais = OOrdemServico
                        .joins(:o_status)
                        .where(o_status: { descricao: 'Pago' })
-                       .sum('o_ordem_servicos.custo_real - COALESCE(o_ordem_servicos.taxa_aplicada, 0)')
-                       .to_f
+                       .sum do |os|
+                         os.custo_real.to_f - os.taxa_aplicada.to_f
+                       end
 
     @saldo_disponivel = @orcamento_total - @gastos_totais
 
@@ -143,30 +143,24 @@ class HomeController < ApplicationController
   def load_gestor_data
     resumo = GCentroCusto
                .unscope(:select)
-               .select(
-                 'COALESCE(SUM(valor_inicial), 0) AS total_orcamento'
-               )
+               .select('COALESCE(SUM(valor_inicial), 0) AS total_orcamento')
                .take
 
     @orcamento_total = resumo.total_orcamento.to_f
 
-    # 🔹 Total pago líquido baseado nas OS
     @gastos_totais = OOrdemServico
                        .joins(:o_status)
                        .where(o_status: { descricao: 'Pago' })
-                       .sum('o_ordem_servicos.custo_real - COALESCE(o_ordem_servicos.taxa_aplicada, 0)')
-                       .to_f
+                       .sum { |os| os.custo_real.to_f - os.taxa_aplicada.to_f }
 
-    # 🔹 Receita de taxas
     @receita_taxas = OOrdemServico
                        .joins(:o_status)
                        .where(o_status: { descricao: 'Pago' })
                        .sum(:taxa_aplicada)
                        .to_f
 
-    @variacao_receita = 0 # placeholder
+    @variacao_receita = 0
 
-    # 🔹 Contadores gerais
     @solicitacoes_total      = OSolicitacao.count
     @solicitacoes_pendentes  = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Pendente' }).count
     @solicitacoes_andamento  = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Em Cotação' }).count
@@ -176,7 +170,6 @@ class HomeController < ApplicationController
     @propostas_recebidas   = OProposta.count
     @servicos_ativos       = OOrdemServico.joins(:o_status).where(o_status: { descricao: 'Ativo' }).count
 
-    # 🔹 Gráficos
     solicitacoes_status = OSolicitacao
                             .joins(:o_status)
                             .group('o_status.descricao')
@@ -210,6 +203,7 @@ class HomeController < ApplicationController
   # --------------------------------------------------
   def load_fornecedor_data
     @fornecedor = current_user.f_empresa_fornecedora
+    return unless @fornecedor
 
     # Relacionamentos
     @fornecedor_financeiros = @fornecedor.f_financeiros.includes(:f_financeiros_movimentos)
@@ -239,12 +233,12 @@ class HomeController < ApplicationController
       OpenStruct.new(
         descricao: cat.descricao,
         count: @fornecedor_servicos.count { |s| s.o_categoria_servico_id == cat.id },
-        saldo: @fornecedor_financeiros.where(o_categoria_servico_id: cat.id).sum(:saldo_disponivel) || 0
+        saldo: @fornecedor_financeiros.where(o_categoria_servico_id: cat.id).sum(:saldo_disponivel).to_f
       )
     end
   end
 
   def load_solicitacoes_fornecedor
-    @solicitacoes = [] # TODO: substituir depois quando ligarmos fornecedor → solicitações
+    @solicitacoes = [] # TODO: substituir quando ligação fornecedor → solicitações for implementada
   end
 end

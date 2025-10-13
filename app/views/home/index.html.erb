@@ -154,7 +154,7 @@
   <div class="metrics-grid">
     <% metrics = [
         {label: 'Volume Total', value: @orcamento_total || 0, trend: @variacao_orcamento || 0, icon: '💰', desc: 'Orçamento total aprovado', color: 'blue', trend_class: 'up'},
-        {label: 'Total Pago', value: @gastos_totais || 0, trend: @variacao_gastos || 0, icon: '✓', desc: 'Gastos realizados', color: 'green', trend_class: 'up'},
+        {label: 'Total Pago', value: @gastos_totais || 0, trend: @variacao_receita || 0, icon: '✓', desc: 'Gastos realizados', color: 'green', trend_class: 'up'},
         {label: 'Pagamentos Pendentes', value: @saldo_disponivel || 0, trend: @variacao_pendentes || 0, icon: '⏱', desc: 'Saldo disponível', color: 'yellow', trend_class: 'down'},
         {label: 'Receita de Taxas', value: @receita_taxas || 0, trend: @variacao_receita || 0, icon: '📊', desc: 'Receita de transações pagas', color: 'red', trend_class: 'neutral'}
       ] %>
