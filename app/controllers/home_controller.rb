@@ -223,6 +223,7 @@ class HomeController < ApplicationController
                      .where(f_empresa_fornecedora_id: @fornecedor.id)
                      .map { |os| os.custo_real - os.taxa_aplicada.to_f }
                      .sum
+   Rails.logger.info "💰 Saldo a receber para fornecedor #{@fornecedor.id}: #{@saldo_a_receber}"
 
                          
 
