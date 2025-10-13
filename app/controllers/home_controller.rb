@@ -212,6 +212,21 @@ class HomeController < ApplicationController
     @categorias_servicos = OCategoriaServico.all
     @tipos_movimentos    = GTipoMovimento.all
 
+     # 🔹 Saldos
+
+
+  # 🔹 Saldos
+    @saldo_disponivel = @fornecedor.f_financeiros.sum(:saldo_disponivel).to_f
+  
+    # 🔹 Saldo a Receber (baseado em OS pagas)
+    @saldo_a_receber = OOrdemServico
+                         .joins(:o_status)
+                         .where(f_empresa_fornecedora_id: @fornecedor.id)
+                         .where(o_status: { descricao: 'Pago' })
+                         .sum('COALESCE(o_ordem_servicos.custo_real, 0) - COALESCE(o_ordem_servicos.taxa_aplicada, 0)')
+                         .to_f
+  
+
     load_movimentos_financeiros
     load_servicos_por_categoria
     load_solicitacoes_fornecedor
