@@ -48,6 +48,24 @@ class OOrdemServicosController < ApplicationController
     redirect_to o_ordem_servicos_path, alert: "Erro ao aplicar taxa: #{e.message}"
   end
 
+  def enviar_nf
+    if request.get?
+      # GET → listar todas as OS para enviar NF
+      @o_ordem_servicos = OOrdemServico.all
+      @o_nota_fiscal = ONotaFiscal.new
+    elsif request.post?
+      # POST → criar a NF
+      @o_nota_fiscal = ONotaFiscal.new(o_nota_fiscal_params)
+      if @o_nota_fiscal.save
+        redirect_to enviar_nf_o_ordem_servicos_path, notice: "Nota Fiscal enviada com sucesso!"
+      else
+        @o_ordem_servicos = OOrdemServico.all
+        render :enviar_nf, status: :unprocessable_entity
+      end
+    end
+  end
+
+
   private
 
   def set_o_ordem_servico
@@ -68,5 +86,11 @@ class OOrdemServicosController < ApplicationController
 
   def redirect_unless_admin!
     redirect_to o_ordem_servicos_path, alert: "Acesso negado" unless current_user.admin?
+  end
+
+
+  def o_nota_fiscal_params
+    permitted_attributes = ONotaFiscal.column_names - ['deleted_at', 'created_by', 'updated_by']
+    params.require(:o_nota_fiscal).permit(permitted_attributes.map(&:to_sym), :arquivo_pdf,:arquivo_xml)
   end
 end

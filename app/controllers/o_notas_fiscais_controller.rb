@@ -14,9 +14,18 @@ class ONotasFiscaisController < ApplicationController
     @pagy, @ordens_de_servico = pagy(@q.result.includes(:o_proposta, :g_veiculo, :f_empresa_fornecedora))
   end
   
-  def new
+ def new
+  if params[:o_ordem_servico_id]
+    @o_ordem_servico = OOrdemServico.find(params[:o_ordem_servico_id])
+    @o_nota_fiscal = ONotaFiscal.new(
+      o_ordem_servico: @o_ordem_servico,
+      numero: "#{@o_ordem_servico.numero_os}-NF",
+      valor_total: @o_ordem_servico.o_proposta&.valor_total
+    )
+  else
     @o_nota_fiscal = ONotaFiscal.new
   end
+ end
 
   def edit
   end
@@ -47,6 +56,30 @@ class ONotasFiscaisController < ApplicationController
     end   
   end
 
+
+
+  # GET /o_notas_fiscais/relatorio
+  def relatorio
+    @notas_fiscais = ONotaFiscal.includes(:o_ordem_servico, :o_status_nf).order(created_at: :desc)
+    
+    # Filtros opcionais (por OS, status, período)
+    if params[:os_numero].present?
+      @notas_fiscais = @notas_fiscais.joins(:o_ordem_servico).where("o_ordem_servicos.numero ILIKE ?", "%#{params[:os_numero]}%")
+    end
+
+    if params[:status_nf].present?
+      @notas_fiscais = @notas_fiscais.where(o_status_nf_id: params[:status_nf])
+    end
+
+    if params[:data_inicio].present?
+      @notas_fiscais = @notas_fiscais.where("data_emissao >= ?", params[:data_inicio])
+    end
+
+    if params[:data_fim].present?
+      @notas_fiscais = @notas_fiscais.where("data_emissao <= ?", params[:data_fim])
+    end
+  end
+  
   private
 
   def set_o_nota_fiscal
@@ -56,7 +89,7 @@ class ONotasFiscaisController < ApplicationController
 
   def o_nota_fiscal_params
     permitted_attributes = ONotaFiscal.column_names.reject { |col| ['deleted_at', 'created_by', 'updated_by'].include?(col) }
-    params.require(:o_nota_fiscal).permit(permitted_attributes.map(&:to_sym))
+    params.require(:o_nota_fiscal).permit(permitted_attributes.map(&:to_sym),:arquivo_pdf,:arquivo_xml)
   end
 
   def handle_not_found

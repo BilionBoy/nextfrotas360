@@ -1,13 +1,23 @@
 Rails.application.routes.draw do
-  resources :o_notas_fiscais
-  resources :o_ordem_servicos, only: [:index, :show] do
+   resources :o_notas_fiscais, only: [:index, :new,  :show] do
+     collection do
+       get :relatorio
+     end
+   end
+
+   resources :o_ordem_servicos, only: [:index, :show] do
     member do
       patch :finalizar
-      patch :aceitar_proposta    # nova rota para aceitar a proposta
-      patch :rejeitar_proposta   # nova rota para rejeitar a proposta
+      patch :aceitar_proposta
+      patch :rejeitar_proposta
       patch :marcar_como_atendida
       patch :validar_servico
       patch :aplicar_taxa_admin
+    end
+
+    collection do
+      get :enviar_nf
+      post :enviar_nf
     end
   end
 

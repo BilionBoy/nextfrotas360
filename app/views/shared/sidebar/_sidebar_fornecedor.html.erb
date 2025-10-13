@@ -23,27 +23,51 @@
     <div class="sidebar-section">
       <ul class="nav nav-sidebar pv-nav" data-nav-type="accordion" id="sidebar-items">
         <!-- HOME -->
+        <!-- HOME -->
         <li class="nav-item">
-          <a href="<%= root_path %>" class="nav-link pv-nav-link active"><i class="ph-house-line"></i> Página Inicial</a>
+          <a href="<%= root_path %>" class="nav-link pv-nav-link active">
+            <i class="ph-house-line"></i> Página Inicial
+          </a>
         </li>
         <!-- SERVIÇOS -->
         <li class="nav-item-header pv-nav-header"><span>SERVIÇOS</span></li>
-        <li>
-          <a href="<%= f_empresas_servicos_path %>" class="nav-link"><i class="ph-clipboard-text"></i> Meus Serviços</a>
+        <li class="nav-item">
+          <a href="<%= f_empresas_servicos_path %>" class="nav-link">
+            <i class="ph-clipboard-text"></i> Meus Serviços
+          </a>
         </li>
-        <li>
-          <a href="<%= o_ordem_servicos_path %>" class="nav-link"><i class="ph-file-text"></i> Minhas Ordens de Serviço</a>
+        <li class="nav-item">
+          <a href="<%= o_ordem_servicos_path %>" class="nav-link">
+            <i class="ph-file-text"></i> Minhas Ordens de Serviço
+          </a>
         </li>
         <!-- ORÇAMENTOS / PROPOSTAS -->
-        <li>
-          <a href="<%= enviar_proposta_o_cotacoes_path %>" class="nav-link"><i class="ph-file-text"></i> Cotações</a>
+        <li class="nav-item-header pv-nav-header"><span>ORÇAMENTOS / PROPOSTAS</span></li>
+        <li class="nav-item">
+          <a href="<%= enviar_proposta_o_cotacoes_path %>" class="nav-link">
+            <i class="ph-file-text"></i> Cotações
+          </a>
         </li>
-        <a href="<%= fornecedor_enviadas_o_propostas_path %>" class="nav-link">
-          <i class="ph-clipboard-text"></i> Propostas Enviadas
-        </a>
+        <li class="nav-item">
+          <a href="<%= fornecedor_enviadas_o_propostas_path %>" class="nav-link">
+            <i class="ph-clipboard-text"></i> Propostas Enviadas
+          </a>
+        </li>
+        <!-- NOTAS FISCAIS -->
+        <li class="nav-item-header pv-nav-header"><span>NOTAS FISCAIS</span></li>
+        <li class="nav-item">
+          <a href="<%= enviar_nf_o_ordem_servicos_path %>" class="nav-link">
+            <i class="ph-file-plus"></i> Enviar Nota Fiscal
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<%= relatorio_o_notas_fiscais_path %>" class="nav-link">
+            <i class="ph-file-text"></i> Notas Fiscais Enviadas
+          </a>
+        </li>
         <!-- FINANCEIRO -->
         <li class="nav-item-header pv-nav-header"><span>FINANCEIRO</span></li>
-        <li class="nav-item-submenu">
+        <li class="nav-item nav-item-submenu">
           <a href="#" class="nav-link">
             <i class="ph-wallet"></i> Financeiro
           </a>

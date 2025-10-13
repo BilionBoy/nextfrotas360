@@ -1,0 +1,29 @@
+<div class="card">
+  <div class="card-header">
+    <h3>Enviar Nota Fiscal</h3>
+  </div>
+  <div class="card-body table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>OS</th>
+          <th>Status</th>
+          <th>Proposta</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @o_ordem_servicos.each do |os| %>
+          <tr>
+            <td><%= os.numero_os %></td>
+            <td><%= os.o_status.descricao %></td>
+            <td><%= number_to_currency(os.o_proposta&.valor_total || 0) %></td>
+            <td>
+              <%= link_to "Enviar NF", new_o_nota_fiscal_path(o_ordem_servico_id: os.id), class: "btn btn-sm btn-success" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

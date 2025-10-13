@@ -2,7 +2,7 @@
   <span class="breadcrumb-item"><%= link_to t("activerecord.models.#{ONotaFiscal.model_name.i18n_key}.other"), o_notas_fiscais_path, class: "text-dark" %></span>
   <span class="breadcrumb-item active"><%= t("helpers.submit.#{params[:action]}") %></span>
 <% end %>
-<%= simple_form_for(@o_nota_fiscal) do |f| %>
+<%= simple_form_for(@o_nota_fiscal, url: enviar_nf_o_ordem_servicos_path, html: { multipart: true }) do |f| %>
   <div class="card">
     <div class="card-header">
       <h5 class="my-0">
@@ -13,26 +13,32 @@
       <%= f.error_notification %>
       <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
       <div class="row">
-        <div class="col-4">
+        <div class="col-3">
           <%= f.input :o_ordem_servico_id, collection: OOrdemServico.all, label_method: :numero_os, value_method: :id, prompt: "Selecione a Ordem de Serviço" %>
         </div>
-        <div class="col-4">
+        <div class="col-3">
           <%= f.input :numero, input_html: { class: "capitalize"}, placeholder: "Numero"  %>
         </div>
-        <div class="col-4">
-          <%= f.input :data_emissao, input_html: { class: "capitalize"}, placeholder: "Data emissao"  %>
-        </div>
-        <div class="col-4">
+        <div class="col-3">
           <%= f.input :valor_total, input_html: { class: "capitalize"}, placeholder: "Valor total"  %>
         </div>
-        <div class="col-4">
+        <div class="col-3">
           <%= f.input :o_status_nf_id, collection: OStatusNf.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Status da Nota" %>
+        </div>
+        <div class="col-12">
+          <%= f.input :data_emissao, input_html: { class: "capitalize"}, placeholder: "Data emissao"  %>
+        </div>
+        <div class="col-6">
+          <%= f.input :arquivo_pdf, as: :file, label: "Arquivo PDF", input_html: { accept: "application/pdf" } %>
+        </div>
+        <div class="col-6">
+          <%= f.input :arquivo_xml, as: :file, label: "Arquivo XML", input_html: { accept: "text/xml,application/xml" } %>
         </div>
       </div>
     </div>
     <div class="card-footer">
       <%= btn_submit(f) %>
-      <%= link_to "Voltar", o_notas_fiscais_path, class: "btn btn-light" %>
+      <%= link_to "Voltar", enviar_nf_o_ordem_servicos_path, class: "btn btn-light" %>
     </div>
   </div>
 <% end %>
