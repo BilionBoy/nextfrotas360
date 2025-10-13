@@ -48,22 +48,35 @@ class OOrdemServicosController < ApplicationController
     redirect_to o_ordem_servicos_path, alert: "Erro ao aplicar taxa: #{e.message}"
   end
 
-  def enviar_nf
-    if request.get?
-      # GET → listar todas as OS para enviar NF
+ def enviar_nf
+  if request.get?
+    # GET → listar apenas OS da empresa do fornecedor logado
+    if current_user.fornecedor?
+      @o_ordem_servicos = OOrdemServico.joins(:o_propostas)
+                                       .where(o_propostas: { f_empresa_fornecedora_id: current_user.f_empresa_fornecedora_id })
+                                       .distinct
+    else
       @o_ordem_servicos = OOrdemServico.all
-      @o_nota_fiscal = ONotaFiscal.new
-    elsif request.post?
-      # POST → criar a NF
-      @o_nota_fiscal = ONotaFiscal.new(o_nota_fiscal_params)
-      if @o_nota_fiscal.save
-        redirect_to enviar_nf_o_ordem_servicos_path, notice: "Nota Fiscal enviada com sucesso!"
+    end
+    @o_nota_fiscal = ONotaFiscal.new
+  elsif request.post?
+    # POST → criar a NF
+    @o_nota_fiscal = ONotaFiscal.new(o_nota_fiscal_params)
+    if @o_nota_fiscal.save
+      redirect_to enviar_nf_o_ordem_servicos_path, notice: "Nota Fiscal enviada com sucesso!"
+    else
+      # manter o filtro no render caso dê erro
+      if current_user.fornecedor?
+        @o_ordem_servicos = OOrdemServico.joins(:o_propostas)
+                                         .where(o_propostas: { f_empresa_fornecedora_id: current_user.f_empresa_fornecedora_id })
+                                         .distinct
       else
         @o_ordem_servicos = OOrdemServico.all
-        render :enviar_nf, status: :unprocessable_entity
       end
+      render :enviar_nf, status: :unprocessable_entity
     end
   end
+end
 
 
   private
