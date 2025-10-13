@@ -491,15 +491,10 @@
           </div>
         </div>
         <div class="metric-content">
-          <% if @fornecedor_financeiros.present? %>
-            <!-- Saldo Disponível -->
-            <div class="metric-content">
-              R$ <%= number_to_currency(@saldo_a_receber || 0, unit: "", separator: ",") %>
-            <% else %>
-              <h2 class="metric-value">R$ 0,00</h2>
-            <% end %>
-            <p class="metric-label">Saldo A receber</p>
-          </div>
+          <h2 class="metric-value">
+            R$ <%= number_to_currency(@saldo_a_receber || 0, unit: "", separator: ",", delimiter: ".") %>
+          </h2>
+          <p class="metric-label">Saldo A receber</p>
         </div>
       </div>
       <!-- Total de Serviços Ativos -->
