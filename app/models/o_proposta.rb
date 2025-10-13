@@ -4,6 +4,7 @@ class OProposta < ApplicationRecord
   belongs_to :f_empresa_fornecedora
   belongs_to :usuario_envio, class_name: "User"
   belongs_to :o_status
+  has_one :o_ordem_servico, foreign_key: "o_proposta_id"
 
   has_many :o_proposta_itens, class_name: "OPropostaItem", dependent: :destroy
 

@@ -7,7 +7,7 @@ class OOrdemServico < ApplicationRecord
   belongs_to :validado_por, class_name: 'User', optional: true
   belongs_to :t_taxa, optional: true
   belongs_to :o_nota_fiscal, optional: true
-  has_many   :o_propostas
+  belongs_to :o_proposta
   validates :numero_os, presence: true, uniqueness: true
   validates :o_proposta, :f_empresa_fornecedora, :g_veiculo, :o_status, presence: true
 

@@ -48,13 +48,12 @@ class OOrdemServicosController < ApplicationController
     redirect_to o_ordem_servicos_path, alert: "Erro ao aplicar taxa: #{e.message}"
   end
 
- def enviar_nf
+def enviar_nf
   if request.get?
     # GET → listar apenas OS da empresa do fornecedor logado
     if current_user.fornecedor?
-      @o_ordem_servicos = OOrdemServico.joins(:o_propostas)
+      @o_ordem_servicos = OOrdemServico.joins(:o_proposta)
                                        .where(o_propostas: { f_empresa_fornecedora_id: current_user.f_empresa_fornecedora_id })
-                                       .distinct
     else
       @o_ordem_servicos = OOrdemServico.all
     end
@@ -67,9 +66,8 @@ class OOrdemServicosController < ApplicationController
     else
       # manter o filtro no render caso dê erro
       if current_user.fornecedor?
-        @o_ordem_servicos = OOrdemServico.joins(:o_propostas)
+        @o_ordem_servicos = OOrdemServico.joins(:o_proposta)
                                          .where(o_propostas: { f_empresa_fornecedora_id: current_user.f_empresa_fornecedora_id })
-                                         .distinct
       else
         @o_ordem_servicos = OOrdemServico.all
       end
@@ -77,6 +75,7 @@ class OOrdemServicosController < ApplicationController
     end
   end
 end
+
 
 
   private
