@@ -55,10 +55,20 @@ class HomeController < ApplicationController
                )
                .take
 
-    @orcamento_total  = resumo.total_orcamento.to_f
-    @gastos_totais    = resumo.total_gasto.to_f
+    @orcamento_total = resumo.total_orcamento.to_f
+
+    # 🔹 Cálculo do total pago líquido (custo real - taxa)
+    custo_real = resumo.total_gasto.to_f
+    taxas = OOrdemServico
+              .joins(:o_status)
+              .where(o_status: { descricao: 'Pago' })
+              .sum(:taxa_aplicada)
+              .to_f
+    @gastos_totais = custo_real - taxas
+
     @saldo_disponivel = @orcamento_total - @gastos_totais
 
+    # 🔹 Contadores gerais
     @solicitacoes_total      = OSolicitacao.count
     @solicitacoes_pendentes  = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Pendente' }).count
     @solicitacoes_andamento  = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Em Cotação' }).count
@@ -69,13 +79,8 @@ class HomeController < ApplicationController
     @servicos_ativos       = OOrdemServico.joins(:o_status).where(o_status: { descricao: 'Ativo' }).count
 
     # 🔹 Receita de Taxas (somente OS pagas)
-    @receita_taxas = OOrdemServico
-                       .joins(:o_status)
-                       .where(o_status: { descricao: 'Pago' })
-                       .sum(:taxa_aplicada)
-                       .to_f
-
-    @variacao_receita = 0 # placeholder, depois pode calcular variação mensal
+    @receita_taxas = taxas
+    @variacao_receita = 0 # placeholder
 
     load_admin_chart_data
     load_admin_recent_activities
@@ -143,8 +148,17 @@ class HomeController < ApplicationController
                .take
 
     @orcamento_total = resumo.total_orcamento.to_f
-    @gastos_totais   = resumo.total_gasto.to_f
 
+    # 🔹 Cálculo do total pago líquido (custo real - taxa)
+    custo_real = resumo.total_gasto.to_f
+    taxas = OOrdemServico
+              .joins(:o_status)
+              .where(o_status: { descricao: 'Pago' })
+              .sum(:taxa_aplicada)
+              .to_f
+    @gastos_totais = custo_real - taxas
+
+    # 🔹 Contadores gerais
     @solicitacoes_total      = OSolicitacao.count
     @solicitacoes_pendentes  = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Pendente' }).count
     @solicitacoes_andamento  = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Em Cotação' }).count
@@ -155,15 +169,10 @@ class HomeController < ApplicationController
     @servicos_ativos       = OOrdemServico.joins(:o_status).where(o_status: { descricao: 'Ativo' }).count
 
     # 🔹 Receita de Taxas (somente OS pagas)
-    @receita_taxas = OOrdemServico
-                       .joins(:o_status)
-                       .where(o_status: { descricao: 'Pago' })
-                       .sum(:taxa_aplicada)
-                       .to_f
-
+    @receita_taxas = taxas
     @variacao_receita = 0 # placeholder
 
-    # Gráficos
+    # 🔹 Gráficos
     solicitacoes_status = OSolicitacao
                             .joins(:o_status)
                             .group('o_status.descricao')
