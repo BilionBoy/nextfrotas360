@@ -704,6 +704,15 @@
             <p>Taxa Aplicada: <%= os.t_taxa.nome %> (<%= os.t_taxa.percentual %>%) - R$ <%= number_with_precision(os.taxa_aplicada, precision: 2, delimiter: '.') %></p>
           <% end %>
         </div>
+        <div class="nf-status">
+          <% if os.o_status&.descricao == "Concluída" && os.o_nota_fiscal.nil? %>
+            <p>Status NF: Aguardando envio da NF pelo fornecedor</p>
+          <% elsif os.o_nota_fiscal&.status_nf&.descricao == "Enviada" %>
+            <p>Status NF: NF enviada / Pendente validação</p>
+          <% elsif os.o_nota_fiscal&.status_nf&.descricao == "Pago" %>
+            <p>Status NF: Pago</p>
+          <% end %>
+        </div>
         <%# Progress bar %>
         <% total_days = (os.data_termino_prevista - os.data_inicio_prevista).to_i rescue 0 %>
         <% elapsed_days = (Date.today - os.data_inicio_prevista).to_i rescue 0 %>
