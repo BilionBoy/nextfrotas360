@@ -491,10 +491,12 @@
           </div>
         </div>
         <div class="metric-content">
-          <h2 class="metric-value">
-            R$ <%= number_to_currency(@saldo_a_receber || 0, unit: "", separator: ",", delimiter: ".") %>
-          </h2>
-          <p class="metric-label">Saldo A receber</p>
+          <div class="metric-content">
+            <h2 class="metric-value">
+              R$ <%= number_to_currency(@saldo_a_receber || 0, unit: "", separator: ",", delimiter: ".") %>
+            </h2>
+            <p class="metric-label">Saldo A receber</p>
+          </div>
         </div>
       </div>
       <!-- Total de Serviços Ativos -->
