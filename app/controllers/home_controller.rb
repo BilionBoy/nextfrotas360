@@ -50,23 +50,29 @@ class HomeController < ApplicationController
     resumo = GCentroCusto
                .unscope(:select)
                .select(
-                 'COALESCE(SUM(valor_inicial), 0) AS total_orcamento,
-                  COALESCE(SUM(valor_inicial - saldo_atual), 0) AS total_gasto'
+                 'COALESCE(SUM(valor_inicial), 0) AS total_orcamento'
                )
                .take
 
     @orcamento_total = resumo.total_orcamento.to_f
 
-    # 🔹 Cálculo do total pago líquido (custo real - taxa)
-    custo_real = resumo.total_gasto.to_f
-    taxas = OOrdemServico
-              .joins(:o_status)
-              .where(o_status: { descricao: 'Pago' })
-              .sum(:taxa_aplicada)
-              .to_f
-    @gastos_totais = custo_real - taxas
+    # 🔹 Total pago líquido baseado nas OS
+    @gastos_totais = OOrdemServico
+                       .joins(:o_status)
+                       .where(o_status: { descricao: 'Pago' })
+                       .sum('o_ordem_servicos.custo_real - COALESCE(o_ordem_servicos.taxa_aplicada, 0)')
+                       .to_f
 
     @saldo_disponivel = @orcamento_total - @gastos_totais
+
+    # 🔹 Receita de taxas
+    @receita_taxas = OOrdemServico
+                       .joins(:o_status)
+                       .where(o_status: { descricao: 'Pago' })
+                       .sum(:taxa_aplicada)
+                       .to_f
+
+    @variacao_receita = 0 # placeholder
 
     # 🔹 Contadores gerais
     @solicitacoes_total      = OSolicitacao.count
@@ -77,10 +83,6 @@ class HomeController < ApplicationController
     @cotacoes_em_andamento = OCotacao.joins(:o_status).where(o_status: { descricao: 'Em Cotação' }).count
     @propostas_recebidas   = OProposta.count
     @servicos_ativos       = OOrdemServico.joins(:o_status).where(o_status: { descricao: 'Ativo' }).count
-
-    # 🔹 Receita de Taxas (somente OS pagas)
-    @receita_taxas = taxas
-    @variacao_receita = 0 # placeholder
 
     load_admin_chart_data
     load_admin_recent_activities
@@ -142,21 +144,27 @@ class HomeController < ApplicationController
     resumo = GCentroCusto
                .unscope(:select)
                .select(
-                 'COALESCE(SUM(valor_inicial), 0) AS total_orcamento,
-                  COALESCE(SUM(valor_inicial - saldo_atual), 0) AS total_gasto'
+                 'COALESCE(SUM(valor_inicial), 0) AS total_orcamento'
                )
                .take
 
     @orcamento_total = resumo.total_orcamento.to_f
 
-    # 🔹 Cálculo do total pago líquido (custo real - taxa)
-    custo_real = resumo.total_gasto.to_f
-    taxas = OOrdemServico
-              .joins(:o_status)
-              .where(o_status: { descricao: 'Pago' })
-              .sum(:taxa_aplicada)
-              .to_f
-    @gastos_totais = custo_real - taxas
+    # 🔹 Total pago líquido baseado nas OS
+    @gastos_totais = OOrdemServico
+                       .joins(:o_status)
+                       .where(o_status: { descricao: 'Pago' })
+                       .sum('o_ordem_servicos.custo_real - COALESCE(o_ordem_servicos.taxa_aplicada, 0)')
+                       .to_f
+
+    # 🔹 Receita de taxas
+    @receita_taxas = OOrdemServico
+                       .joins(:o_status)
+                       .where(o_status: { descricao: 'Pago' })
+                       .sum(:taxa_aplicada)
+                       .to_f
+
+    @variacao_receita = 0 # placeholder
 
     # 🔹 Contadores gerais
     @solicitacoes_total      = OSolicitacao.count
@@ -167,10 +175,6 @@ class HomeController < ApplicationController
     @cotacoes_em_andamento = OCotacao.joins(:o_status).where(o_status: { descricao: 'Em Cotação' }).count
     @propostas_recebidas   = OProposta.count
     @servicos_ativos       = OOrdemServico.joins(:o_status).where(o_status: { descricao: 'Ativo' }).count
-
-    # 🔹 Receita de Taxas (somente OS pagas)
-    @receita_taxas = taxas
-    @variacao_receita = 0 # placeholder
 
     # 🔹 Gráficos
     solicitacoes_status = OSolicitacao
