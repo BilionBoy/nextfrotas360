@@ -1,0 +1,259 @@
+<div class="container-fluid py-4">
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0 text-dark fw-bold">Relatório de Ordens de Serviço</h1>
+    <small class="text-muted">Atualizado em <%= Time.current.strftime("%d/%m/%Y às %H:%M") %></small>
+  </div>
+  <!-- Cards de Resumo -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <p class="text-muted mb-1 small">Total de OS</p>
+              <h3 class="mb-0 fw-bold text-primary"><%= @ordens_servico.count %></h3>
+            </div>
+            <div class="bg-primary bg-opacity-10 rounded p-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="text-primary" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <p class="text-muted mb-1 small">Valor Total OS</p>
+              <h3 class="mb-0 fw-bold text-success">R$ <%= number_to_currency(@ordens_servico.sum(&:custo_real), unit: "", separator: ",", delimiter: ".") %></h3>
+            </div>
+            <div class="bg-success bg-opacity-10 rounded p-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="text-success" viewBox="0 0 16 16">
+                <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <p class="text-muted mb-1 small">Total Taxa Aplicada</p>
+              <h3 class="mb-0 fw-bold text-warning">R$ <%= number_to_currency(@ordens_servico.sum(&:taxa_aplicada), unit: "", separator: ",", delimiter: ".") %></h3>
+            </div>
+            <div class="bg-warning bg-opacity-10 rounded p-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="text-warning" viewBox="0 0 16 16">
+                <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Filtros -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-white border-0 py-3">
+      <h5 class="mb-0 fw-semibold">Filtros</h5>
+    </div>
+    <div class="card-body">
+      <%= form_with url: relatorios_ordens_servico_path, method: :get, local: true, class: "row g-3" do |f| %>
+        <div class="col-md-3">
+          <%= f.label :status_id, "Status", class: "form-label fw-semibold small" %>
+          <%= f.select :status_id, OStatus.order(:descricao).pluck(:descricao, :id), { include_blank: "Todos os status" }, class: "form-select" %>
+        </div>
+        <div class="col-md-3">
+          <%= f.label :fornecedor_id, "Fornecedor", class: "form-label fw-semibold small" %>
+          <%= f.select :fornecedor_id, FEmpresaFornecedora.order(:nome_fantasia).pluck(:nome_fantasia, :id), { include_blank: "Todos os fornecedores" }, class: "form-select" %>
+        </div>
+        <div class="col-md-2">
+          <%= f.label :inicio, "Data Início", class: "form-label fw-semibold small" %>
+          <%= f.date_field :inicio, value: params[:inicio], class: "form-control" %>
+        </div>
+        <div class="col-md-2">
+          <%= f.label :fim, "Data Fim", class: "form-label fw-semibold small" %>
+          <%= f.date_field :fim, value: params[:fim], class: "form-control" %>
+        </div>
+        <div class="col-md-2 d-flex align-items-end gap-2">
+          <%= f.submit "Filtrar", class: "btn btn-primary flex-grow-1" %>
+          <%= link_to "Limpar", relatorios_ordens_servico_path, class: "btn btn-outline-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <!-- Tabela -->
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-white border-0 py-3">
+      <h5 class="mb-0 fw-semibold">Ordens de Serviço</h5>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th class="fw-semibold small text-muted">ID</th>
+              <th class="fw-semibold small text-muted">Data</th>
+              <th class="fw-semibold small text-muted">Fornecedor</th>
+              <th class="fw-semibold small text-muted">Status</th>
+              <th class="fw-semibold small text-muted">Veículo</th>
+              <th class="fw-semibold small text-muted">Proposta</th>
+              <th class="fw-semibold small text-muted text-end">Valor OS</th>
+              <th class="fw-semibold small text-muted text-end">Taxa Aplicada</th>
+              <th class="fw-semibold small text-muted">Validado Por</th>
+              <th class="fw-semibold small text-muted">Notas Fiscais</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @ordens_servico.any? %>
+              <% @ordens_servico.each do |os| %>
+                <tr>
+                  <td class="fw-semibold text-primary">#<%= os.id %></td>
+                  <td><%= os.created_at.strftime("%d/%m/%Y") %></td>
+                  <td><%= os.f_empresa_fornecedora&.nome_fantasia || "N/A" %></td>
+                  <td>
+                    <% status_class = case os.o_status&.descricao
+                      when "Concluída" then "badge rounded-pill bg-success"
+                      when "Pago" then "badge rounded-pill bg-info"
+                      when "Aberta" then "badge rounded-pill bg-warning text-dark"
+                      when "Cancelada" then "badge rounded-pill bg-danger"
+                      else "badge rounded-pill bg-secondary"
+                    end %>
+                    <span class="<%= status_class %>"><%= os.o_status&.descricao || "N/A" %></span>
+                  </td>
+                  <td>
+                    <% if os.g_veiculo %>
+                      <div class="small">
+                        <div class="fw-semibold"><%= os.g_veiculo.g_tipo_veiculo&.descricao || "N/A" %></div>
+                        <div class="text-muted"><%= os.g_veiculo.a_unidade&.nome_fantasia || "N/A" %></div>
+                      </div>
+                    <% else %>
+                      <span class="text-muted">N/A</span>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if os.o_proposta %>
+                      <div class="small">
+                        <div><%= os.o_proposta.f_empresa_fornecedora&.nome_fantasia || "N/A" %></div>
+                        <% proposta_status_class = case os.o_proposta.o_status&.descricao
+                          when "Aprovada" then "badge rounded-pill bg-success bg-opacity-25 text-success"
+                          when "Pendente" then "badge rounded-pill bg-warning bg-opacity-25 text-warning"
+                          when "Rejeitada" then "badge rounded-pill bg-danger bg-opacity-25 text-danger"
+                          else "badge rounded-pill bg-secondary bg-opacity-25 text-secondary"
+                        end %>
+                        <span class="<%= proposta_status_class %> small"><%= os.o_proposta.o_status&.descricao || "N/A" %></span>
+                      </div>
+                    <% else %>
+                      <span class="text-muted">N/A</span>
+                    <% end %>
+                  </td>
+                  <td class="text-end fw-semibold">R$ <%= number_to_currency(os.custo_real.to_f, unit: "", separator: ",", delimiter: ".") %></td>
+                  <td class="text-end fw-semibold text-warning">R$ <%= number_to_currency(os.taxa_aplicada.to_f, unit: "", separator: ",", delimiter: ".") %></td>
+                  <td>
+                    <% if os.validado_por %>
+                      <div class="d-flex align-items-center gap-2">
+                        <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                          <span class="text-primary fw-semibold small"><%= os.validado_por.nome.first.upcase %></span>
+                        </div>
+                        <span class="small"><%= os.validado_por.nome %></span>
+                      </div>
+                    <% else %>
+                      <span class="text-muted">N/A</span>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if os.o_nota_fiscal.present? %>
+                      <div class="small">
+                        <div class="fw-semibold">NF <%= os.o_nota_fiscal.numero %></div>
+                        <% nf_status_class = case os.o_nota_fiscal.o_status_nf&.descricao
+                          when "Emitida" then "badge rounded-pill bg-success bg-opacity-25 text-success"
+                          when "Pendente" then "badge rounded-pill bg-warning bg-opacity-25 text-warning"
+                          when "Cancelada" then "badge rounded-pill bg-danger bg-opacity-25 text-danger"
+                          else "badge rounded-pill bg-secondary bg-opacity-25 text-secondary"
+                        end %>
+                        <span class="<%= nf_status_class %> small"><%= os.o_nota_fiscal.o_status_nf&.descricao || "Pendente" %></span>
+                      </div>
+                    <% else %>
+                      <span class="badge rounded-pill bg-secondary">Sem NF</span>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            <% else %>
+              <tr>
+                <td colspan="10" class="text-center py-5">
+                  <div class="text-muted">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="mb-3 opacity-50" viewBox="0 0 16 16">
+                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                    <p class="mb-0">Nenhuma ordem de serviço encontrada</p>
+                    <small>Tente ajustar os filtros ou adicionar novas ordens</small>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- Paginação -->
+  <% if @pagy.pages > 1 %>
+    <div class="d-flex justify-content-center mt-4">
+      <%= pagy_nav(@pagy) %>
+    </div>
+  <% end %>
+</div>
+<style>
+  /* Custom styles for better UX */
+  .table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+    transition: background-color 0.2s ease;
+  }
+
+  .card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .badge {
+    font-weight: 500;
+    padding: 0.35em 0.65em;
+  }
+
+  .form-select, .form-control {
+    border-color: #e0e0e0;
+  }
+
+  .form-select:focus, .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+  }
+
+  .btn {
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .table {
+      font-size: 0.875rem;
+    }
+
+    .card-body {
+      padding: 1rem;
+    }
+  }
+</style>

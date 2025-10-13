@@ -27,103 +27,100 @@
         <li class="nav-item">
           <a href="<%= root_path %>" class="nav-link pv-nav-link active"><i class="ph-house-line"></i> Página Inicial</a>
         </li>
-        <li class="nav-item nav-item-submenu">
-          <a href="#" class="nav-link"><i class="ph-coins"></i> Financeiro</a>
-          <ul class="nav nav-group-sub">
-            <li><a href="<%= f_financeiros_path %>" class="nav-link"><i class="ph-coins"></i> Saldo / Financeiro</a></li>
-            <li><a href="<%= f_empresas_servicos_path %>" class="nav-link"><i class="ph-clipboard-text"></i> Serviços da Empresa</a></li>
-            <li><a href="<%= f_financeiros_movimentos_path %>" class="nav-link"><i class="ph-clock-counter-clockwise"></i> Movimentos</a></li>
-          </ul>
-        </li>
         <!-- ORÇAMENTOS -->
         <li class="nav-item-header pv-nav-header"><span>ORÇAMENTOS</span></li>
         <li class="nav-item">
-          <a href="<%= o_ordem_servicos_path %>" class="nav-link">
-            <i class="ph-file-text"></i> Ordens de Serviço
-          </a>
+          <a href="<%= o_ordem_servicos_path %>" class="nav-link"><i class="ph-file-text"></i> Ordens de Serviço</a>
         </li>
         <li class="nav-item">
-          <a href="<%= a_unidades_path %>" class="nav-link">
-            <i class="ph-buildings"></i> Nova Unidade
+          <a href="<%= a_unidades_path %>" class="nav-link"><i class="ph-buildings"></i> Nova Unidade</a>
+        </li>
+        <li>
+          <a href="<%= new_user_path(a_tipo_usuario_id: ATipoUsuario.find_by(descricao: "Gestor")&.id) %>" class="nav-link">
+            <i class="ph-user-plus"></i> Novo Gestor
           </a>
         </li>
-        <a href="<%= new_user_path(a_tipo_usuario_id: ATipoUsuario.find_by(descricao: "Gestor")&.id) %>" class="nav-link">
-          <i class="ph-user-plus"></i> Novo Gestor
-        </a>
-      </li>
-      <!-- FORNECEDORES -->
-      <li class="nav-item-header pv-nav-header"><span>Frotas</span></li>
-      <li><a href="<%= f_empresas_fornecedoras_path %>" class="nav-link"><i class="ph-storefront"></i> Empresas Fornecedoras</a></li>
-      <li>
-        <a href="<%= new_user_path(a_tipo_usuario_id: ATipoUsuario.find_by(descricao: "Fornecedor")&.id) %>" class="nav-link">
-          <i class="ph-user-plus"></i> Novo Fornecedor
-        </a>
-      </li>
-      <!-- CONFIGURAÇÕES / REFERENCIAIS -->
-      <li class="nav-item-header pv-nav-header"><span>CONFIGURAÇÕES</span></li>
-      <li class="nav-item nav-item-submenu">
-        <a href="#" class="nav-link"><i class="ph-database"></i> Referenciais</a>
-        <ul class="nav nav-group-sub">
-          <!-- Usuários agora dentro de Referenciais -->
-          <li class="nav-item nav-item-submenu">
-            <a href="#" class="nav-link"><i class="ph-users"></i> Usuários</a>
-            <ul class="nav nav-group-sub">
-              <li><a href="<%= users_path %>" class="nav-link"><i class="ph-users"></i> Lista / Cadastro de Usuários</a></li>
-              <li><a href="<%= a_usuarios_papeis_path %>" class="nav-link"><i class="ph-shield"></i> Papéis</a></li>
-              <li><a href="<%= a_usuarios_historicos_cargos_unidades_path %>" class="nav-link"><i class="ph-clock"></i> Histórico Cargos/Unidade</a></li>
-              <li><a href="<%= a_tipo_usuarios_path %>" class="nav-link"><i class="ph-identification-card"></i> Tipos de Usuários</a></li>
-              <li><a href="<%= a_status_index_path %>" class="nav-link"><i class="ph-toggle-left"></i> Status</a></li>
-            </ul>
-          </li>
-          <!-- Condutores -->
-          <li class="nav-item nav-item-submenu">
-            <a href="#" class="nav-link"><i class="ph-user-circle"></i> Condutores</a>
-            <ul class="nav nav-group-sub">
-              <li><a href="<%= g_carteiras_orgaos_emissores_path %>" class="nav-link"><i class="ph-cards"></i> Órgãos Emissores</a></li>
-              <li><a href="<%= g_categorias_carteiras_condutores_path %>" class="nav-link"><i class="ph-cards"></i> Categorias de Carteira</a></li>
-            </ul>
-          </li>
-          <!-- Veículos -->
-          <li class="nav-item nav-item-submenu">
-            <a href="#" class="nav-link"><i class="ph-car"></i> Veículos</a>
-            <ul class="nav nav-group-sub">
-              <li><a href="<%= g_tipos_veiculos_path %>" class="nav-link"><i class="ph-truck"></i> Tipos de Veículos</a></li>
-              <li><a href="<%= g_status_index_path %>" class="nav-link"><i class="ph-check-circle"></i> Status Veículos</a></li>
-            </ul>
-          </li>
-          <!-- Orçamentos -->
-          <li class="nav-item nav-item-submenu">
-            <a href="#" class="nav-link"><i class="ph-flag"></i> Orçamentos</a>
-            <ul class="nav nav-group-sub">
-              <li><a href="<%= o_status_index_path %>" class="nav-link"><i class="ph-flag"></i> Status</a></li>
-              <li><a href="<%= o_tipos_solicitacoes_path %>" class="nav-link"><i class="ph-list-plus"></i> Tipos Solicitação</a></li>
-              <li><a href="<%= o_categorias_servicos_path %>" class="nav-link"><i class="ph-grid-four"></i> Categorias Serviço</a></li>
-              <li><a href="<%= o_urgencias_path %>" class="nav-link"><i class="ph-warning-circle"></i> Urgências</a></li>
-              <li><a href="<%= o_visibilidades_path %>" class="nav-link"><i class="ph-eye"></i> Visibilidades</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="<%= o_status_nf_index_path %>" class="nav-link">
-              <i class="ph-eye"></i> Notas Fiscais
-            </a>
-          </li>
-          <!-- Localidades -->
-          <li class="nav-item nav-item-submenu">
-            <a href="#" class="nav-link"><i class="ph-map-pin-line"></i> Localidades</a>
-            <ul class="nav nav-group-sub">
-              <li><a href="<%= g_paises_path %>" class="nav-link"><i class="ph-globe"></i> Países</a></li>
-              <li><a href="<%= g_estados_path %>" class="nav-link"><i class="ph-map-trifold"></i> Estados</a></li>
-              <li><a href="<%= g_municipios_path %>" class="nav-link"><i class="ph-buildings"></i> Municípios</a></li>
-              <li><a href="<%= g_distritos_path %>" class="nav-link"><i class="ph-compass"></i> Distritos</a></li>
-              <li><a href="<%= g_bairros_path %>" class="nav-link"><i class="ph-house-line"></i> Bairros</a></li>
-              <li><a href="<%= g_localidades_path %>" class="nav-link"><i class="ph-map-pin"></i> Localidades</a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
+        <!-- FROTAS -->
+        <li class="nav-item-header pv-nav-header"><span>FROTAS</span></li>
+        <li><a href="<%= f_empresas_fornecedoras_path %>" class="nav-link"><i class="ph-storefront"></i> Empresas Fornecedoras</a></li>
+        <li>
+          <a href="<%= new_user_path(a_tipo_usuario_id: ATipoUsuario.find_by(descricao: "Fornecedor")&.id) %>" class="nav-link">
+            <i class="ph-user-plus"></i> Novo Fornecedor
+          </a>
+        </li>
+        <!-- RELATÓRIOS -->
+        <li class="nav-item-header pv-nav-header"><span>RELATÓRIOS</span></li>
+        <li class="nav-item nav-item-submenu">
+          <a href="#" class="nav-link"><i class="ph-chart-bar"></i> Relatórios</a>
+          <ul class="nav nav-group-sub">
+            <li><a href="<%= relatorios_ordens_servico_path %>" class="nav-link"><i class="ph-file-text"></i> OS - Admin</a></li>
+            <li><a href="<%= relatorios_ordens_servico_fornecedor_path %>" class="nav-link"><i class="ph-file-text"></i> OS - Fornecedor</a></li>
+          </ul>
+        </li>
+        <!-- CONFIGURAÇÕES / REFERENCIAIS -->
+        <li class="nav-item-header pv-nav-header"><span>CONFIGURAÇÕES</span></li>
+        <li class="nav-item nav-item-submenu">
+          <a href="#" class="nav-link"><i class="ph-database"></i> Referenciais</a>
+          <ul class="nav nav-group-sub">
+            <!-- Usuários -->
+            <li class="nav-item nav-item-submenu">
+              <a href="#" class="nav-link"><i class="ph-users"></i> Usuários</a>
+              <ul class="nav nav-group-sub">
+                <li><a href="<%= users_path %>" class="nav-link"><i class="ph-users"></i> Lista / Cadastro de Usuários</a></li>
+                <li><a href="<%= a_usuarios_papeis_path %>" class="nav-link"><i class="ph-shield"></i> Papéis</a></li>
+                <li><a href="<%= a_usuarios_historicos_cargos_unidades_path %>" class="nav-link"><i class="ph-clock"></i> Histórico Cargos/Unidade</a></li>
+                <li><a href="<%= a_tipo_usuarios_path %>" class="nav-link"><i class="ph-identification-card"></i> Tipos de Usuários</a></li>
+                <li><a href="<%= a_status_index_path %>" class="nav-link"><i class="ph-toggle-left"></i> Status</a></li>
+              </ul>
+            </li>
+            <!-- Condutores -->
+            <li class="nav-item nav-item-submenu">
+              <a href="#" class="nav-link"><i class="ph-user-circle"></i> Condutores</a>
+              <ul class="nav nav-group-sub">
+                <li><a href="<%= g_carteiras_orgaos_emissores_path %>" class="nav-link"><i class="ph-cards"></i> Órgãos Emissores</a></li>
+                <li><a href="<%= g_categorias_carteiras_condutores_path %>" class="nav-link"><i class="ph-cards"></i> Categorias de Carteira</a></li>
+              </ul>
+            </li>
+            <!-- Veículos -->
+            <li class="nav-item nav-item-submenu">
+              <a href="#" class="nav-link"><i class="ph-car"></i> Veículos</a>
+              <ul class="nav nav-group-sub">
+                <li><a href="<%= g_tipos_veiculos_path %>" class="nav-link"><i class="ph-truck"></i> Tipos de Veículos</a></li>
+                <li><a href="<%= g_status_index_path %>" class="nav-link"><i class="ph-check-circle"></i> Status Veículos</a></li>
+              </ul>
+            </li>
+            <!-- Orçamentos -->
+            <li class="nav-item nav-item-submenu">
+              <a href="#" class="nav-link"><i class="ph-flag"></i> Orçamentos</a>
+              <ul class="nav nav-group-sub">
+                <li><a href="<%= o_status_index_path %>" class="nav-link"><i class="ph-flag"></i> Status</a></li>
+                <li><a href="<%= o_tipos_solicitacoes_path %>" class="nav-link"><i class="ph-list-plus"></i> Tipos Solicitação</a></li>
+                <li><a href="<%= o_categorias_servicos_path %>" class="nav-link"><i class="ph-grid-four"></i> Categorias Serviço</a></li>
+                <li><a href="<%= o_urgencias_path %>" class="nav-link"><i class="ph-warning-circle"></i> Urgências</a></li>
+                <li><a href="<%= o_visibilidades_path %>" class="nav-link"><i class="ph-eye"></i> Visibilidades</a></li>
+              </ul>
+            </li>
+            <!-- Notas Fiscais -->
+            <li>
+              <a href="<%= o_status_nf_index_path %>" class="nav-link"><i class="ph-eye"></i> Notas Fiscais</a>
+            </li>
+            <!-- Localidades -->
+            <li class="nav-item nav-item-submenu">
+              <a href="#" class="nav-link"><i class="ph-map-pin-line"></i> Localidades</a>
+              <ul class="nav nav-group-sub">
+                <li><a href="<%= g_paises_path %>" class="nav-link"><i class="ph-globe"></i> Países</a></li>
+                <li><a href="<%= g_estados_path %>" class="nav-link"><i class="ph-map-trifold"></i> Estados</a></li>
+                <li><a href="<%= g_municipios_path %>" class="nav-link"><i class="ph-buildings"></i> Municípios</a></li>
+                <li><a href="<%= g_distritos_path %>" class="nav-link"><i class="ph-compass"></i> Distritos</a></li>
+                <li><a href="<%= g_bairros_path %>" class="nav-link"><i class="ph-house-line"></i> Bairros</a></li>
+                <li><a href="<%= g_localidades_path %>" class="nav-link"><i class="ph-map-pin"></i> Localidades</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
-</div>
 </div>
 <script>
   document.addEventListener("DOMContentLoaded", function() {

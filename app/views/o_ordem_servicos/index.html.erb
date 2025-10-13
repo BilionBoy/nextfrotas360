@@ -707,9 +707,9 @@
         <div class="nf-status">
           <% if os.o_status&.descricao == "Concluída" && os.o_nota_fiscal.nil? %>
             <p>Status NF: Aguardando envio da NF pelo fornecedor</p>
-          <% elsif os.o_nota_fiscal&.status_nf&.descricao == "Enviada" %>
+          <% elsif os.o_nota_fiscal&.o_status_nf&.descricao == "Enviada" %>
             <p>Status NF: NF enviada / Pendente validação</p>
-          <% elsif os.o_nota_fiscal&.status_nf&.descricao == "Pago" %>
+          <% elsif os.o_nota_fiscal&.o_status_nf&.descricao == "Pago" %>
             <p>Status NF: Pago</p>
           <% end %>
         </div>

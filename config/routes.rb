@@ -116,5 +116,8 @@ Rails.application.routes.draw do
 
   root 'home#index'
   get 'home/index'
+  get 'relatorios/ordens_servico',            to: 'relatorios#ordens_servico', as: :relatorios_ordens_servico
+  get 'relatorios/ordens_servico_fornecedor', to: 'relatorios#ordens_servico_fornecedor', as: :relatorios_ordens_servico_fornecedor
+
   get 'up' => 'rails/health#show', as: :rails_health_check
 end
