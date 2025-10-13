@@ -491,7 +491,7 @@
           </div>
         </div>
         <div class="metric-content">
-          <% if @fornecedor_financeiro %>
+          <% if @fornecedor_financeiros.present? %>
             <!-- Saldo Disponível -->
             <div class="metric-content">
               R$ <%= number_to_currency(@saldo_a_receber || 0, unit: "", separator: ",") %>
