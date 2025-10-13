@@ -17,21 +17,20 @@
     <div class="card-body">
       <%= f.error_notification %>
       <div class="row">
-        <div class="col-3"><%= f.input :descricao, placeholder: "Título" %></div>
+        <div class="col-3">
+          <%= f.input :descricao, placeholder: "Título" %>
+        </div>
         <div class="col-3">
           <%= f.input :g_veiculo_id, collection: GVeiculo.all, label_method: :placa, value_method: :id, prompt: "Selecione o Veículo" %>
         </div>
         <div class="col-3">
-          <%= f.input :g_centro_custo_id, collection: GCentroCusto.all, label_method: :nome, value_method: :id,
-                        prompt: "Selecione o Centro de Custo", input_html: { id: "centro-custo-select" } %>
+          <%= f.input :o_tipo_solicitacao_id, collection: OTipoSolicitacao.all, label_method: :descricao, value_method: :id,prompt: "Selecione o Tipo de Solicitação" %>
         </div>
         <div class="col-3">
-          <%= f.input :o_tipo_solicitacao_id, collection: OTipoSolicitacao.all, label_method: :descricao, value_method: :id,
-                        prompt: "Selecione o Tipo de Solicitação" %>
+          <%= f.input :g_centro_custo_id, collection: @centros_disponiveis,label_method: :nome, value_method: :id,prompt: "Selecione o Centro de Custo",input_html: { id: "centro-custo-select" } %>
         </div>
         <div class="col-3">
-          <%= f.input :o_categoria_servico_id, collection: OCategoriaServico.all, label_method: :descricao, value_method: :id,
-                        prompt: "Selecione a Categoria de Serviço" %>
+          <%= f.input :o_categoria_servico_id, collection: OCategoriaServico.all, label_method: :descricao, value_method: :id,                prompt: "Selecione a Categoria de Serviço" %>
         </div>
         <div class="col-3"><%= f.input :km_reportado, placeholder: "Km reportado" %></div>
         <div class="col-3">
@@ -48,9 +47,7 @@
         </div>
         <!-- 🔹 Novo campo de observação -->
         <div class="col-12 mt-2">
-          <%= f.input :observacao, as: :text,
-                      input_html: { rows: 3, placeholder: "Observações adicionais sobre a solicitação..." },
-                      label: "Observação" %>
+          <%= f.input :observacao, as: :text, input_html: { rows: 3, placeholder: "Observações adicionais sobre a solicitação..." }, label: "Observação" %>
         </div>
       </div>
     </div>

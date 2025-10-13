@@ -3,18 +3,31 @@ class OCotacoesController < ApplicationController
   before_action :set_o_cotacao, only: %i[show edit update destroy]
 
   rescue_from ActiveRecord::RecordNotFound, with: :handle_not_found
-
   def index
-    @q = OCotacao.ransack(params[:q])
-    @pagy, @o_cotacoes = pagy(@q.result.includes(:o_solicitacao, :o_status))
+    if current_user.gestor?
+      unidade_id = current_user.a_unidade_id
+  
+      @q = OCotacao.joins(o_solicitacao: :g_centro_custo)
+                   .where(g_centros_custos: { a_unidade_id: unidade_id })
+                   .ransack(params[:q])
+    else
+      @q = OCotacao.ransack(params[:q])
+    end
+  
+    @pagy, @o_cotacoes = pagy(@q.result.includes(:o_solicitacao, :o_status).distinct)
   end
+
 
   def new
     @o_cotacao = OCotacao.new
     @o_cotacao.o_solicitacao_id = params[:solicitacao_id] if params[:solicitacao_id].present?
   end
 
-  def edit; end
+  def edit; 
+    if current_user.gestor? && @o_cotacao.o_solicitacao.g_centro_custo.a_unidade_id != current_user.a_unidade_id
+      redirect_to o_cotacoes_path, alert: "Acesso negado"
+    end
+  end
 
   def create
     @o_cotacao = OCotacao.new(o_cotacao_params)

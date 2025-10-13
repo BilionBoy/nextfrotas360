@@ -6,7 +6,8 @@ class GCentrosCustosController < ApplicationController
 
   def index
     @q = GCentroCusto.ransack(params[:q])
-    @pagy, @g_centros_custos = pagy(@q.result)
+    scoped_result = @q.result.where(a_unidade_id: current_user.a_unidade_id)
+    @pagy, @g_centros_custos = pagy(scoped_result)
   end
 
   def new

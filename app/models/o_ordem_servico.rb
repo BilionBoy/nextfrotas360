@@ -12,6 +12,8 @@ class OOrdemServico < ApplicationRecord
   validates :o_proposta, :f_empresa_fornecedora, :g_veiculo, :o_status, presence: true
 
   before_validation :gerar_numero_os, on: :create
+  
+  scope :da_empresa, ->(empresa_id) { joins(:o_proposta).where(o_propostas: { f_empresa_fornecedora_id: empresa_id }) }
 
 
 

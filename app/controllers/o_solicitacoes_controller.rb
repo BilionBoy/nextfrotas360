@@ -16,9 +16,13 @@ class OSolicitacoesController < ApplicationController
       centro = GCentroCusto.find_by(id: params[:g_centro_custo_id])
       @o_solicitacao.saldo_snapshot = centro&.saldo_atual || 0
     end
+
+    # Apenas centros de custo da unidade do gestor
+    @centros_disponiveis = GCentroCusto.where(a_unidade_id: current_user.a_unidade_id)
   end
 
   def edit
+    @centros_disponiveis = GCentroCusto.where(a_unidade_id: current_user.a_unidade_id)
   end
 
   def create

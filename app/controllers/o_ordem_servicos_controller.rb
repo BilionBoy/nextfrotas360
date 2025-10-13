@@ -4,18 +4,12 @@ class OOrdemServicosController < ApplicationController
 
   # GET /o_ordem_servicos
   def index
-    @q = OOrdemServico.accessible_by(current_ability).ransack(params[:q])
-    @pagy, @o_ordem_servicos = pagy(
-      @q.result
-        .includes(
-          :o_status,
-          :g_veiculo,
-          :f_empresa_fornecedora,
-          :t_taxa,
-          o_proposta: [:o_status, o_cotacao: :o_solicitacao]
-        )
-        .order(created_at: :desc)
-    )
+    @q = OOrdemServico.includes(:o_status, :g_veiculo, :f_empresa_fornecedora, :t_taxa,
+                                o_proposta: [:o_status, o_cotacao: :o_solicitacao])
+                      .then { |scope| filter_por_empresa(scope) }
+                      .ransack(params[:q])
+
+    @pagy, @o_ordem_servicos = pagy(@q.result.order(created_at: :desc))
   end
 
   # PATCH /o_ordem_servicos/:id/marcar_como_atendida
@@ -40,43 +34,28 @@ class OOrdemServicosController < ApplicationController
   def aplicar_taxa_admin
     redirect_unless_admin!
     
-    taxa_id = params[:t_taxa_id]
-    @o_ordem_servico.aplicar_taxa_admin!(current_user, taxa_id)
-
+    @o_ordem_servico.aplicar_taxa_admin!(current_user, params[:t_taxa_id])
     redirect_to o_ordem_servicos_path, notice: "Taxa aplicada e pagamento registrado com sucesso."
   rescue ActiveRecord::RecordInvalid, StandardError => e
     redirect_to o_ordem_servicos_path, alert: "Erro ao aplicar taxa: #{e.message}"
   end
 
+  # GET /o_ordem_servicos/enviar_nf
+  # POST /o_ordem_servicos/enviar_nf
   def enviar_nf
     if request.get?
-      # GET → listar apenas OS da empresa do fornecedor logado
-      if current_user.fornecedor?
-        @o_ordem_servicos = OOrdemServico.joins(:o_proposta)
-                                         .where(o_propostas: { f_empresa_fornecedora_id: current_user.f_empresa_fornecedora_id })
-      else
-        @o_ordem_servicos = OOrdemServico.all
-      end
+      @o_ordem_servicos = lista_os_filtrada
       @o_nota_fiscal = ONotaFiscal.new
     elsif request.post?
-      # POST → criar a NF
       @o_nota_fiscal = ONotaFiscal.new(o_nota_fiscal_params)
       if @o_nota_fiscal.save
         redirect_to enviar_nf_o_ordem_servicos_path, notice: "Nota Fiscal enviada com sucesso!"
       else
-        # manter o filtro no render caso dê erro
-        if current_user.fornecedor?
-          @o_ordem_servicos = OOrdemServico.joins(:o_proposta)
-                                           .where(o_propostas: { f_empresa_fornecedora_id: current_user.f_empresa_fornecedora_id })
-        else
-          @o_ordem_servicos = OOrdemServico.all
-        end
+        @o_ordem_servicos = lista_os_filtrada
         render :enviar_nf, status: :unprocessable_entity
       end
     end
   end
-
-
 
   private
 
@@ -86,6 +65,9 @@ class OOrdemServicosController < ApplicationController
     redirect_to o_ordem_servicos_path, alert: "Ordem de Serviço não encontrada"
   end
 
+  # -----------------------------
+  # Permissões
+  # -----------------------------
   def authorize_fornecedor!
     unless current_user.fornecedor? && @o_ordem_servico.f_empresa_fornecedora_id == current_user.f_empresa_fornecedora_id
       redirect_to o_ordem_servicos_path, alert: "Acesso negado"
@@ -100,9 +82,25 @@ class OOrdemServicosController < ApplicationController
     redirect_to o_ordem_servicos_path, alert: "Acesso negado" unless current_user.admin?
   end
 
+  # -----------------------------
+  # Filtros DRY
+  # -----------------------------
+  def filter_por_empresa(scope)
+    return scope.da_empresa(current_user.f_empresa_fornecedora_id) if current_user.fornecedor?
 
+    scope
+  end
+
+  def lista_os_filtrada
+    scope = OOrdemServico.includes(:o_proposta, :o_status)
+    filter_por_empresa(scope).order(created_at: :desc)
+  end
+
+  # -----------------------------
+  # Params
+  # -----------------------------
   def o_nota_fiscal_params
     permitted_attributes = ONotaFiscal.column_names - ['deleted_at', 'created_by', 'updated_by']
-    params.require(:o_nota_fiscal).permit(permitted_attributes.map(&:to_sym), :arquivo_pdf,:arquivo_xml)
+    params.require(:o_nota_fiscal).permit(permitted_attributes.map(&:to_sym), :arquivo_pdf, :arquivo_xml)
   end
 end

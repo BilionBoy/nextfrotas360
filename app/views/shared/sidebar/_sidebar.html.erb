@@ -42,6 +42,11 @@
             <i class="ph-file-text"></i> Ordens de Serviço
           </a>
         </li>
+        <li class="nav-item">
+          <a href="<%= a_unidades_path %>" class="nav-link">
+            <i class="ph-buildings"></i> Nova Unidade
+          </a>
+        </li>
         <a href="<%= new_user_path(a_tipo_usuario_id: ATipoUsuario.find_by(descricao: "Gestor")&.id) %>" class="nav-link">
           <i class="ph-user-plus"></i> Novo Gestor
         </a>

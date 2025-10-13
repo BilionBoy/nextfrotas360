@@ -17,7 +17,12 @@
       <%= f.error_notification %>
       <div class="row mb-3">
         <div class="col-4">
-          <%= f.input :o_cotacao_id, collection: OCotacao.all, label_method: :descricao_completa, value_method: :id, prompt: "Selecione a Cotação" %>
+          <%= f.input :o_cotacao_id,
+            collection: OCotacao.all,
+            label_method: :descricao_completa,
+            value_method: :id,
+            prompt: "Selecione a Cotação",
+            input_html: { disabled: @o_proposta.o_cotacao_id.present? } %>
         </div>
         <div class="col-4">
           <%= f.input :valor_total, input_html: { class: "capitalize" }, placeholder: "Valor total" %>

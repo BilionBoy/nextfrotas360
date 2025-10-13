@@ -14,8 +14,21 @@ class OPropostasController < ApplicationController
   # Ações abertas para gestores
   # -----------------------------
   def index
-    @q = OProposta.ransack(params[:q])
-    @pagy, @o_propostas = pagy(@q.result)
+    # Apenas gestores
+    if current_user.gestor?
+      # Pega propostas cujas cotações pertencem a solicitações da unidade do gestor
+      unidade_id = current_user.a_unidade_id
+  
+      @q = OProposta.joins(o_cotacao: :o_solicitacao)
+                    .where(o_solicitacoes: { g_centro_custo_id: GCentroCusto.where(a_unidade_id: unidade_id) })
+                    .ransack(params[:q])
+  
+      @pagy, @o_propostas = pagy(@q.result.distinct.order(created_at: :desc))
+    else
+      # Para outros perfis (fornecedor/admin)
+      @q = OProposta.ransack(params[:q])
+      @pagy, @o_propostas = pagy(@q.result.order(created_at: :desc))
+    end
   end
 
   def aprovar
@@ -50,6 +63,7 @@ end
   # -----------------------------
   def new
     @o_proposta = OProposta.new
+    @o_proposta.o_cotacao_id = params[:o_cotacao_id] if params[:o_cotacao_id].present?
     @o_proposta.o_proposta_itens.build
   end
 
@@ -75,13 +89,16 @@ end
 
   def fornecedor_enviadas
     authorize! :fornecedor_enviadas, OProposta
-
+  
     fornecedor = current_user.f_empresa_fornecedora
-    @o_propostas = OProposta.where(f_empresa_fornecedora: fornecedor)
-                             .where(o_status: OStatus.where(descricao: ['Pendente', 'Enviada', 'Aprovada', 'Rejeitada']))
-                             .order(created_at: :desc)
+    return redirect_to root_path, alert: "Usuário sem empresa associada" unless fornecedor
+  
+    @o_propostas = OProposta
+                    .where(f_empresa_fornecedora: fornecedor)
+                    .where(o_status: OStatus.where(descricao: ['Pendente', 'Enviada', 'Aprovada', 'Rejeitada']))
+                    .includes(:o_cotacao, :o_status)
+                    .order(created_at: :desc)
   end
-
   def show
     # CanCan já faz a checagem via load_and_authorize_resource
   end
