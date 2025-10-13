@@ -217,12 +217,13 @@ class HomeController < ApplicationController
 
   # 🔹 Saldos
     @saldo_disponivel = @fornecedor.f_financeiros.sum(:saldo_disponivel).to_f
-  
-   @saldo_a_receber = OOrdemServico
-                     .joins(:o_status)
+    
+    @saldo_a_receber = OOrdemServico
+                     .includes(:o_status, :o_proposta)
                      .where(o_status: { descricao: 'Pago' })
                      .where(f_empresa_fornecedora_id: @fornecedor.id)
                      .sum { |os| os.custo_real - os.taxa_aplicada.to_f }
+
 
                          
 
