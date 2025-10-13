@@ -16,7 +16,11 @@
         <div class="col-md-4"><%= f.input :email, input_html: { placeholder: "Digite o e-mail" } %></div>
         <!-- Tipo de Usuário, Unidade, Empresa -->
         <div class="col-md-4"><%= f.input :a_tipo_usuario_id, collection: ATipoUsuario.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Tipo de Usuário", input_html: { id: "tipo-usuario-select" } %></div>
+        <div class="col-md-4" id="campo-unidade"><%= f.input :a_unidade_id, collection: AUnidade.all, label_method: :nome_fantasia, value_method: :id, prompt: "Selecione a Unidade" %></div>
+        <div class="col-md-4" id="campo-empresa"><%= f.input :f_empresa_fornecedora_id, collection: FEmpresaFornecedora.all, label_method: :nome_fantasia, value_method: :id, prompt: "Selecione a Empresa do Usuário" %></div>
         <!-- Cargo e Status -->
+        <div class="col-md-4"><%= f.input :a_cargo_id, collection: ACargo.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Cargo" %></div>
+        <div class="col-md-4"><%= f.input :a_status_id, collection: AStatus.all, label_method: :descricao, value_method: :id, prompt: "Selecione o Status do Usuário" %></div>
         <!-- Fotos -->
         <div class="col-md-6">
           <%= f.input :foto_perfil, as: :file, label: "Foto de Perfil" %>

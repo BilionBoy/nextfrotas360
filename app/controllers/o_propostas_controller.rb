@@ -26,24 +26,23 @@ class OPropostasController < ApplicationController
     redirect_to o_propostas_path, alert: "Falha ao aprovar proposta: #{e.message}"
   end
 
- def recusar
+def recusar
   authorize_gestor!
 
-  # Busca apenas a proposta do fornecedor atual
-  @o_proposta = OProposta.find_by(
-    id: params[:id],
-    f_empresa_fornecedora_id: current_user.f_empresa_fornecedora&.id
-  )
+  @o_proposta = OProposta.find_by(id: params[:id])
 
   if @o_proposta.nil?
-    redirect_back(fallback_location: o_cotacoes_path, alert: "Proposta não encontrada ou acesso negado") and return
+    redirect_back(fallback_location: o_cotacoes_path, alert: "Proposta não encontrada") and return
   end
 
-  @o_proposta.recusar!(current_user)
-  redirect_back(fallback_location: o_cotacoes_path, notice: "Proposta rejeitada com sucesso")
- rescue ActiveRecord::RecordInvalid => e
-   redirect_back(fallback_location: o_cotacoes_path, alert: "Erro ao rejeitar proposta: #{e.message}")
- end
+  begin
+    @o_proposta.recusar!(current_user)
+    redirect_back(fallback_location: o_cotacoes_path, notice: "Proposta rejeitada com sucesso")
+  rescue ActiveRecord::RecordInvalid => e
+    redirect_back(fallback_location: o_cotacoes_path, alert: "Erro ao rejeitar proposta: #{e.message}")
+  end
+end
+
 
 
   # -----------------------------
