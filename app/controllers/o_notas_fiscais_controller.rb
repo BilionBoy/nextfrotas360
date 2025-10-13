@@ -59,26 +59,38 @@ class ONotasFiscaisController < ApplicationController
 
 
   # GET /o_notas_fiscais/relatorio
-  def relatorio
-    @notas_fiscais = ONotaFiscal.includes(:o_ordem_servico, :o_status_nf).order(created_at: :desc)
-    
-    # Filtros opcionais (por OS, status, período)
-    if params[:os_numero].present?
-      @notas_fiscais = @notas_fiscais.joins(:o_ordem_servico).where("o_ordem_servicos.numero ILIKE ?", "%#{params[:os_numero]}%")
-    end
+ def relatorio
+   @notas_fiscais = ONotaFiscal
+                      .includes(:o_ordem_servico, :o_status_nf)
+                      .order(created_at: :desc)
+ 
+   # Se o usuário for fornecedor, mostra só as NF da empresa dele
+   if current_user.fornecedor?
+     @notas_fiscais = @notas_fiscais
+                       .joins(o_ordem_servico: :o_proposta)
+                       .where(o_propostas: { f_empresa_fornecedora_id: current_user.f_empresa_fornecedora_id })
+   end
+ 
+   # Filtros opcionais (por OS, status, período)
+   if params[:os_numero].present?
+     @notas_fiscais = @notas_fiscais
+                        .joins(:o_ordem_servico)
+                        .where("o_ordem_servicos.numero_os ILIKE ?", "%#{params[:os_numero]}%")
+   end
+ 
+   if params[:status_nf].present?
+     @notas_fiscais = @notas_fiscais.where(o_status_nf_id: params[:status_nf])
+   end
+ 
+   if params[:data_inicio].present?
+     @notas_fiscais = @notas_fiscais.where("data_emissao >= ?", params[:data_inicio])
+   end
+ 
+   if params[:data_fim].present?
+     @notas_fiscais = @notas_fiscais.where("data_emissao <= ?", params[:data_fim])
+   end
+ end
 
-    if params[:status_nf].present?
-      @notas_fiscais = @notas_fiscais.where(o_status_nf_id: params[:status_nf])
-    end
-
-    if params[:data_inicio].present?
-      @notas_fiscais = @notas_fiscais.where("data_emissao >= ?", params[:data_inicio])
-    end
-
-    if params[:data_fim].present?
-      @notas_fiscais = @notas_fiscais.where("data_emissao <= ?", params[:data_fim])
-    end
-  end
   
   private
 
