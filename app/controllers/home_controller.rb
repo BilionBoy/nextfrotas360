@@ -215,13 +215,13 @@ class HomeController < ApplicationController
      # 🔹 Saldos
 
 
-      # 🔹 Saldo a Receber (total líquido das OS pagas para o fornecedor)
-    @saldo_a_receber = OOrdemServico
-                         .joins(:o_status)
-                         .where(f_empresa_fornecedora_id: @fornecedor.id)
-                         .where(o_status: { descricao: 'Pago' })
-                         .sum('COALESCE(o_ordem_servicos.custo_real, 0) - COALESCE(o_ordem_servicos.taxa_aplicada, 0)')
-                         .to_f
+   @saldo_a_receber = OOrdemServico
+                     .joins(:o_status)
+                     .where(o_status: { descricao: 'Pago' })
+                     .where(f_empresa_fornecedora_id: @fornecedor.id)
+                     .sum do |os|
+                       os.custo_real.to_f - os.taxa_aplicada.to_f
+                     end
 
     @gastos_totais = OOrdemServico
                        .joins(:o_status)
