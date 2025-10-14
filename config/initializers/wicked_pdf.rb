@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 WickedPdf.configure do |config|
-  # Caminho para o executável do wkhtmltopdf
-  config.exe_path = Gem.bin_path('wkhtmltopdf-binary', 'wkhtmltopdf')
+  # Caminho para o executável do wkhtmltopdf instalado no sistema
+  config.exe_path = '/usr/bin/wkhtmltopdf'  # <--- altere isso
 
   # Permite acesso a arquivos locais (CSS/JS/Imagens)
   config.enable_local_file_access = true
