@@ -86,10 +86,15 @@ class OOrdemServicosController < ApplicationController
   # Filtros DRY
   # -----------------------------
   def filter_por_empresa(scope)
-    return scope.da_empresa(current_user.f_empresa_fornecedora_id) if current_user.fornecedor?
-
+  if current_user.fornecedor?
+    scope.da_empresa(current_user.f_empresa_fornecedora_id)
+  elsif current_user.gestor?
+    scope.joins(o_proposta: { o_cotacao: { o_solicitacao: :g_unidade } })
+         .where(g_unidades: { id: current_user.g_unidade_id })
+  else
     scope
   end
+end
 
   def lista_os_filtrada
     scope = OOrdemServico.includes(:o_proposta, :o_status)
