@@ -586,7 +586,7 @@
   }
 </style>
 <div class="report-container">
-  <!-- Header e filtros (mantidos igual ao seu original) -->
+  <!-- Header e filtros -->
   <div class="report-header">
     <div class="header-content">
       <div>
@@ -599,6 +599,7 @@
       </div>
     </div>
   </div>
+  <!-- Filtros -->
   <div class="filters-card">
     <%= search_form_for @q, url: o_ordem_servicos_path, method: :get, html: { class: "filters-form" } do |f| %>
       <div class="filter-group flex flex-col">
@@ -611,7 +612,7 @@
       <button type="submit" class="btn-primary">Filtrar Resultados</button>
     <% end %>
   </div>
-  <%# --- Métricas --- %>
+  <!-- Métricas -->
   <% total_ordens = @o_ordem_servicos.size %>
   <% status_counts = @o_ordem_servicos.group_by { |os| os.o_status&.descricao || "Sem Status" }.transform_values(&:count) %>
   <% abertas = status_counts["Aberta"] || 0 %>
@@ -620,10 +621,10 @@
   <div class="metrics-grid">
     <div class="metric-card">
       <div class="metric-icon" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-          <line x1="9" y1="9" x2="15" y2="9"></line>
-          <line x1="9" y1="15" x2="15" y2="15"></line>
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+          <line x1="9" y1="9" x2="15" y2="9"/>
+          <line x1="9" y1="15" x2="15" y2="15"/>
         </svg>
       </div>
       <div class="metric-content">
@@ -633,9 +634,9 @@
     </div>
     <div class="metric-card">
       <div class="metric-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
         </svg>
       </div>
       <div class="metric-content">
@@ -645,9 +646,9 @@
     </div>
     <div class="metric-card">
       <div class="metric-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <polyline points="12 6 12 12 16 14"></polyline>
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
         </svg>
       </div>
       <div class="metric-content">
@@ -657,11 +658,11 @@
     </div>
     <div class="metric-card">
       <div class="metric-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-          <polyline points="14 2 14 8 20 8"></polyline>
-          <line x1="16" y1="13" x2="8" y2="13"></line>
-          <line x1="16" y1="17" x2="8" y2="17"></line>
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
         </svg>
       </div>
       <div class="metric-content">
@@ -670,7 +671,7 @@
       </div>
     </div>
   </div>
-  <%# --- Cards de Ordens --- %>
+  <!-- Lista de Ordens -->
   <div class="orders-grid">
     <% @o_ordem_servicos.each do |os| %>
       <% status_descricao = os.o_status&.descricao || os.o_proposta&.o_status&.descricao || "Sem Status" %>
@@ -698,10 +699,11 @@
           </div>
         </div>
         <div class="service-details">
-          <!-- detalhes como antes -->
           <p>Custo Real: R$ <%= number_with_precision(os.custo_real, precision: 2, delimiter: '.') %></p>
-          <% if os.t_taxa.present? %>
-            <p>Taxa Aplicada: <%= os.t_taxa.nome %> (<%= os.t_taxa.percentual %>%) - R$ <%= number_with_precision(os.taxa_aplicada, precision: 2, delimiter: '.') %></p>
+          <%# Só mostra a taxa para admin ou fornecedor — não para gestor %>
+          <% if os.t_taxa.present? && (current_user.admin? || current_user.fornecedor?) %>
+            <p>Taxa Aplicada: <%= os.t_taxa.nome %> (<%= os.t_taxa.percentual %>%) - 
+              R$ <%= number_with_precision(os.taxa_aplicada, precision: 2, delimiter: '.') %></p>
           <% end %>
         </div>
         <div class="nf-status">
@@ -713,7 +715,7 @@
             <p>Status NF: Pago</p>
           <% end %>
         </div>
-        <%# Progress bar %>
+        <%# Barra de progresso %>
         <% total_days = (os.data_termino_prevista - os.data_inicio_prevista).to_i rescue 0 %>
         <% elapsed_days = (Date.today - os.data_inicio_prevista).to_i rescue 0 %>
         <% progress = total_days > 0 ? [[elapsed_days.to_f / total_days * 100, 0].max, 100].min.round : 0 %>
@@ -729,7 +731,7 @@
           </div>
         <% end %>
         <div class="card-footer">
-          <%# --- Fornecedor --- %>
+          <%# Fornecedor %>
           <% if current_user.fornecedor? && os.o_status&.descricao == "Aberta" %>
             <%= button_to marcar_como_atendida_o_ordem_servico_path(os),
                   method: :patch,
@@ -738,7 +740,7 @@
               Marcar como Atendida
             <% end %>
           <% end %>
-          <%# --- Gestor --- %>
+          <%# Gestor %>
           <% if current_user.gestor? && os.o_status&.descricao == "Atendida" %>
             <%= button_to "Validar Ordem de Serviço",
                  validar_servico_o_ordem_servico_path(os),
@@ -746,7 +748,7 @@
                  data: { confirm: "Confirmar validação do serviço?" },
                  class: "btn btn-primary" %>
           <% end %>
-          <%# --- Admin / Financeiro --- %>
+          <%# Admin / Financeiro %>
           <% if current_user.admin? && os.o_status&.descricao == "Concluída" %>
             <%= form_with url: aplicar_taxa_admin_o_ordem_servico_path(os), method: :patch, local: true do |f| %>
               <div class="mb-2">
@@ -760,14 +762,12 @@
       </div>
     <% end %>
   </div>
-  <!-- Empty State -->
   <% if @o_ordem_servicos.empty? %>
     <div class="empty-state">
       <h3 class="empty-title">Nenhuma ordem de serviço encontrada</h3>
       <p class="empty-description">Tente ajustar os filtros ou criar uma nova OS</p>
     </div>
   <% end %>
-  <!-- Paginação -->
   <% if defined?(@pagy) && @pagy %>
     <div class="pagination-container">
       <%= pagy_bootstrap_nav(@pagy).html_safe %>
