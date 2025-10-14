@@ -31,5 +31,3 @@ RUN yarn install --frozen-lockfile
 
 ENV PATH="/usr/local/bin:$PATH"
 
-# Comando para iniciar o servidor Rails em produção
-CMD ["rails", "server", "-b", "0.0.0.0", "-p", "3000"]
