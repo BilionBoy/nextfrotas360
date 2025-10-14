@@ -20,7 +20,7 @@ gem 'jbuilder'
 # Use o Kredis para obter tipos de dados de nível superior no Redis [https://github.com/rails/kredis]
 # gem "kredis"
 gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
+# gem 'wkhtmltopdf-binary'
 
 # Use o método has_secure_password do Active Model [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"

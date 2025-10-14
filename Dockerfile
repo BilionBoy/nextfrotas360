@@ -5,8 +5,12 @@ FROM ruby:3.3.5-slim
 
 # Instala dependências do sistema
 RUN apt-get update -qq && \
-    apt-get install -y nodejs npm postgresql-client libpq-dev \
-    ffmpeg libvips42 && \
+    apt-get install -y \
+      nodejs npm \
+      postgresql-client libpq-dev \
+      ffmpeg libvips42 \
+      xfonts-75dpi xfonts-base \
+      wkhtmltopdf && \
     npm install -g yarn && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
