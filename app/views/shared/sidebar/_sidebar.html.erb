@@ -71,43 +71,68 @@
                 <li><a href="<%= a_usuarios_historicos_cargos_unidades_path %>" class="nav-link"><i class="ph-clock"></i> Histórico Cargos/Unidade</a></li>
                 <li><a href="<%= a_tipo_usuarios_path %>" class="nav-link"><i class="ph-identification-card"></i> Tipos de Usuários</a></li>
                 <li><a href="<%= a_status_index_path %>" class="nav-link"><i class="ph-toggle-left"></i> Status</a></li>
+                <li><a href="<%= a_tipos_unidades_path %>" class="nav-link"><i class="ph-buildings"></i> Tipos de Unidades</a></li>
+                <li><a href="<%= a_cargos_path %>" class="nav-link"><i class="ph-briefcase"></i> Cargos</a></li>
+                <li><a href="<%= a_papeis_path %>" class="nav-link"><i class="ph-shield-check"></i> Papéis Gerais</a></li>
+                <li><a href="<%= a_permissoes_path %>" class="nav-link"><i class="ph-key"></i> Permissões</a></li>
+                <li><a href="<%= a_papeis_permissoes_path %>" class="nav-link"><i class="ph-shield-star"></i> Papéis / Permissões</a></li>
+                <li><a href="<%= a_unidades_path %>" class="nav-link"><i class="ph-buildings"></i> Unidades</a></li>
               </ul>
             </li>
             <!-- Condutores -->
             <li class="nav-item nav-item-submenu">
               <a href="#" class="nav-link"><i class="ph-user-circle"></i> Condutores</a>
-              <ul class="nav nav-group-sub">
+              <ul class="nav nav-group">
                 <li><a href="<%= g_carteiras_orgaos_emissores_path %>" class="nav-link"><i class="ph-cards"></i> Órgãos Emissores</a></li>
                 <li><a href="<%= g_categorias_carteiras_condutores_path %>" class="nav-link"><i class="ph-cards"></i> Categorias de Carteira</a></li>
+                <li><a href="<%= g_condutores_path %>" class="nav-link"><i class="ph-user"></i> Lista de Condutores</a></li>
+                <li><a href="<%= g_condutores_veiculos_path %>" class="nav-link"><i class="ph-car"></i> Condutores / Veículos</a></li>
               </ul>
             </li>
             <!-- Veículos -->
             <li class="nav-item nav-item-submenu">
               <a href="#" class="nav-link"><i class="ph-car"></i> Veículos</a>
-              <ul class="nav nav-group-sub">
+              <ul class="nav nav-group">
                 <li><a href="<%= g_tipos_veiculos_path %>" class="nav-link"><i class="ph-truck"></i> Tipos de Veículos</a></li>
                 <li><a href="<%= g_status_index_path %>" class="nav-link"><i class="ph-check-circle"></i> Status Veículos</a></li>
+                <li><a href="<%= g_veiculos_path %>" class="nav-link"><i class="ph-car-side"></i> Lista de Veículos</a></li>
+                <li><a href="<%= g_tipos_centros_custos_path %>" class="nav-link"><i class="ph-list"></i> Tipos de Centros de Custo</a></li>
+                <li><a href="<%= g_centros_custos_path %>" class="nav-link"><i class="ph-bank"></i> Centros de Custo</a></li>
+                <li><a href="<%= g_centros_custos_movimentos_path %>" class="nav-link"><i class="ph-arrows-left-right"></i> Movimentos Centros de Custo</a></li>
+                <li><a href="<%= g_tipos_movimentos_path %>" class="nav-link"><i class="ph-swap"></i> Tipos de Movimentos</a></li>
               </ul>
             </li>
             <!-- Orçamentos -->
             <li class="nav-item nav-item-submenu">
               <a href="#" class="nav-link"><i class="ph-flag"></i> Orçamentos</a>
-              <ul class="nav nav-group-sub">
+              <ul class="nav nav-group">
                 <li><a href="<%= o_status_index_path %>" class="nav-link"><i class="ph-flag"></i> Status</a></li>
                 <li><a href="<%= o_tipos_solicitacoes_path %>" class="nav-link"><i class="ph-list-plus"></i> Tipos Solicitação</a></li>
                 <li><a href="<%= o_categorias_servicos_path %>" class="nav-link"><i class="ph-grid-four"></i> Categorias Serviço</a></li>
                 <li><a href="<%= o_urgencias_path %>" class="nav-link"><i class="ph-warning-circle"></i> Urgências</a></li>
                 <li><a href="<%= o_visibilidades_path %>" class="nav-link"><i class="ph-eye"></i> Visibilidades</a></li>
+                <li><a href="<%= o_solicitacoes_path %>" class="nav-link"><i class="ph-file-plus"></i> Solicitações</a></li>
+                <li><a href="<%= o_cotacoes_itens_path %>" class="nav-link"><i class="ph-files"></i> Itens de Cotação</a></li>
               </ul>
             </li>
             <!-- Notas Fiscais -->
             <li>
               <a href="<%= o_status_nf_index_path %>" class="nav-link"><i class="ph-eye"></i> Notas Fiscais</a>
             </li>
+            <!-- Financeiro / Empresas -->
+            <li class="nav-item nav-item-submenu">
+              <a href="#" class="nav-link"><i class="ph-storefront"></i> Empresas / Financeiro</a>
+              <ul class="nav nav-group">
+                <li><a href="<%= f_financeiros_path %>" class="nav-link"><i class="ph-currency-dollar"></i> Financeiros</a></li>
+                <li><a href="<%= f_financeiros_movimentos_path %>" class="nav-link"><i class="ph-arrows-left-right"></i> Movimentos Financeiros</a></li>
+                <li><a href="<%= f_empresas_servicos_path %>" class="nav-link"><i class="ph-briefcase"></i> Serviços</a></li>
+                <li><a href="<%= f_empresas_fornecedoras_path %>" class="nav-link"><i class="ph-storefront"></i> Fornecedoras</a></li>
+              </ul>
+            </li>
             <!-- Localidades -->
             <li class="nav-item nav-item-submenu">
               <a href="#" class="nav-link"><i class="ph-map-pin-line"></i> Localidades</a>
-              <ul class="nav nav-group-sub">
+              <ul class="nav nav-group">
                 <li><a href="<%= g_paises_path %>" class="nav-link"><i class="ph-globe"></i> Países</a></li>
                 <li><a href="<%= g_estados_path %>" class="nav-link"><i class="ph-map-trifold"></i> Estados</a></li>
                 <li><a href="<%= g_municipios_path %>" class="nav-link"><i class="ph-buildings"></i> Municípios</a></li>
