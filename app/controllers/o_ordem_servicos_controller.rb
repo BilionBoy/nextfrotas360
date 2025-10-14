@@ -82,19 +82,19 @@ class OOrdemServicosController < ApplicationController
     redirect_to o_ordem_servicos_path, alert: "Acesso negado" unless current_user.admin?
   end
 
-  # -----------------------------
-  # Filtros DRY
-  # -----------------------------
+   # -----------------------------
+   # Filtros DRY
   def filter_por_empresa(scope)
-  if current_user.fornecedor?
-    scope.da_empresa(current_user.f_empresa_fornecedora_id)
-  elsif current_user.gestor?
-    scope.joins(o_proposta: { o_cotacao: { o_solicitacao: :g_unidade } })
-         .where(g_unidades: { id: current_user.g_unidade_id })
-  else
-    scope
+   if current_user.fornecedor?
+     scope.da_empresa(current_user.f_empresa_fornecedora_id)
+   elsif current_user.gestor?
+     scope.joins(o_proposta: { o_cotacao: { o_solicitacao: :a_unidade } })
+          .where(a_unidades: { id: current_user.a_unidade_id })
+   else
+     scope
+   end
   end
-end
+
 
   def lista_os_filtrada
     scope = OOrdemServico.includes(:o_proposta, :o_status)
