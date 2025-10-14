@@ -120,6 +120,7 @@ Rails.application.routes.draw do
   get 'relatorios/ordens_servico',            to: 'relatorios#ordens_servico', as: :relatorios_ordens_servico
   get 'relatorios/ordens_servico_fornecedor', to: 'relatorios#ordens_servico_fornecedor', as: :relatorios_ordens_servico_fornecedor
   get 'ordens_servico_gestor', to: 'relatorios#ordens_servico_gestor', as: :ordens_servico_gestor
+  get 'relatorios/ordens_servico_pdf', to: 'relatorios#ordens_servico_pdf', as: :relatorios_ordens_servico_pdf
 
   get 'up' => 'rails/health#show', as: :rails_health_check
 end

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Relatório de Ordens de Serviço</title>
+    <style>
+      /* Simplified CSS for better PDF compatibility */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        color: #1e293b;
+        background: #ffffff;
+        padding: 0;
+        font-size: 10pt;
+        line-height: 1.6;
+      }
+
+      /* Premium Header with Company Branding */
+      .document-header {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        color: white;
+        padding: 40px 50px;
+        position: relative;
+      }
+
+      .header-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .company-info {
+        margin-bottom: 30px;
+        overflow: hidden;
+      }
+
+      .company-logo {
+        background: white;
+        padding: 12px 24px;
+        border-radius: 6px;
+        font-weight: 700;
+        font-size: 16pt;
+        color: #0f172a;
+        letter-spacing: -0.5px;
+        float: left;
+      }
+
+      .company-details {
+        float: right;
+        text-align: right;
+        font-size: 8pt;
+        line-height: 1.8;
+        color: #cbd5e1;
+      }
+
+      .company-details strong {
+        color: white;
+        font-weight: 600;
+      }
+
+      .report-title {
+        font-size: 28pt;
+        font-weight: 300;
+        letter-spacing: -1px;
+        margin-bottom: 8px;
+        color: white;
+        clear: both;
+        padding-top: 20px;
+      }
+
+      .report-subtitle {
+        font-size: 10pt;
+        color: #94a3b8;
+        font-weight: 400;
+      }
+
+      /* Report Metadata Section */
+      .report-metadata {
+        background: #f8fafc;
+        border-left: 4px solid #3b82f6;
+        padding: 20px 50px;
+        overflow: hidden;
+        font-size: 9pt;
+      }
+
+      .metadata-item {
+        float: left;
+        width: 25%;
+        padding-right: 15px;
+      }
+
+      .metadata-label {
+        color: #64748b;
+        font-size: 8pt;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        margin-bottom: 4px;
+        display: block;
+      }
+
+      .metadata-value {
+        color: #1e293b;
+        font-weight: 600;
+        font-size: 10pt;
+        display: block;
+      }
+
+      /* Main Content */
+      .document-body {
+        padding: 40px 50px;
+      }
+
+      /* Executive Summary Section */
+      .section-title {
+        font-size: 14pt;
+        font-weight: 600;
+        color: #0f172a;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e2e8f0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      /* Changed from flexbox to table layout for better PDF compatibility */
+      .summary-grid {
+        width: 100%;
+        margin-bottom: 40px;
+        border-collapse: separate;
+        border-spacing: 15px 0;
+        display: table;
+      }
+
+      .summary-card {
+        display: table-cell;
+        width: 33.33%;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 24px;
+        position: relative;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        vertical-align: top;
+      }
+
+      .summary-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        border-radius: 8px 8px 0 0;
+      }
+
+      .summary-card.primary::before {
+        background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+      }
+
+      .summary-card.success::before {
+        background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+      }
+
+      .summary-card.accent::before {
+        background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+      }
+
+      .summary-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        display: inline-block;
+        text-align: center;
+        line-height: 40px;
+        margin-bottom: 16px;
+        font-size: 18pt;
+      }
+
+      .summary-card.primary .summary-icon {
+        background: #eff6ff;
+        color: #2563eb;
+      }
+
+      .summary-card.success .summary-icon {
+        background: #f0fdf4;
+        color: #059669;
+      }
+
+      .summary-card.accent .summary-icon {
+        background: #fffbeb;
+        color: #d97706;
+      }
+
+      .summary-label {
+        font-size: 9pt;
+        color: #64748b;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      .summary-value {
+        font-size: 24pt;
+        font-weight: 700;
+        color: #0f172a;
+        line-height: 1;
+        display: block;
+      }
+
+      /* Premium Table */
+      .table-section {
+        margin-bottom: 40px;
+      }
+
+      table.data-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      table.data-table thead {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+      }
+
+      table.data-table thead th {
+        color: white;
+        font-weight: 600;
+        text-align: left;
+        padding: 16px 14px;
+        font-size: 8pt;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        border-right: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      table.data-table thead th:last-child {
+        border-right: none;
+      }
+
+      table.data-table tbody tr {
+        border-bottom: 1px solid #f1f5f9;
+      }
+
+      table.data-table tbody tr:nth-child(even) {
+        background-color: #fafafa;
+      }
+
+      table.data-table tbody tr:last-child {
+        border-bottom: none;
+      }
+
+      table.data-table tbody td {
+        padding: 14px;
+        font-size: 9pt;
+        color: #475569;
+        border-right: 1px solid #f1f5f9;
+        vertical-align: middle;
+      }
+
+      table.data-table tbody td:last-child {
+        border-right: none;
+      }
+
+      /* Enhanced Badges */
+      .badge {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 6px;
+        font-size: 7.5pt;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .badge.aberta {
+        background-color: #fef3c7;
+        color: #92400e;
+      }
+
+      .badge.concluida {
+        background-color: #d1fae5;
+        color: #065f46;
+      }
+
+      .badge.pago {
+        background-color: #dbeafe;
+        color: #1e40af;
+      }
+
+      .badge.cancelada {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      /* Enhanced ID Badge */
+      .id-badge {
+        background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+        color: #0f172a;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-weight: 700;
+        font-family: 'Courier New', monospace;
+        font-size: 9pt;
+        border: 1px solid #cbd5e1;
+      }
+
+      /* Currency Styling */
+      .currency {
+        font-weight: 700;
+        color: #059669;
+        font-family: 'Courier New', monospace;
+      }
+
+      /* Document Footer */
+      .document-footer {
+        background: #f8fafc;
+        padding: 30px 50px;
+        border-top: 3px solid #e2e8f0;
+        margin-top: 40px;
+      }
+
+      .footer-content {
+        overflow: hidden;
+        font-size: 8pt;
+        color: #64748b;
+      }
+
+      .footer-left {
+        float: left;
+        width: 60%;
+      }
+
+      .footer-company {
+        font-weight: 700;
+        color: #1e293b;
+        font-size: 10pt;
+        margin-bottom: 6px;
+      }
+
+      .footer-contact {
+        line-height: 1.8;
+      }
+
+      .footer-right {
+        float: right;
+        width: 35%;
+        text-align: right;
+      }
+
+      .footer-disclaimer {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #e2e8f0;
+        text-align: center;
+        font-size: 7.5pt;
+        color: #94a3b8;
+        font-style: italic;
+        clear: both;
+      }
+
+      /* No Data State */
+      .no-data {
+        text-align: center;
+        padding: 60px 40px;
+        color: #94a3b8;
+        font-size: 11pt;
+        background: #f8fafc;
+        border-radius: 8px;
+        border: 2px dashed #cbd5e1;
+      }
+
+      .no-data-icon {
+        font-size: 48pt;
+        margin-bottom: 16px;
+        opacity: 0.3;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Removed all debug text that was appearing in the PDF -->
+    <div class="document-header">
+      <div class="header-content">
+        <div class="company-info">
+          <div class="company-logo">
+            NEXTFROTAS360   
+          </div>
+          <div class="company-details">
+            <strong>Gestão de Frotas</strong><br>
+            Tel: (+55) 69 9966-1986<br>
+            nextfrotas360@gmail.com
+          </div>
+        </div>
+        <h1 class="report-title">Relatório de Ordens de Serviço</h1>
+        <p class="report-subtitle">Análise Detalhada de Manutenções e Serviços</p>
+      </div>
+    </div>
+    <div class="report-metadata">
+      <div class="metadata-item">
+        <span class="metadata-label">Data de Geração</span>
+        <span class="metadata-value"><%= Time.current.strftime("%d/%m/%Y às %H:%M") %></span>
+      </div>
+      <div class="metadata-item">
+        <span class="metadata-label">Período</span>
+        <span class="metadata-value">
+          <% if params[:data_inicio].present? && params[:data_fim].present? %>
+            <%= params[:data_inicio] %> até <%= params[:data_fim] %>
+          <% else %>
+            Todos os períodos
+          <% end %>
+        </span>
+      </div>
+      <div class="metadata-item">
+        <span class="metadata-label">Status</span>
+        <span class="metadata-value">
+          <%= params[:status].present? ? params[:status] : "Todos" %>
+        </span>
+      </div>
+      <div class="metadata-item">
+        <span class="metadata-label">Total de Registros</span>
+        <span class="metadata-value"><%= @ordens_servico.count %></span>
+      </div>
+    </div>
+    <div class="document-body">
+      <h2 class="section-title">Resumo Executivo</h2>
+      <!-- Changed to table layout for better PDF rendering -->
+      <div class="summary-grid">
+        <div class="summary-card primary">
+          <div class="summary-icon">📋</div>
+          <span class="summary-label">Total de Ordens</span>
+          <span class="summary-value"><%= @ordens_servico.count %></span>
+        </div>
+        <div class="summary-card success">
+          <div class="summary-icon">💰</div>
+          <span class="summary-label">Valor Total</span>
+          <span class="summary-value">R$ <%= number_to_currency(@ordens_servico.sum(&:custo_real).to_f, unit: "", separator: ",", delimiter: ".") %></span>
+        </div>
+        <div class="summary-card accent">
+          <div class="summary-icon">📊</div>
+          <span class="summary-label">Taxa Total</span>
+          <span class="summary-value">R$ <%= number_to_currency(@ordens_servico.sum(&:taxa_aplicada).to_f, unit: "", separator: ",", delimiter: ".") %></span>
+        </div>
+      </div>
+      <h2 class="section-title">Detalhamento das Ordens</h2>
+      <div class="table-section">
+        <% if @ordens_servico.any? %>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Data</th>
+                <th>Fornecedor</th>
+                <th>Status</th>
+                <th>Veículo</th>
+                <th>Proposta</th>
+                <th>Valor OS</th>
+                <th>Taxa</th>
+                <th>Validado Por</th>
+                <th>NF</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @ordens_servico.each do |os| %>
+                <tr>
+                  <td>
+                    <span class="id-badge">#<%= os.id %></span>
+                  </td>
+                  <td><%= os.created_at.strftime("%d/%m/%Y") %></td>
+                  <td><%= os.f_empresa_fornecedora&.nome_fantasia || "N/A" %></td>
+                  <td>
+                    <% status_class = os.o_status&.descricao&.downcase&.gsub(/[^a-z]/, '') || 'aberta' %>
+                    <span class="badge <%= status_class %>">
+                      <%= os.o_status&.descricao || "N/A" %>
+                    </span>
+                  </td>
+                  <td><%= os.g_veiculo&.g_tipo_veiculo&.descricao || "N/A" %></td>
+                  <td><%= os.o_proposta&.f_empresa_fornecedora&.nome_fantasia || "N/A" %></td>
+                  <td>
+                    <span class="currency">
+                      R$ <%= number_to_currency(os.custo_real.to_f, unit: "", separator: ",", delimiter: ".") %>
+                    </span>
+                  </td>
+                  <td>
+                    <span class="currency">
+                      R$ <%= number_to_currency(os.taxa_aplicada.to_f, unit: "", separator: ",", delimiter: ".") %>
+                    </span>
+                  </td>
+                  <td><%= os.validado_por&.nome || "N/A" %></td>
+                  <td><%= os.o_nota_fiscal&.numero || "Sem NF" %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <div class="no-data">
+            <div class="no-data-icon">📭</div>
+            <p><strong>Nenhuma ordem de serviço encontrada</strong></p>
+            <p>Não há registros que correspondam aos filtros aplicados.</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="document-footer">
+      <div class="footer-content">
+        <div class="footer-left">
+          <div class="footer-company">SUA EMPRESA - Gestão de Frotas</div>
+          <div class="footer-contact">
+            Rua Exemplo, 123 - São Paulo, SP<br>
+            Tel: (11) 0000-0000 | contato@suaempresa.com.br
+          </div>
+        </div>
+        <div class="footer-right">
+          <strong>Página 1 de 1</strong><br>
+          Documento gerado automaticamente
+        </div>
+      </div>
+      <div class="footer-disclaimer">
+        Este documento é confidencial e destinado exclusivamente ao uso interno. 
+        Todas as informações contidas neste relatório são propriedade da empresa e não devem ser divulgadas sem autorização prévia.
+      </div>
+    </div>
+  </body>
+</html>

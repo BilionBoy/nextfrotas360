@@ -93,4 +93,24 @@ def ordens_servico_gestor
   @pagy, @ordens_servico = pagy(@ordens_servico, items: 20)
 end
 
+def ordens_servico_pdf
+  @ordens_servico = OOrdemServico
+                     .includes(:f_empresa_fornecedora, :o_status, :t_taxa, :validado_por, :o_proposta, :g_veiculo, :o_nota_fiscal)
+                     .order(created_at: :desc)
+
+  respond_to do |format|
+    format.html
+    format.pdf do
+      render pdf: "relatorio_ordens_servico_#{Time.current.strftime('%d%m%Y_%H%M')}",
+             template: "relatorios/ordens_servico_pdf",  # sem extensão
+             layout: "pdf",                             # ou "pdf.html"
+             encoding: "UTF-8",
+             formats: [:html]
+    end
+  end
+end
+
+
+
+
 end

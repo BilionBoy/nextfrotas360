@@ -2,7 +2,14 @@
   <!-- Header -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h1 class="h3 mb-0 text-dark fw-bold">Relatório de Ordens de Serviço</h1>
-    <small class="text-muted">Atualizado em <%= Time.current.strftime("%d/%m/%Y às %H:%M") %></small>
+    <div class="d-flex align-items-center gap-2">
+      <small class="text-muted">Atualizado em <%= Time.current.strftime("%d/%m/%Y às %H:%M") %></small>
+      <%= link_to "📥 Baixar PDF",
+            relatorios_ordens_servico_pdf_path(request.query_parameters.merge(format: :pdf)),
+            class: "btn btn-sm btn-primary",
+            target: "_blank",
+            data: { confirm: "Deseja realmente baixar o relatório em PDF?" } %>
+    </div>
   </div>
   <!-- Cards de Resumo -->
   <div class="row g-3 mb-4">
