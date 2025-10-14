@@ -93,22 +93,19 @@ def ordens_servico_gestor
   @pagy, @ordens_servico = pagy(@ordens_servico, items: 20)
 end
 
+# controller
 def ordens_servico_pdf
-  @ordens_servico = OOrdemServico
-                     .includes(:f_empresa_fornecedora, :o_status, :t_taxa, :validado_por, :o_proposta, :g_veiculo, :o_nota_fiscal)
-                     .order(created_at: :desc)
+  @ordens_servico = OOrdemServico.order(created_at: :desc)
 
-  respond_to do |format|
-    format.html
-    format.pdf do
-      render pdf: "relatorio_ordens_servico_#{Time.current.strftime('%d%m%Y_%H%M')}",
-             template: "relatorios/ordens_servico_pdf",  # sem extensão
-             layout: "pdf",                             # ou "pdf.html"
-             encoding: "UTF-8",
-             formats: [:html]
-    end
-  end
+  pdf_html = render_to_string(template: "relatorios/ordens_servico_pdf", layout: "pdf")
+  pdf = WickedPdf.new.pdf_from_string(pdf_html)
+
+  send_data pdf,
+            filename: "relatorio_ordens_servico_#{Time.current.strftime('%d%m%Y_%H%M')}.pdf",
+            type: "application/pdf",
+            disposition: "attachment"
 end
+
 
 
 
