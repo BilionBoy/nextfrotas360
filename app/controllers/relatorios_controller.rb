@@ -66,8 +66,10 @@ class RelatoriosController < ApplicationController
 
   # GET /relatorios/ordens_servico_gestor
 def ordens_servico_gestor
-  # 🔹 Apenas OS da unidade do gestor logado
   unidade_id = current_user.a_unidade_id
+
+  # nome real da tabela (corrige problemas de plural irregular)
+  tabela_os = OOrdemServico.table_name
 
   @ordens_servico = OOrdemServico
     .includes(
@@ -81,17 +83,22 @@ def ordens_servico_gestor
     )
     .joins(:g_veiculo)
     .where(g_veiculos: { a_unidade_id: unidade_id })
-    .order(created_at: :desc)
+    .order("#{tabela_os}.created_at DESC")
 
-  # 🔹 Filtros opcionais: status e datas
+  # 🔹 Filtros opcionais
   @ordens_servico = @ordens_servico.where(o_status_id: params[:status_id]) if params[:status_id].present?
+
   if params[:inicio].present? && params[:fim].present?
-    @ordens_servico = @ordens_servico.where('created_at BETWEEN ? AND ?', params[:inicio], params[:fim])
+    @ordens_servico = @ordens_servico.where(
+      "#{tabela_os}.created_at BETWEEN ? AND ?",
+      params[:inicio],
+      params[:fim]
+    )
   end
 
-  # 🔹 Paginação
   @pagy, @ordens_servico = pagy(@ordens_servico, items: 20)
 end
+
 
 # controller
 def ordens_servico_pdf

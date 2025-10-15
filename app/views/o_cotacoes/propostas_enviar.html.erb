@@ -383,13 +383,15 @@
       <article class="proposal-card">
         <header class="proposal-header">
           <h2 class="proposal-number">
-            <%= cotacao.o_solicitacao.descricao %>
+            <%= cotacao.o_solicitacao.descricao.presence || "Solicitação ##{cotacao.o_solicitacao.id}" %>
           </h2>
         </header>
         <div class="proposal-body">
-          <!-- Info geral da cotação -->
+          <!-- Informações principais -->
           <% [
-            {icon: "ph-user", bg: "#dbeafe", color: "#1e40af", label: "Solicitante", value: cotacao.o_solicitacao.solicitante&.nome || 'N/A'},
+            {icon: "ph-user", bg: "#dbeafe", color: "#1e40af", label: "Solicitante / Gestor", value: "#{cotacao.o_solicitacao.solicitante&.nome }"},
+            {icon: "ph-calendar", bg: "#e0f2fe", color: "#0369a1", label: "Data de Envio", value: l(cotacao.created_at, format: :short)},
+            {icon: "ph-clock", bg: "#fef3c7", color: "#b45309", label: "Data de Expiração", value: l(cotacao.data_expiracao, format: :short)},
             {icon: "ph-car", bg: "#e0e7ff", color: "#4338ca", label: "Veículo", value: cotacao.o_solicitacao.g_veiculo&.modelo || 'N/A'},
             {icon: "ph-buildings", bg: "#fef3c7", color: "#d97706", label: "Centro de Custo", value: cotacao.o_solicitacao.g_centro_custo&.nome || 'N/A'},
             {icon: "ph-wrench", bg: "#d1fae5", color: "#059669", label: "Tipo / Categoria", value: "#{cotacao.o_solicitacao.o_tipo_solicitacao&.descricao || 'N/A'} • #{cotacao.o_solicitacao.o_categoria_servico&.descricao || 'N/A'}"}
@@ -406,10 +408,6 @@
           <% end %>
         </div>
         <footer class="proposal-footer" style="display: flex; justify-content: space-between; align-items: center;">
-          <div class="expiration-badge" role="alert">
-            <i class="ph-clock" aria-hidden="true"></i>
-            <span>Expira: <%= l(cotacao.data_expiracao, format: :short) %></span>
-          </div>
           <% if propostas_fornecedor.any? %>
             <% ultima_proposta = propostas_fornecedor.last %>
             <% status = ultima_proposta.o_status.descricao %>
@@ -420,10 +418,10 @@
                               when 'Rejeitada' then '#fee2e2'
                               else '#e5e7eb'
                               end %>;
-        color: <%= status == 'Rejeitada' ? '#b91c1c' : '#111827' %>;
-        padding: 0.2rem 0.5rem;
-        border-radius: 0.25rem;">
-              <%= status %>
+                      color: <%= status == 'Rejeitada' ? '#b91c1c' : '#111827' %>;
+                      padding: 0.3rem 0.7rem;
+                      border-radius: 0.25rem;">
+              <strong><%= status %></strong>
             </div>
           <% else %>
             <%= link_to new_o_proposta_path(o_cotacao_id: cotacao.id), class: "btn btn-primary btn-sm" do %>
