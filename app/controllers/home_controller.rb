@@ -141,62 +141,91 @@ class HomeController < ApplicationController
   # 🔹 DASHBOARD GESTOR
   # --------------------------------------------------
   def load_gestor_data
-    resumo = GCentroCusto
-               .unscope(:select)
-               .select('COALESCE(SUM(valor_inicial), 0) AS total_orcamento')
-               .take
-
+    unidade_id = current_user.a_unidade_id
+    return unless unidade_id
+  
+    # 🔹 Centros de custo apenas da unidade do gestor
+    centros_custos = GCentroCusto
+                       .joins(:a_unidade)
+                       .where(a_unidades: { id: unidade_id })
+  
+    resumo = centros_custos
+                .unscope(:select)
+                .select('COALESCE(SUM(valor_inicial), 0) AS total_orcamento')
+                .take
+  
     @orcamento_total = resumo.total_orcamento.to_f
-
-    @gastos_totais = OOrdemServico
+  
+    # 🔹 Ordens de serviço ligadas à unidade do gestor
+    ordens_servico = OOrdemServico
+                       .joins(o_proposta: { o_cotacao: { o_solicitacao: { g_centro_custo: :a_unidade } } })
+                       .where(a_unidades: { id: unidade_id })
+  
+    @gastos_totais = ordens_servico
                        .joins(:o_status)
                        .where(o_status: { descricao: 'Pago' })
                        .sum { |os| os.custo_real.to_f - os.taxa_aplicada.to_f }
-
-    @receita_taxas = OOrdemServico
+  
+    @receita_taxas = ordens_servico
                        .joins(:o_status)
                        .where(o_status: { descricao: 'Pago' })
                        .sum(:taxa_aplicada)
                        .to_f
-
+  
     @variacao_receita = 0
-
-    @solicitacoes_total      = OSolicitacao.count
-    @solicitacoes_pendentes  = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Pendente' }).count
-    @solicitacoes_andamento  = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Em Cotação' }).count
-    @solicitacoes_concluidas = OSolicitacao.joins(:o_status).where(o_status: { descricao: 'Concluída' }).count
-
-    @cotacoes_em_andamento = OCotacao.joins(:o_status).where(o_status: { descricao: 'Em Cotação' }).count
-    @propostas_recebidas   = OProposta.count
-    @servicos_ativos       = OOrdemServico.joins(:o_status).where(o_status: { descricao: 'Ativo' }).count
-
-    solicitacoes_status = OSolicitacao
+  
+    # 🔹 Solicitações filtradas pela unidade
+    solicitacoes = OSolicitacao
+                     .joins(g_centro_custo: :a_unidade)
+                     .where(a_unidades: { id: unidade_id })
+  
+    @solicitacoes_total      = solicitacoes.count
+    @solicitacoes_pendentes  = solicitacoes.joins(:o_status).where(o_status: { descricao: 'Pendente' }).count
+    @solicitacoes_andamento  = solicitacoes.joins(:o_status).where(o_status: { descricao: 'Em Cotação' }).count
+    @solicitacoes_concluidas = solicitacoes.joins(:o_status).where(o_status: { descricao: 'Concluída' }).count
+  
+    # 🔹 Cotações e propostas relacionadas à unidade
+    cotacoes = OCotacao
+                 .joins(o_solicitacao: { g_centro_custo: :a_unidade })
+                 .where(a_unidades: { id: unidade_id })
+  
+    propostas = OProposta
+                  .joins(o_cotacao: { o_solicitacao: { g_centro_custo: :a_unidade } })
+                  .where(a_unidades: { id: unidade_id })
+  
+    @cotacoes_em_andamento = cotacoes.joins(:o_status).where(o_status: { descricao: 'Em Cotação' }).count
+    @propostas_recebidas   = propostas.count
+    @servicos_ativos       = ordens_servico.joins(:o_status).where(o_status: { descricao: 'Ativo' }).count
+  
+    # 🔹 Gráfico de status
+    solicitacoes_status = solicitacoes
                             .joins(:o_status)
                             .group('o_status.descricao')
                             .count
-
+  
     @status_labels           = solicitacoes_status.keys
     @solicitacoes_por_status = solicitacoes_status.values
-
-    solicitacoes_categoria = OSolicitacao
+  
+    # 🔹 Gráfico por categoria
+    solicitacoes_categoria = solicitacoes
                                .joins(:o_categoria_servico)
                                .group('o_categorias_servicos.descricao')
                                .order(Arel.sql('COUNT(*) DESC'))
                                .limit(10)
                                .count
-
+  
     @solicitacoes_por_categoria = solicitacoes_categoria.map do |descricao, count|
       OpenStruct.new(descricao:, count:)
     end
-
-    centros_custos = GCentroCusto
-                       .where('valor_inicial > 0')
-                       .select('nome, (valor_inicial - saldo_atual) AS gasto')
-                       .order(Arel.sql('gasto DESC'))
-                       .limit(10)
-
-    @gastos_por_centro = centros_custos.map { |c| OpenStruct.new(nome: c.nome, valor: c.gasto.to_f) }
+  
+    # 🔹 Gastos por centro de custo da unidade
+    @gastos_por_centro = centros_custos
+                           .select('nome, (valor_inicial - saldo_atual) AS gasto')
+                           .order(Arel.sql('gasto DESC'))
+                           .limit(10)
+                           .map { |c| OpenStruct.new(nome: c.nome, valor: c.gasto.to_f) }
   end
+
 
   # --------------------------------------------------
   # 🔹 DASHBOARD FORNECEDOR
