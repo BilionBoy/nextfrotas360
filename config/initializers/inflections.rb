@@ -47,4 +47,6 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.irregular 'o_nota_fiscal',                     'o_notas_fiscais'
   inflect.irregular 't_taxa',                            't_taxas'
   inflect.irregular 't_taxa_empresa_fornecedora',        't_taxas_empresas_fornecedoras'
+  inflect.irregular 'dhiogo',        'dhiogos'
+
 end
