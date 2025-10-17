@@ -57,21 +57,26 @@ class OCotacoesController < ApplicationController
 
   # ============================
   # Ação para fornecedor enviar proposta
-  def propostas_enviar
-    fornecedor = current_user.f_empresa_fornecedora
+ # ============================
+# Ação para fornecedor enviar proposta
+def propostas_enviar
+  fornecedor = current_user.f_empresa_fornecedora
+  return redirect_to root_path, alert: "Usuário sem empresa associada" unless fornecedor
 
-    # Trazer todas as cotações visíveis
-    @o_cotacoes = OCotacao
+  # Filtra cotações de solicitações do mesmo município do fornecedor
+  @q = OCotacao
+         .joins(o_solicitacao: { g_centro_custo: { a_unidade: :g_municipio } })
+         .where(a_unidades: { g_municipio_id: fornecedor.g_municipio_id })
+         .ransack(params[:q])
+
+  @o_cotacoes = @q.result(distinct: true)
                   .includes(:o_solicitacao, o_propostas: :o_status)
                   .order(created_at: :desc)
 
-    # Ransack para filtro de pesquisa
-    @q = OCotacao.ransack(params[:q])
-    @o_cotacoes = @q.result(distinct: true)
+  # Paginação
+  @pagy, @o_cotacoes = pagy(@o_cotacoes)
+end
 
-    # Paginação
-    @pagy, @o_cotacoes = pagy(@o_cotacoes)
-  end
 
   private
 
